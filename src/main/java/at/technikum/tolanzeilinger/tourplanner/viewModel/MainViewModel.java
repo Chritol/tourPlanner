@@ -1,5 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.viewModel;
 
+import at.technikum.tolanzeilinger.tourplanner.event.Event;
+import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.model.WordRepository;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -7,14 +9,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class MainViewModel {
+    private final WordRepository wordRepository;
+    private final EventAggregator eventAggregator;
 
     private final ObservableList<String> names = FXCollections.observableArrayList();
-    private final WordRepository wordRepository;
     private final StringProperty input = new SimpleStringProperty();
-
     private final StringProperty selectedName = new SimpleStringProperty();
 
-    public MainViewModel(WordRepository wordRepository) {
+    public MainViewModel(
+            EventAggregator eventAggregator,
+            WordRepository wordRepository
+    ) {
+        this.eventAggregator = eventAggregator;
         this.wordRepository = wordRepository;
 
         initializeView();
@@ -22,8 +28,8 @@ public class MainViewModel {
     }
 
     private void initializeEventListeners() {
-        wordRepository.addNewWordListener(this::addNewWord);
-        wordRepository.addDeleteWordListener(this::removeWord);
+        eventAggregator.addSubscriber(Event.CREATE_WORD, this::updateWords);
+        eventAggregator.addSubscriber(Event.DELETE_WORD, this::updateWords);
     }
 
     private void initializeView() {
@@ -54,12 +60,9 @@ public class MainViewModel {
         this.selectedName.set(selectedName);
     }
 
-    private void addNewWord(String word) {
-        names.add(word);
-    }
-
-    private void removeWord(String word) {
-        names.remove(word);
+    private void updateWords() {
+        names.clear();
+        names.addAll(wordRepository.findAll());
     }
 
     public ObservableList<String> getNames() {

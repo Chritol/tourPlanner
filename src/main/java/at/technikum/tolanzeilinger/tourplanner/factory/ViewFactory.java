@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
+import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.model.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
@@ -7,16 +8,23 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
 public class ViewFactory {
     private static ViewFactory instance;
 
+    private final EventAggregator eventAggregator;
+
+
     // Repositories
     private final WordRepository wordRepository;
+
+    // View Models
     private final MainViewModel mainViewModel;
 
     private ViewFactory() {
+        this.eventAggregator = new EventAggregator();
+
         // initialize Repositories
-        this.wordRepository = new WordRepository();
+        this.wordRepository = new WordRepository(eventAggregator);
 
         // initialize ViewModels
-        this.mainViewModel = new MainViewModel(wordRepository);
+        this.mainViewModel = new MainViewModel(eventAggregator, wordRepository);
     }
 
     public static ViewFactory getInstance() {
