@@ -1,0 +1,8 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+"Use the application" as (Use)
+
+User --> Use
+@enduml
