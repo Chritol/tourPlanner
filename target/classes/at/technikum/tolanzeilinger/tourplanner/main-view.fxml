@@ -54,27 +54,66 @@
         </children>
     </AnchorPane>
 
-    <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <HBox VBox.vgrow="ALWAYS">
-            <Button onAction="#delete" style="-fx-background-color: #ff0000;" text="DELETE" />
-            <Button text="Route" />
-            <Button text="Misc" />
-        </HBox>
-        <ImageView fitHeight="100" VBox.vgrow="ALWAYS" />
-        <HBox VBox.vgrow="ALWAYS">
-            <Button text="Tour Logs" />
-            <Button text="+" />
-            <Button text="-" />
-            <Button text="..." />
-        </HBox>
-        <TableView VBox.vgrow="ALWAYS">
-            <columns>
-                <TableColumn text="Date" />
-                <TableColumn text="Duration" />
-                <TableColumn text="Distance" />
-            </columns>
-            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
-        </TableView>
-    </VBox>
+    <AnchorPane  GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <children>
+            <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <tabs>
+                    <Tab text="General">
+                        <content>
+                            <VBox maxHeight="Infinity">
+                                <Button onAction="#delete" style="-fx-background-color: #ff0000;" text="DELETE" />
+                            </VBox>
+                        </content>
+                    </Tab>
+                    <Tab text="Route">
+                        <content>
+                            <VBox maxHeight="Infinity">
+                                <ImageView fitHeight="100" VBox.vgrow="ALWAYS" />
+                            </VBox>
+                        </content>
+                    </Tab>
+                    <Tab text="Misc">
+                        <content>
+                            <VBox maxHeight="Infinity">
+                                <!-- Here is where misc goes -->
+                            </VBox>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+
+        </children>
+    </AnchorPane>
+
+    <AnchorPane  GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <children>
+            <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <tabs>
+                    <Tab text="Tour Logs">
+                        <content>
+                            <VBox maxHeight="Infinity">
+                                <TableView VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn text="Date" />
+                                        <TableColumn text="Duration" />
+                                        <TableColumn text="Distance" />
+                                    </columns>
+                                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
+                                </TableView>
+                            </VBox>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+            <ImageView fitHeight="100" VBox.vgrow="ALWAYS" />
+            <HBox AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" VBox.vgrow="ALWAYS">
+                <Button text="" />
+                <Button text="+" />
+                <Button text="-" />
+                <Button text="..." />
+            </HBox>
+        </children>
+    </AnchorPane>
+
     <VBox GridPane.columnIndex="2" GridPane.rowIndex="3" />
 </GridPane>
