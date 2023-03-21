@@ -29,4 +29,3 @@ target/
 *mvnw
 *mvnw.cmd
 *.iml
-target/classes/main/resources/at/technikum/tolanzeilinger/tourplanner/gui_en.properties
