@@ -54,13 +54,13 @@
         </children>
     </AnchorPane>
 
-    <AnchorPane  GridPane.columnIndex="1" GridPane.rowIndex="2">
+    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
         <children>
             <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <tabs>
                     <Tab text="General">
                         <content>
-                            <VBox maxHeight="Infinity">
+                            <VBox maxHeight="Infinity" prefHeight="229.0" prefWidth="579.0">
                                 <Button onAction="#delete" style="-fx-background-color: #ff0000;" text="DELETE" />
                             </VBox>
                         </content>
@@ -85,7 +85,7 @@
         </children>
     </AnchorPane>
 
-    <AnchorPane  GridPane.columnIndex="1" GridPane.rowIndex="3">
+    <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
         <children>
             <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <tabs>
