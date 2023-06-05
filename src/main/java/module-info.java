@@ -3,7 +3,6 @@ module at.technikum.tolanzeilinger.tourplanner {
     requires javafx.fxml;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
-    requires kotlin.stdlib;
 
     opens at.technikum.tolanzeilinger.tourplanner to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner;
