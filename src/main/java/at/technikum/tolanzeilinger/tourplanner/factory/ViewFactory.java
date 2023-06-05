@@ -1,6 +1,8 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
+import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.view.PDFcView;
@@ -20,14 +22,19 @@ public class ViewFactory {
     private final MainViewModel mainViewModel;
     private final PDFcViewModel pdFcViewModel;
 
+    // Logger
+    private final Logger logger;
+
     private ViewFactory() {
+
+        this.logger = new Log4jLogger();
         this.eventAggregator = new EventAggregator();
 
         // initialize Repositories
         this.wordRepository = new WordRepository(eventAggregator);
 
         // initialize ViewModels
-        this.mainViewModel = new MainViewModel(eventAggregator, wordRepository);
+        this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger);
 
         this.pdFcViewModel = new PDFcViewModel();
     }

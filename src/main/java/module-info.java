@@ -3,6 +3,9 @@ module at.technikum.tolanzeilinger.tourplanner {
     requires javafx.fxml;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.logging.log4j;
+    requires org.apache.logging.log4j.slf4j;
+    requires org.apache.logging.log4j.core;
 
     opens at.technikum.tolanzeilinger.tourplanner to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner;
