@@ -9,6 +9,7 @@ import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 public class Log4jLogger implements Logger {
     private final org.apache.logging.log4j.Logger log;
 
+    // TODO change to singleton
     public Log4jLogger() {
         ConfigurationBuilder<BuiltConfiguration> builder
                 = ConfigurationBuilderFactory.newConfigurationBuilder();
