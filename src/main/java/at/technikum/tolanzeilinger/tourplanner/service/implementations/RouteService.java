@@ -2,6 +2,8 @@ package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.model.JsonObject;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
+import at.technikum.tolanzeilinger.tourplanner.model.repositories.TourRepository;
+import at.technikum.tolanzeilinger.tourplanner.model.repositories.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.IRouteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +18,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
+// just for talking to the api
 public class RouteService implements IRouteService {
+
+
     @Override
     public RouteItem loadRouteFromUrl(String url, Map<String, String> params) throws IOException, URISyntaxException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();

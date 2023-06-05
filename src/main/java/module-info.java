@@ -23,4 +23,6 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.service.implementations to java.net.http, com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.model to com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.persistence.dao to org.hibernate.orm.core;
+    opens at.technikum.tolanzeilinger.tourplanner.model.tours to com.fasterxml.jackson.databind;
+    opens at.technikum.tolanzeilinger.tourplanner.model.repositories to com.fasterxml.jackson.databind;
 }

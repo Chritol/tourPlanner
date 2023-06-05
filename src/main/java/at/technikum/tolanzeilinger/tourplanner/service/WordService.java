@@ -1,6 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.service;
 
-import at.technikum.tolanzeilinger.tourplanner.model.WordRepository;
+import at.technikum.tolanzeilinger.tourplanner.model.repositories.WordRepository;
 
 public class WordService {
 
