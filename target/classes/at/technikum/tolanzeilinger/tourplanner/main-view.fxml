@@ -76,6 +76,7 @@
                     <Tab text="Misc">
                         <content>
                             <VBox maxHeight="Infinity">
+                                <fx:include fx:id="pdfCreation" source="PDF-c-view.fxml"></fx:include>
                                 <!-- Here is where misc goes -->
                             </VBox>
                         </content>
@@ -117,4 +118,5 @@
     </AnchorPane>
 
     <VBox GridPane.columnIndex="2" GridPane.rowIndex="3" />
+
 </GridPane>
