@@ -3,7 +3,9 @@ package at.technikum.tolanzeilinger.tourplanner.factory;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.model.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
+import at.technikum.tolanzeilinger.tourplanner.view.PDFcView;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.PDFcViewModel;
 
 public class ViewFactory {
     private static ViewFactory instance;
@@ -16,6 +18,7 @@ public class ViewFactory {
 
     // View Models
     private final MainViewModel mainViewModel;
+    private final PDFcViewModel pdFcViewModel;
 
     private ViewFactory() {
         this.eventAggregator = new EventAggregator();
@@ -25,6 +28,8 @@ public class ViewFactory {
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository);
+
+        this.pdFcViewModel = new PDFcViewModel();
     }
 
     public static ViewFactory getInstance() {
@@ -34,6 +39,8 @@ public class ViewFactory {
     }
 
     public Object create(Class<?> controllerClass) {
+        if(controllerClass == PDFcView.class)
+            return new PDFcView(pdFcViewModel);
         if(controllerClass == MainController.class)
             return new MainController(mainViewModel);
 
