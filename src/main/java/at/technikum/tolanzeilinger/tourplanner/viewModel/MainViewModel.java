@@ -2,6 +2,7 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel;
 
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
 import at.technikum.tolanzeilinger.tourplanner.model.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.RouteService;
@@ -20,6 +21,8 @@ public class MainViewModel {
 
     private final IRouteService routeService;
 
+    private final Logger log;
+
     private final ObservableList<String> names = FXCollections.observableArrayList();
     private final StringProperty input = new SimpleStringProperty();
     private final StringProperty selectedName = new SimpleStringProperty();
@@ -28,10 +31,12 @@ public class MainViewModel {
 
     public MainViewModel(
             EventAggregator eventAggregator,
-            WordRepository wordRepository
+            WordRepository wordRepository,
+            Logger logger
     ) {
         this.eventAggregator = eventAggregator;
         this.wordRepository = wordRepository;
+        this.log = logger;
         this.routeService = new RouteService();
 
         initializeView();
@@ -75,16 +80,14 @@ public class MainViewModel {
         try {
             RouteItem asd = routeService.loadRouteFromUrl("https://www.mapquestapi.com/directions/v2/route?key=XSqMMjiT0vjeJtxPj22gTLZ2X2LNiDqj&from=Wien&to=Koeln&unit=K", null);
             Image image = routeService.getRouteImage("https://www.mapquestapi.com/staticmap/v5/map?key=XSqMMjiT0vjeJtxPj22gTLZ2X2LNiDqj&session=", asd.getSessionId());
+            log.info("Received route with sessionId:"+asd.getSessionId());
             return image;
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+            log.error(e.getMessage(), e);
         } catch (URISyntaxException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+            log.error(e.getMessage(), e);
         } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+            log.error(e.getMessage(), e);
         }
         return null;
     }
