@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane style="-fx-background-color: #2f2f2f;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainController">
+<GridPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>

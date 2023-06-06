@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.TourMiscView"
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView"
             prefHeight="400.0" prefWidth="600.0">
     <Text text="tour_title"></Text>
     <Button text="Delete this tour?"></Button>
-    <fx:include source="pdf-c-view.fxml"></fx:include>
+    <fx:include source="miscElements/pdf-c-view.fxml"></fx:include>
     <Text text="Special feature here"></Text>
 
 </AnchorPane>
