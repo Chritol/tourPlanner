@@ -51,8 +51,8 @@ public class TourDataView implements View {
         hillinessComboBox.valueProperty().bindBidirectional(viewModel.getHillinessProperty());
 
         // Set the dropdown options from the ViewModel
-        transportationComboBox.setItems(viewModel.getTransportationOptionsProperty());
-        hillinessComboBox.setItems((ObservableList<Hilltype>) viewModel.getHillinessOptionsProperty());
+        transportationComboBox.setItems(viewModel.getTransportationOptionsProperty().get());
+        hillinessComboBox.setItems(viewModel.getHillinessOptionsProperty().get());
 
     }
 

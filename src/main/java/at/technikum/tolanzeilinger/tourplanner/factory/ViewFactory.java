@@ -98,16 +98,18 @@ public class ViewFactory {
     }
 
     public Object create(Class<?> controllerClass) {
-        if(controllerClass == TourDataViewModel.class)
+        if(controllerClass == TourDataView.class)
             return new TourDataView(tourDataViewModel);
-        if(controllerClass == TourMapViewModel.class)
+        if(controllerClass == TourMapView.class)
             return new TourMapView(tourMapViewModel);
-        if(controllerClass == TourMiscViewModel.class)
+        if(controllerClass == TourMiscView.class)
             return new TourMiscView(tourMiscViewModel);
         if(controllerClass == PDFcView.class)
             return new PDFcView(pdFcViewModel);
         if(controllerClass == MainController.class)
             return new MainController(mainViewModel);
+
+        System.out.println("No controller found for class: " + controllerClass.getName());
 
         throw new NullPointerException();
     }

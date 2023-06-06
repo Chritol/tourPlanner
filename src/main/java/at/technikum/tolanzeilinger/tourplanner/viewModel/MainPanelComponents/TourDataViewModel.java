@@ -59,98 +59,65 @@ public class TourDataViewModel implements ViewModel {
         return nameProperty;
     }
 
-    public SimpleStringProperty namePropertyProperty() {
-        return nameProperty;
-    }
-
-    public void setNameProperty(String nameProperty) {
-        this.nameProperty.set(nameProperty);
+    public void setNameProperty(String name) {
+        this.nameProperty.set(name);
     }
 
     public SimpleStringProperty getDescriptionProperty() {
         return descriptionProperty;
     }
 
-    public SimpleStringProperty descriptionPropertyProperty() {
-        return descriptionProperty;
-    }
-
-    public void setDescriptionProperty(String descriptionProperty) {
-        this.descriptionProperty.set(descriptionProperty);
+    public void setDescriptionProperty(String description) {
+        this.descriptionProperty.set(description);
     }
 
     public SimpleStringProperty getFromProperty() {
         return fromProperty;
     }
 
-    public SimpleStringProperty fromPropertyProperty() {
-        return fromProperty;
-    }
-
-    public void setFromProperty(String fromProperty) {
-        this.fromProperty.set(fromProperty);
+    public void setFromProperty(String from) {
+        this.fromProperty.set(from);
     }
 
     public SimpleStringProperty getToProperty() {
         return toProperty;
     }
 
-    public SimpleStringProperty toPropertyProperty() {
-        return toProperty;
-    }
-
-    public void setToProperty(String toProperty) {
-        this.toProperty.set(toProperty);
+    public void setToProperty(String to) {
+        this.toProperty.set(to);
     }
 
     public SimpleObjectProperty<Transportation> getTransportationProperty() {
         return transportationProperty;
     }
 
-    public SimpleObjectProperty<Transportation> transportationPropertyProperty() {
-        return transportationProperty;
-    }
-
-    public void setTransportationProperty(Transportation transportationProperty) {
-        this.transportationProperty.set(transportationProperty);
+    public void setTransportationProperty(Transportation transportation) {
+        this.transportationProperty.set(transportation);
     }
 
     public SimpleObjectProperty<Hilltype> getHillinessProperty() {
         return hillinessProperty;
     }
 
-    public SimpleObjectProperty<Hilltype> hillinessPropertyProperty() {
-        return hillinessProperty;
+    public void setHillinessProperty(Hilltype hilliness) {
+        this.hillinessProperty.set(hilliness);
     }
 
-    public void setHillinessProperty(Hilltype hillinessProperty) {
-        this.hillinessProperty.set(hillinessProperty);
-    }
-
-    public ObservableList<Transportation> getTransportationOptionsProperty() {
-        return transportationOptionsProperty.get();
-    }
-
-    public SimpleObjectProperty<ObservableList<Transportation>> transportationOptionsPropertyProperty() {
+    public SimpleObjectProperty<ObservableList<Transportation>> getTransportationOptionsProperty() {
         return transportationOptionsProperty;
     }
 
-    public void setTransportationOptionsProperty(ObservableList<Transportation> transportationOptionsProperty) {
-        this.transportationOptionsProperty.set(transportationOptionsProperty);
+    public void setTransportationOptionsProperty(ObservableList<Transportation> transportationOptions) {
+        this.transportationOptionsProperty.set(transportationOptions);
     }
 
     public SimpleObjectProperty<ObservableList<Hilltype>> getHillinessOptionsProperty() {
-        return (SimpleObjectProperty<ObservableList<Hilltype>>) hillinessOptionsProperty.get();
-    }
-
-    public SimpleObjectProperty<ObservableList<Hilltype>> hillinessOptionsPropertyProperty() {
         return hillinessOptionsProperty;
     }
 
-    public void setHillinessOptionsProperty(ObservableList<Hilltype> hillinessOptionsProperty) {
-        this.hillinessOptionsProperty.set(hillinessOptionsProperty);
+    public void setHillinessOptionsProperty(ObservableList<Hilltype> hillinessOptions) {
+        this.hillinessOptionsProperty.set(hillinessOptions);
     }
-
 
 
     // Other methods and properties go here
