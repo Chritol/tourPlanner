@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.model;
+package at.technikum.tolanzeilinger.tourplanner.model.repositories;
 
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
@@ -6,7 +6,7 @@ import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordRepository {
+public class WordRepository implements Repository<String> {
     private final List<String> words;
     private final EventAggregator eventAggregator;
 
@@ -33,4 +33,11 @@ public class WordRepository {
     public List<String> findAll() {
         return words;
     }
+
+    @Override
+    public String findFirst() {
+        return words.get(0);
+    }
+
+
 }

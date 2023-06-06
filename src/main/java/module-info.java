@@ -23,4 +23,14 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.service.implementations to java.net.http, com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.model to com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.persistence.dao to org.hibernate.orm.core;
+    opens at.technikum.tolanzeilinger.tourplanner.model.tours to com.fasterxml.jackson.databind;
+    opens at.technikum.tolanzeilinger.tourplanner.model.repositories to com.fasterxml.jackson.databind;
+    exports at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents to javafx.fxml;
+    exports at.technikum.tolanzeilinger.tourplanner.view.MiscComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.view.MiscComponents to javafx.fxml;
+    exports at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents to javafx.fxml;
+    exports at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents to javafx.fxml;
 }

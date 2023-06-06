@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane style="-fx-background-color: #2f2f2f;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainController">
+<GridPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
@@ -61,22 +61,22 @@
                     <Tab text="General">
                         <content>
                             <VBox maxHeight="Infinity" prefHeight="229.0" prefWidth="579.0">
-                                <Button onAction="#delete" style="-fx-background-color: #ff0000;" text="DELETE" />
-                                <ImageView fx:id="routeimage" />
+                                <fx:include source="tour-data-view.fxml"></fx:include>
+
                             </VBox>
                         </content>
                     </Tab>
                     <Tab text="Route">
                         <content>
                             <VBox maxHeight="Infinity">
-                                <ImageView fitHeight="100" VBox.vgrow="ALWAYS" />
+                                <fx:include source="tour-map-view.fxml"></fx:include>
                             </VBox>
                         </content>
                     </Tab>
                     <Tab text="Misc">
                         <content>
                             <VBox maxHeight="Infinity">
-                                <fx:include fx:id="pdfCreation" source="PDF-c-view.fxml"></fx:include>
+                                <fx:include source="tour-misc-view.fxml"></fx:include>
                                 <!-- Here is where misc goes -->
                             </VBox>
                         </content>

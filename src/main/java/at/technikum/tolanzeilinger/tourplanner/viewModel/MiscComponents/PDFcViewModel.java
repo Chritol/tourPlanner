@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.viewModel;
+package at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

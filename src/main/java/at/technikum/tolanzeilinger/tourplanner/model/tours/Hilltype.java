@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.model.tourStuff;
+package at.technikum.tolanzeilinger.tourplanner.model.tours;
 
 public enum Hilltype {
     DEFAULT_STRATEGY,

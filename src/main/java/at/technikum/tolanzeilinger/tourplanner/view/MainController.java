@@ -16,9 +16,6 @@ public class MainController {
     @FXML
     private TextField input;
 
-    @FXML
-    private ImageView routeimage;
-
     private final MainViewModel viewModel;
 
     public MainController(MainViewModel viewModel) {
@@ -31,7 +28,6 @@ public class MainController {
         input.textProperty().bindBidirectional(viewModel.inputProperty());
         names.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)
                 -> viewModel.setSelectedName(newValue));
-        routeimage.setImage(viewModel.getRouteImage());
     }
 
     @FXML
