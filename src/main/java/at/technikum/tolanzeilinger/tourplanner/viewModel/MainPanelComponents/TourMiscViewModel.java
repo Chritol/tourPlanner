@@ -2,7 +2,8 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents;
 
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.service.TourService;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 
 public class TourMiscViewModel implements ViewModel {

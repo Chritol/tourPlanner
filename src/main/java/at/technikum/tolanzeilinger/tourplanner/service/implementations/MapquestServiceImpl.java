@@ -2,7 +2,6 @@ package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.model.JsonObject;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.IRouteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.image.Image;
@@ -17,7 +16,7 @@ import java.net.http.HttpResponse;
 import java.util.Map;
 
 // just for talking to the api
-public class RouteService implements IRouteService {
+public class MapquestServiceImpl implements at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService {
 
 
     @Override

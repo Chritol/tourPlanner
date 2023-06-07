@@ -1,14 +1,14 @@
 package at.technikum.tolanzeilinger.tourplanner.model.tours;
 
 public class Tour {
-    String name;
-    String description;
-    Location from;
-    Location to;
-    Transportation transportation;
-    Hilltype hilliness;
-    int distance;
-    int estimatedTime;
+    private String name;
+    private String description;
+    private Location from;
+    private Location to;
+    private Transportation transportation;
+    private Hilltype hilliness;
+    private int distance;
+    private int estimatedTime;
 
     String tourImagePath;
 

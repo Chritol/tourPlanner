@@ -5,9 +5,15 @@ public enum Event {
     PROPERTIES_LOADED,
 
     // Tour Planner Events
-    ROUTE_LOADED,
-    ROUTE_CREATED,
-    ROUTE_DELETED,
+    TOUR_LOADED,
+    TOUR_CREATED,
+    TOUR_DELETED,
+    TOUR_UPDATED,
+
+    LOG_CREATED,
+    LOG_DELETED,
+    LOG_UPDATED,
+
 
 
     // Bsp. Events

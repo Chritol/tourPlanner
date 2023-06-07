@@ -3,10 +3,11 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
-import at.technikum.tolanzeilinger.tourplanner.service.TourService;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -121,4 +122,23 @@ public class TourDataViewModel implements ViewModel {
 
 
     // Other methods and properties go here
+    public void addTour() {
+        Tour tour = new Tour(
+                nameProperty.get(),
+                descriptionProperty.get(),
+                fromProperty.get(),
+                toProperty.get()
+        );
+        tour.setTransportation(transportationProperty.get());
+
+        // TODO - hier routeservice call - service war down als ich das grad geschrieben habe
+        // routeService.
+
+        tour.setDistance(500);
+        tour.setEstimatedTime(500);
+
+        tour.setHilliness(hillinessProperty.get());
+
+        tourService.addTour(tour);
+    }
 }

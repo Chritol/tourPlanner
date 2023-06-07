@@ -1,12 +1,12 @@
-package at.technikum.tolanzeilinger.tourplanner.service.helperServices;
+package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageService;
 import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -15,12 +15,12 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
-public class ImageService {
+public class ImageServiceImpl implements ImageService {
     private final Properties properties;
     private final Logger logger;
     private final EventAggregator eventAggregator;
 
-    public ImageService(Properties properties, EventAggregator eventAggregator, Logger logger) {
+    public ImageServiceImpl(Properties properties, EventAggregator eventAggregator, Logger logger) {
         this.properties = properties;
         this.eventAggregator = eventAggregator;
         this.logger = logger;

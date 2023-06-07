@@ -6,7 +6,7 @@ import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordRepository implements Repository<String> {
+public class WordRepository {
     private final List<String> words;
     private final EventAggregator eventAggregator;
 
@@ -16,16 +16,16 @@ public class WordRepository implements Repository<String> {
         words = new ArrayList<>();
     }
 
-    public void add(String word) {
-        if(word != null && !words.contains(word))
-            words.add(word);
+    public void add(String object) {
+        if(object != null && !words.contains(object))
+            words.add(object);
 
         eventAggregator.publish(Event.CREATE_WORD);
     }
 
-    public void remove(String word) {
-        if(word != null)
-            words.remove(word);
+    public void remove(String object) {
+        if(object != null)
+            words.remove(object);
 
         eventAggregator.publish(Event.DELETE_WORD);
     }
@@ -34,10 +34,7 @@ public class WordRepository implements Repository<String> {
         return words;
     }
 
-    @Override
     public String findFirst() {
         return words.get(0);
     }
-
-
 }
