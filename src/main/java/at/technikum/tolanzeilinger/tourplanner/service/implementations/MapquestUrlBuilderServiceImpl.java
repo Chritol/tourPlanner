@@ -1,12 +1,14 @@
-package at.technikum.tolanzeilinger.tourplanner.service.helperServices;
+package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import at.technikum.tolanzeilinger.tourplanner.properties.PropertyLoader;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBuilderService;
 
-public class MapquestUrlBuilderService {
+public class MapquestUrlBuilderServiceImpl implements MapquestUrlBuilderService {
     private PropertyLoader properties;
 
-    public MapquestUrlBuilderService(PropertyLoader properties) {
+    public MapquestUrlBuilderServiceImpl(PropertyLoader properties) {
         this.properties = properties;
     }
 
@@ -21,7 +23,7 @@ public class MapquestUrlBuilderService {
         return stringBuilder.toString();
     }
 
-    public String buildMapUrl(Tour tour) {
+    public String buildMapImageUrl(Tour tour) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://www.mapquestapi.com/staticmap/v5/map?")
                 .append("key=").append(properties.getProperty("mapquest.apikey"))

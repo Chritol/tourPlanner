@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.persistence.dao;
+package at.technikum.tolanzeilinger.tourplanner.persistence.dao.models;
 
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tp_tour")
-public class TourDao {
+public class TourDaoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -38,10 +38,10 @@ public class TourDao {
     @Column(name = "hill_type", length = 50)
     private HillType hillType;
 
-    public TourDao() {
+    public TourDaoModel() {
     }
 
-    public TourDao(String name, String description, String destinationFrom, String destinationTo, TransportationType transportationType, Integer distance, Integer estimatedTime, HillType hillType) {
+    public TourDaoModel(String name, String description, String destinationFrom, String destinationTo, TransportationType transportationType, Integer distance, Integer estimatedTime, HillType hillType) {
         this.name = name;
         this.description = description;
         this.destinationFrom = destinationFrom;

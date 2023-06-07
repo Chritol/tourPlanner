@@ -1,19 +1,22 @@
-package at.technikum.tolanzeilinger.tourplanner.service;
+package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.TourRepository;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
-import at.technikum.tolanzeilinger.tourplanner.service.helperServices.MapquestUrlBuilderService;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.RouteService;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 // just for talking to the Repository
-public class TourService {
+public class TourServiceImpl implements TourService {
     private final Logger logger;
     private final EventAggregator eventAggregator;
 
@@ -22,12 +25,12 @@ public class TourService {
 
     // Services
     private final MapquestUrlBuilderService mapquestUrlBuilderService;
-    private final RouteService routeService;
+    private final MapquestService mapquestService;
 
     // Miscellaneous
     private Tour activeTour;
 
-    public TourService(Logger logger, EventAggregator eventAggregator, TourRepository tourRepository, RouteService routeService, MapquestUrlBuilderService mapquestUrlBuilderService) {
+    public TourServiceImpl(Logger logger, EventAggregator eventAggregator, TourRepository tourRepository, MapquestService mapquestService, MapquestUrlBuilderService mapquestUrlBuilderService) {
         this.logger = logger;
         this.eventAggregator = eventAggregator;
 
@@ -35,15 +38,17 @@ public class TourService {
         this.tourRepository = tourRepository;
 
         // Services
-        this.routeService = routeService;
+        this.mapquestService = mapquestService;
         this.mapquestUrlBuilderService = mapquestUrlBuilderService;
 
         // Miscellaneous
-        this.activeTour = tourRepository.findFirst();
+        this.activeTour = TourConverter.toTour(tourRepository.findFirst());
+        eventAggregator.publish(Event.TOUR_LOADED);
     }
 
-    public void addNewTour(Tour tour) {
-        tourRepository.add(tour);
+    public void addTour(Tour tour) {
+        var id = tourRepository.create(TourConverter.toTourDaoModel(tour));
+        logger.info("NEW TOUR ID:"+id);
     }
 
     public void setActiveTour(Tour activeTour) {
@@ -56,8 +61,8 @@ public class TourService {
 
     public Image loadTourImage() {
         try {
-            RouteItem routeFromUrl = routeService.loadRouteFromUrl( this.mapquestUrlBuilderService.buildDirectionsUrl(this.activeTour), null);
-            Image image = routeService.getRouteImage(this.mapquestUrlBuilderService.buildMapUrl(this.activeTour), routeFromUrl.getSessionId());
+            RouteItem routeFromUrl = mapquestService.loadRouteFromUrl( this.mapquestUrlBuilderService.buildDirectionsUrl(this.activeTour), null);
+            Image image = mapquestService.getRouteImage(this.mapquestUrlBuilderService.buildMapImageUrl(this.activeTour), routeFromUrl.getSessionId());
             return image;
         } catch (IOException e) {
             logger.error(e.getMessage(), e);

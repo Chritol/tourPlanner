@@ -1,20 +1,27 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.TourRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.TourDao;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.TourLogDao;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.WordRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.helperServices.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourLogRepositoryImpl;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourRepositoryImpl;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.MapquestUrlBuilderServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.properties.PropertyLoader;
-import at.technikum.tolanzeilinger.tourplanner.service.TourService;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.RouteService;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.MapquestServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView;
@@ -27,34 +34,43 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class ViewFactory {
     private static ViewFactory instance;
+    private final HibernateSessionFactory hibernateSessionFactory;
 
-    private  EventAggregator eventAggregator;
+    private final Map<Class<?>, Supplier<Object>> viewMap;
+
+    private final EventAggregator eventAggregator;
 
     // Repositories
-    private  WordRepository wordRepository;
-    private  TourRepository tourRepository;
+    private final WordRepository wordRepository;
+    private final TourRepository tourRepository;
+
+    private final TourLogRepository tourLogRepository;
 
     // Services
-    private PropertyLoader propertyLoader;
-    private MapquestUrlBuilderService mapquestUrlBuilderService;
-    private  TourService tourService;
-    private  RouteService routeService;
+    private final PropertyLoader propertyLoader;
+    private final MapquestUrlBuilderService mapquestUrlBuilderService;
+    private final TourService tourService;
+    private final MapquestService mapquestService;
 
     // View Models
-    private MainViewModel mainViewModel;
-    private  PDFcViewModel pdFcViewModel;
-
-    private  TourDataViewModel tourDataViewModel;
-    private  TourMapViewModel tourMapViewModel;
-    private  TourMiscViewModel tourMiscViewModel;
-
+    private final MainViewModel mainViewModel;
+    private final PDFcViewModel pdFcViewModel;
+    private final TourDataViewModel tourDataViewModel;
+    private final TourMapViewModel tourMapViewModel;
+    private final TourMiscViewModel tourMiscViewModel;
 
     // Logger
     private  Logger logger;
@@ -62,20 +78,27 @@ public class ViewFactory {
 
     private ViewFactory() {
 
-        this.logger = new Log4jLogger();
+        this.logger = Log4jLogger.getInstance();
         this.eventAggregator = new EventAggregator();
-        this.propertyLoader = new PropertyLoader("config.properties", logger, eventAggregator);
+        this.hibernateSessionFactory = new HibernateSessionFactory();
+
+        // TODO - COMMENT IF NOT NEEDED
+        clearDatabase(hibernateSessionFactory);
+
+        this.viewMap = new HashMap<>();
+        initializeViewMap();
+
+        this.propertyLoader = new PropertyLoader(DefaultConstants.CONFIG_PATH, logger, eventAggregator);
 
         // initialize Repositories
         this.wordRepository = new WordRepository(eventAggregator);
-        this.tourRepository = new TourRepository(eventAggregator);
+        this.tourRepository = new TourRepositoryImpl(hibernateSessionFactory, eventAggregator, logger);
+        this.tourLogRepository = new TourLogRepositoryImpl(hibernateSessionFactory, eventAggregator, logger);
 
         // initialize Services
-        this.mapquestUrlBuilderService = new MapquestUrlBuilderService(propertyLoader);
-        this.routeService = new RouteService();
-        this.tourService = new TourService(logger, eventAggregator, tourRepository, routeService, mapquestUrlBuilderService);
-
-
+        this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoader);
+        this.mapquestService = new MapquestServiceImpl();
+        this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger);
@@ -85,9 +108,7 @@ public class ViewFactory {
         this.tourMapViewModel = new TourMapViewModel(eventAggregator, tourService, logger);
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
 
-        HibernateSessionFactory hibernateSessionFactory = new HibernateSessionFactory();
-
-        addTestDataToDb(hibernateSessionFactory);
+        // addTestDataToDb(hibernateSessionFactory);
         checkDatabase(hibernateSessionFactory);
     }
 
@@ -97,21 +118,23 @@ public class ViewFactory {
         return instance;
     }
 
-    public Object create(Class<?> controllerClass) {
-        if(controllerClass == TourDataView.class)
-            return new TourDataView(tourDataViewModel);
-        if(controllerClass == TourMapView.class)
-            return new TourMapView(tourMapViewModel);
-        if(controllerClass == TourMiscView.class)
-            return new TourMiscView(tourMiscViewModel);
-        if(controllerClass == PDFcView.class)
-            return new PDFcView(pdFcViewModel);
-        if(controllerClass == MainController.class)
-            return new MainController(mainViewModel);
+    public Object createView(Class<?> controllerClass) {
+        Supplier<Object> controllerSupplier = viewMap.get(controllerClass);
+        if (controllerSupplier != null) {
+            return controllerSupplier.get();
+        }
 
-        System.out.println("No controller found for class: " + controllerClass.getName());
+        logger.fatal("No controller found for class: " + controllerClass.getName());
 
         throw new NullPointerException();
+    }
+
+    private void initializeViewMap() {
+        viewMap.put(TourDataView.class, () -> new TourDataView(tourDataViewModel));
+        viewMap.put(TourMapView.class, () -> new TourMapView(tourMapViewModel));
+        viewMap.put(TourMiscView.class, () -> new TourMiscView(tourMiscViewModel));
+        viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
+        viewMap.put(MainController.class, () -> new MainController(mainViewModel));
     }
 
     private void checkDatabase(HibernateSessionFactory sessionFactory) {
@@ -119,14 +142,25 @@ public class ViewFactory {
 
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<TourLogDao> criteria = builder.createQuery(TourLogDao.class);
-            criteria.from(TourLogDao.class);
+            CriteriaQuery<TourLogDaoModel> criteria = builder.createQuery(TourLogDaoModel.class);
+            criteria.from(TourLogDaoModel.class);
 
-            List<TourLogDao> tourLogs = session.createQuery(criteria).getResultList();
+            List<TourLogDaoModel> tourLogs = session.createQuery(criteria).getResultList();
             logger.info("Total logs" + tourLogs.stream().count());
-            for (TourLogDao tourLog : tourLogs) {
+            for (TourLogDaoModel tourLog : tourLogs) {
                 logger.info(tourLog.toString());
             }
+        }
+    }
+
+    public void clearDatabase(HibernateSessionFactory sessionFactory) {
+        try (Session session = sessionFactory.openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createNativeQuery("TRUNCATE TABLE tp_tour, tp_tour_log");
+            query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -135,18 +169,18 @@ public class ViewFactory {
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
 
-            TourDao tour1 = new TourDao("Tour 1", "Description 1", "From 1", "To 1",
+            TourDaoModel tour1 = new TourDaoModel("Tour 1", "Description 1", "From 1", "To 1",
                     TransportationType.CAR, 100, 120, HillType.AVOID_ALL_HILLS);
-            TourDao tour2 = new TourDao("Tour 2", "Description 2", "From 2", "To 2",
+            TourDaoModel tour2 = new TourDaoModel("Tour 2", "Description 2", "From 2", "To 2",
                     TransportationType.BIKE, 150, 180, HillType.FAVOR_UP_HILL);
             session.persist(tour1);
             session.persist(tour2);
 
-            TourLogDao log1 = new TourLogDao(tour1, LocalDateTime.now(), "Comment 1",
+            TourLogDaoModel log1 = new TourLogDaoModel(tour1, LocalDateTime.now(), "Comment 1",
                     Difficulty.EASY, 5, 4);
-            TourLogDao log2 = new TourLogDao(tour1, LocalDateTime.now(), "Comment 2",
+            TourLogDaoModel log2 = new TourLogDaoModel(tour1, LocalDateTime.now(), "Comment 2",
                     Difficulty.INTERMEDIATE, 6, 3);
-            TourLogDao log3 = new TourLogDao(tour2, LocalDateTime.now(), "Comment 3",
+            TourLogDaoModel log3 = new TourLogDaoModel(tour2, LocalDateTime.now(), "Comment 3",
                     Difficulty.HARD, 6, 5);
             session.persist(log1);
             session.persist(log2);

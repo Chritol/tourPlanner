@@ -4,15 +4,10 @@ import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 public class TourDataView implements View {
 
@@ -73,6 +68,8 @@ public class TourDataView implements View {
         System.out.println("To: " + to);
         System.out.println("Transportation: " + transportation);
         System.out.println("Hilliness: " + hilliness);
+
+        viewModel.addTour();
     }
 
 }

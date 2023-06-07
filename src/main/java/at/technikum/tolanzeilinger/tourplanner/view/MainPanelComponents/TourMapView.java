@@ -13,8 +13,8 @@ public class TourMapView implements View {
 
     private final TourMapViewModel viewModel;
 
-    public TourMapView(ViewModel viewModel) {
-        this.viewModel = (TourMapViewModel) viewModel;
+    public TourMapView(TourMapViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     @FXML

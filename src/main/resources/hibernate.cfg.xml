@@ -14,7 +14,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
 
-        <mapping class="at.technikum.tolanzeilinger.tourplanner.persistence.dao.TourDao"/>
-        <mapping class="at.technikum.tolanzeilinger.tourplanner.persistence.dao.TourLogDao"/>
+        <mapping class="at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel"/>
+        <mapping class="at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel"/>
     </session-factory>
 </hibernate-configuration>

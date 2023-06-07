@@ -20,7 +20,7 @@ public class FXMLDependencyInjector {
                 FXMLDependencyInjector.class.getResource("/at/technikum/tolanzeilinger/tourplanner/" + location),
                 ResourceBundle.getBundle("at.technikum.tolanzeilinger.tourplanner.gui", locale),
                 new JavaFXBuilderFactory(),
-                viewClass -> ViewFactory.getInstance().create(viewClass)
+                viewClass -> ViewFactory.getInstance().createView(viewClass)
         );
     }
 }

@@ -4,9 +4,9 @@ import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.WordRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.RouteService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.IRouteService;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.MapquestServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +19,7 @@ public class MainViewModel {
     private final WordRepository wordRepository;
     private final EventAggregator eventAggregator;
 
-    private final IRouteService routeService;
+    private final MapquestService routeService;
 
     private final Logger log;
 
@@ -37,7 +37,7 @@ public class MainViewModel {
         this.eventAggregator = eventAggregator;
         this.wordRepository = wordRepository;
         this.log = logger;
-        this.routeService = new RouteService();
+        this.routeService = new MapquestServiceImpl();
 
         initializeView();
         initializeEventListeners();

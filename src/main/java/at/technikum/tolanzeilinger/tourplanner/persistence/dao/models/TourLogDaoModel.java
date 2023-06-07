@@ -1,13 +1,14 @@
-package at.technikum.tolanzeilinger.tourplanner.persistence.dao;
+package at.technikum.tolanzeilinger.tourplanner.persistence.dao.models;
 
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tp_tour_log")
-public class TourLogDao {
+public class TourLogDaoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -15,7 +16,7 @@ public class TourLogDao {
 
     @ManyToOne
     @JoinColumn(name = "tour_id")
-    private TourDao tour;
+    private TourDaoModel tour;
 
     @Column(name = "log_datetime")
     private LocalDateTime logDateTime;
@@ -33,7 +34,7 @@ public class TourLogDao {
     @Column(name = "rating")
     private Integer rating;
 
-    public TourLogDao(TourDao tour, LocalDateTime logDateTime, String comment, Difficulty difficulty, Integer totalTime, Integer rating) {
+    public TourLogDaoModel(TourDaoModel tour, LocalDateTime logDateTime, String comment, Difficulty difficulty, Integer totalTime, Integer rating) {
         this.tour = tour;
         this.logDateTime = logDateTime;
         this.comment = comment;
@@ -42,7 +43,7 @@ public class TourLogDao {
         this.rating = rating;
     }
 
-    public TourLogDao() {
+    public TourLogDaoModel() {
 
     }
 
@@ -50,7 +51,7 @@ public class TourLogDao {
         return id;
     }
 
-    public TourDao getTour() {
+    public TourDaoModel getTour() {
         return tour;
     }
 
