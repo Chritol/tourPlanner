@@ -7,16 +7,15 @@
 
 <GridPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainController">
     <columnConstraints>
-        <ColumnConstraints percentWidth="30.0" />
-        <ColumnConstraints percentWidth="70.0" />
-      <ColumnConstraints />
+        <ColumnConstraints percentWidth="25.0" />
+        <ColumnConstraints percentWidth="75.0" />
     </columnConstraints>
 
     <rowConstraints>
         <RowConstraints fillHeight="true" />
         <RowConstraints fillHeight="true" />
         <RowConstraints fillHeight="true" />
-        <RowConstraints percentHeight="Infinity" />
+        <RowConstraints fillHeight="true" />
     </rowConstraints>
 
     <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">

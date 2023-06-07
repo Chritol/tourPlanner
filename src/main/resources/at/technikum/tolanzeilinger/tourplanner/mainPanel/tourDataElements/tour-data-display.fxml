@@ -10,10 +10,10 @@
 <?import javafx.geometry.Insets?>
 
 
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataDisplayView"
-      maxHeight="Infinity">
-
+>
     <padding>
         <Insets top="20" right="20" bottom="20" left="20" />
     </padding>
@@ -25,23 +25,50 @@
     <Label text="Description:" style="-fx-font-weight: bold;" />
     <Label fx:id="descriptionLabel" />
 
-    <Label text="From:" style="-fx-font-weight: bold;" />
-    <Label fx:id="fromLabel" />
+    <HBox>
+        <padding>
+            <Insets top="5" right="0" bottom="5" left="0" />
+        </padding>
 
-    <Label text="To:" style="-fx-font-weight: bold;" />
-    <Label fx:id="toLabel" />
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="From:" style="-fx-font-weight: bold;" />
+            <Label fx:id="fromLabel" />
+        </VBox>
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="To:" style="-fx-font-weight: bold;" />
+            <Label fx:id="toLabel" />
+        </VBox>
+    </HBox>
 
-    <Label text="Transportation:" style="-fx-font-weight: bold;" />
-    <Label fx:id="transportationLabel" />
+    <HBox>
+        <padding>
+            <Insets top="5" right="0" bottom="5" left="0" />
+        </padding>
 
-    <Label text="Hilliness:" style="-fx-font-weight: bold;" />
-    <Label fx:id="hillinessLabel" />
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="Transportation:" style="-fx-font-weight: bold;" />
+            <Label fx:id="transportationLabel" />
+        </VBox>
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="Hilliness:" style="-fx-font-weight: bold;" />
+            <Label fx:id="hillinessLabel" />
+        </VBox>
+    </HBox>
 
-    <Label text="Distance:" style="-fx-font-weight: bold;" />
-    <Label fx:id="distanceLabel" />
+    <HBox>
+        <padding>
+            <Insets top="5" right="0" bottom="5" left="0" />
+        </padding>
 
-    <Label text="Estimated Time:" style="-fx-font-weight: bold;" />
-    <Label fx:id="estimatedTimeLabel" />
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="Distance:" style="-fx-font-weight: bold;" />
+            <Label fx:id="distanceLabel" />
+        </VBox>
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="Estimated Time:" style="-fx-font-weight: bold;" />
+            <Label fx:id="estimatedTimeLabel" />
+        </VBox>
+    </HBox>
 
     <VBox alignment="CENTER_RIGHT">
         <Button text="Edit this Tour?" fx:id="submitButton" onAction="#handleEditButtonClicked" />
