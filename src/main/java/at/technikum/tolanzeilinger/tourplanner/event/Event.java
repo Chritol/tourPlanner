@@ -24,11 +24,13 @@ public enum Event {
     LOG_DELETED,
     LOG_UPDATED,
 
+    IMAGE_SAVED,
+
 
 
     // Bsp. Events
     CREATE_WORD,
-    IMAGE_SAVED,
+    DELETE_WORD,
 
 
     NEW_TOUR_ACTION,
@@ -40,5 +42,9 @@ public enum Event {
     OPEN_MISC_ACTION,
     NEW_LOG_ACTION,
     REMOVE_LOG_ACTION,
-    DELETE_WORD
+
+
+
+
+
 }
