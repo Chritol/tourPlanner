@@ -12,8 +12,8 @@ public class TourConverter {
         return new TourDaoModel(
                 tour.getName(),
                 tour.getDescription(),
-                tour.getFrom().getLocationName(),
-                tour.getTo().getLocationName(),
+                tour.getFrom(),
+                tour.getTo(),
                 TransportationType.valueOf(tour.getTransportation().name()),
                 tour.getDistance(),
                 tour.getEstimatedTime(),

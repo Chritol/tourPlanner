@@ -28,7 +28,7 @@ public class TourServiceImpl implements TourService {
     private final MapquestService mapquestService;
 
     // Miscellaneous
-    private Tour activeTour;
+    private long activeTourIndex = -1;
 
     public TourServiceImpl(Logger logger, EventAggregator eventAggregator, TourRepository tourRepository, MapquestService mapquestService, MapquestUrlBuilderService mapquestUrlBuilderService) {
         this.logger = logger;
@@ -42,7 +42,6 @@ public class TourServiceImpl implements TourService {
         this.mapquestUrlBuilderService = mapquestUrlBuilderService;
 
         // Miscellaneous
-        this.activeTour = TourConverter.toTour(tourRepository.findFirst());
         eventAggregator.publish(Event.TOUR_LOADED);
     }
 
@@ -51,18 +50,18 @@ public class TourServiceImpl implements TourService {
         logger.info("NEW TOUR ID:"+id);
     }
 
-    public void setActiveTour(Tour activeTour) {
-        this.activeTour = activeTour;
+    public void setActiveTourIndex(long index) {
+        this.activeTourIndex = index;
     }
 
-    public Tour getActiveTour() {
-        return activeTour;
+    public long getActiveTourIndex() {
+        return activeTourIndex;
     }
 
     public Image loadTourImage() {
         try {
-            RouteItem routeFromUrl = mapquestService.loadRouteFromUrl( this.mapquestUrlBuilderService.buildDirectionsUrl(this.activeTour), null);
-            Image image = mapquestService.getRouteImage(this.mapquestUrlBuilderService.buildMapImageUrl(this.activeTour), routeFromUrl.getSessionId());
+            RouteItem routeFromUrl = mapquestService.loadRouteFromUrl( this.mapquestUrlBuilderService.buildDirectionsUrl(this.getActiveTour()), null);
+            Image image = mapquestService.getRouteImage(this.mapquestUrlBuilderService.buildMapImageUrl(this.getActiveTour()), routeFromUrl.getSessionId());
             return image;
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
@@ -72,6 +71,12 @@ public class TourServiceImpl implements TourService {
             logger.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    public Tour getActiveTour() {
+        return TourConverter.toTour(
+                this.tourRepository.read(this.activeTourIndex)
+        );
     }
 
     public Image getActiveImage() {

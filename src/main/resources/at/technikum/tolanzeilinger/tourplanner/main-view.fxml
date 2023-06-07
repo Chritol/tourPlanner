@@ -46,44 +46,13 @@
                     </Tab>
                 </tabs>
             </TabPane>
-            <HBox AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" VBox.vgrow="ALWAYS">
-                <Button text="+" />
-                <Button text="-" />
-                <Button text="..." />
-            </HBox>
+            <fx:include AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" source="tour-list-action-buttons.fxml"></fx:include>
         </children>
     </AnchorPane>
 
     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
         <children>
-            <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <tabs>
-                    <Tab text="General">
-                        <content>
-                            <VBox maxHeight="Infinity" prefHeight="229.0" prefWidth="579.0">
-                                <fx:include source="tour-data-view.fxml"></fx:include>
-
-                            </VBox>
-                        </content>
-                    </Tab>
-                    <Tab text="Route">
-                        <content>
-                            <VBox maxHeight="Infinity">
-                                <fx:include source="tour-map-view.fxml"></fx:include>
-                            </VBox>
-                        </content>
-                    </Tab>
-                    <Tab text="Misc">
-                        <content>
-                            <VBox maxHeight="Infinity">
-                                <fx:include source="tour-misc-view.fxml"></fx:include>
-                                <!-- Here is where misc goes -->
-                            </VBox>
-                        </content>
-                    </Tab>
-                </tabs>
-            </TabPane>
-
+            <fx:include source="main-tab-pane-switcher.fxml" maxHeight="Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" ></fx:include>
         </children>
     </AnchorPane>
 
@@ -107,13 +76,7 @@
                     </Tab>
                 </tabs>
             </TabPane>
-            <ImageView fitHeight="100" VBox.vgrow="ALWAYS" />
-            <HBox AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" VBox.vgrow="ALWAYS">
-                <Button text="" />
-                <Button text="+" />
-                <Button text="-" />
-                <Button text="..." />
-            </HBox>
+            <fx:include source="tour-logs-action-buttons.fxml" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0"></fx:include>
         </children>
     </AnchorPane>
 

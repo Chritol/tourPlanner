@@ -1,22 +1,22 @@
 package at.technikum.tolanzeilinger.tourplanner.model.tours;
 
 public class Tour {
-    private String name;
-    private String description;
-    private Location from;
-    private Location to;
-    private Transportation transportation;
-    private Hilltype hilliness;
-    private int distance;
-    private int estimatedTime;
+    String name;
+    String description;
+    String from;
+    String to;
+    Transportation transportation;
+    Hilltype hilliness;
+    int distance;
+    int estimatedTime;
 
-    String tourImagePath;
+    String tourImageName;
 
     public Tour(String name, String description, String from, String to){
         this.name = name;
         this.description = description;
-        this.from = new Location(from);
-        this.to = new Location(to);
+        this.from = new String(from);
+        this.to = new String(to);
     }
 
 
@@ -36,19 +36,19 @@ public class Tour {
         this.description = description;
     }
 
-    public Location getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(Location from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public Location getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(Location to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
