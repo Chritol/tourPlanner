@@ -3,6 +3,8 @@ package at.technikum.tolanzeilinger.tourplanner.service.interfaces;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import javafx.scene.image.Image;
 
+import java.util.List;
+
 public interface TourService {
     void addTour(Tour tour);
 
@@ -15,4 +17,6 @@ public interface TourService {
     Tour getActiveTour();
 
     Image getActiveImage();
+
+    List<Tour> getTours();
 }

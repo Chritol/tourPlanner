@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.StylingConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
@@ -11,6 +12,10 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.Border;
+
+import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.clearTrailingWhitespaces;
+import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.isNullOrWhitespace;
 
 public class TourDataEditViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
@@ -27,6 +32,13 @@ public class TourDataEditViewModel implements ViewModel {
     private SimpleObjectProperty<Hilltype> hillinessProperty = new SimpleObjectProperty<>();
     private SimpleObjectProperty<ObservableList<Transportation>> transportationOptionsProperty = new SimpleObjectProperty<>();
     private SimpleObjectProperty<ObservableList<Hilltype>> hillinessOptionsProperty = new SimpleObjectProperty<>();
+
+    ObjectProperty<Border> nameBorderProperty = new SimpleObjectProperty<>();
+    ObjectProperty<Border> descriptionBorderProperty = new SimpleObjectProperty<>();
+    ObjectProperty<Border> fromBorderProperty = new SimpleObjectProperty<>();
+    ObjectProperty<Border> toBorderProperty = new SimpleObjectProperty<>();
+    ObjectProperty<Border> transportationBorderProperty = new SimpleObjectProperty<>();
+    ObjectProperty<Border> hillinessBorderProperty = new SimpleObjectProperty<>();
 
     private BooleanProperty submitButtonIsActive = new SimpleBooleanProperty(false);
 
@@ -62,7 +74,7 @@ public class TourDataEditViewModel implements ViewModel {
         transportationProperty.set(null);
         hillinessProperty.set(null);
 
-        submitButtonIsActive.set(false);
+        resetBorderStyles();
     }
 
     @Override
@@ -78,7 +90,11 @@ public class TourDataEditViewModel implements ViewModel {
         if (activeTour == null) {
             logger.warn("No active tour");
             setDefaultText();
+
+            submitButtonIsActive.set(true);
         }else {
+            submitButtonIsActive.set(false);
+
             this.nameProperty.set(activeTour.getName());
             this.descriptionProperty.set(activeTour.getDescription());
             this.fromProperty.set(activeTour.getFrom());
@@ -191,6 +207,78 @@ public class TourDataEditViewModel implements ViewModel {
         this.hillinessOptionsProperty.set(hillinessOptionsProperty);
     }
 
+    public Border getNameBorderProperty() {
+        return nameBorderProperty.get();
+    }
+
+    public ObjectProperty<Border> nameBorderPropertyProperty() {
+        return nameBorderProperty;
+    }
+
+    public void setNameBorderProperty(Border nameBorderProperty) {
+        this.nameBorderProperty.set(nameBorderProperty);
+    }
+
+    public Border getDescriptionBorderProperty() {
+        return descriptionBorderProperty.get();
+    }
+
+    public ObjectProperty<Border> descriptionBorderPropertyProperty() {
+        return descriptionBorderProperty;
+    }
+
+    public void setDescriptionBorderProperty(Border descriptionBorderProperty) {
+        this.descriptionBorderProperty.set(descriptionBorderProperty);
+    }
+
+    public Border getFromBorderProperty() {
+        return fromBorderProperty.get();
+    }
+
+    public ObjectProperty<Border> fromBorderPropertyProperty() {
+        return fromBorderProperty;
+    }
+
+    public void setFromBorderProperty(Border fromBorderProperty) {
+        this.fromBorderProperty.set(fromBorderProperty);
+    }
+
+    public Border getToBorderProperty() {
+        return toBorderProperty.get();
+    }
+
+    public ObjectProperty<Border> toBorderPropertyProperty() {
+        return toBorderProperty;
+    }
+
+    public void setToBorderProperty(Border toBorderProperty) {
+        this.toBorderProperty.set(toBorderProperty);
+    }
+
+    public Border getTransportationBorderProperty() {
+        return transportationBorderProperty.get();
+    }
+
+    public ObjectProperty<Border> transportationBorderPropertyProperty() {
+        return transportationBorderProperty;
+    }
+
+    public void setTransportationBorderProperty(Border transportationBorderProperty) {
+        this.transportationBorderProperty.set(transportationBorderProperty);
+    }
+
+    public Border getHillinessBorderProperty() {
+        return hillinessBorderProperty.get();
+    }
+
+    public ObjectProperty<Border> hillinessBorderPropertyProperty() {
+        return hillinessBorderProperty;
+    }
+
+    public void setHillinessBorderProperty(Border hillinessBorderProperty) {
+        this.hillinessBorderProperty.set(hillinessBorderProperty);
+    }
+
     public boolean isSubmitButtonIsActive() {
         return submitButtonIsActive.get();
     }
@@ -204,15 +292,83 @@ public class TourDataEditViewModel implements ViewModel {
     }
 
     public void submit() {
-        //TODO: Handle the submission of the data
+        resetBorderStyles();
+
+        cleanInputs();
+
+        if (!isAnyPropertyNull()) {
+            // All properties are not null
+            logger.info("If you see this pray to god!");
+
+            updateTour();
+
+            setDefaultText();
+
+            eventAggregator.publish(Event.EXIT_FORM_TOUR_ACTION);
+        } else {
+            // At least one property is null
+            logger.warn("At least one property is null");
+
+            markNullFields();
+        }
+    }
+
+
+    private void cleanInputs() {
+        nameProperty.set(clearTrailingWhitespaces(nameProperty.get()));
+        descriptionProperty.set(clearTrailingWhitespaces(descriptionProperty.get()));
+        fromProperty.set(clearTrailingWhitespaces(fromProperty.get()));
+        toProperty.set(clearTrailingWhitespaces(toProperty.get()));
+    }
+
+    private boolean isAnyPropertyNull() {
+        return isNullOrWhitespace(nameProperty.get()) ||
+                isNullOrWhitespace(descriptionProperty.get()) ||
+                isNullOrWhitespace(fromProperty.get()) ||
+                isNullOrWhitespace(toProperty.get()) ||
+                transportationProperty.get() != null ||
+                hillinessProperty.get() != null;
+    }
+
+    private void markNullFields() {
+        if (isNullOrWhitespace(nameProperty.get())) {
+            nameBorderProperty.set(StylingConstants.ERROR_BORDER);
+        }
+        if (isNullOrWhitespace(descriptionProperty.get())) {
+            descriptionBorderProperty.set(StylingConstants.ERROR_BORDER);
+        }
+        if (isNullOrWhitespace(fromProperty.get())) {
+            fromBorderProperty.set(StylingConstants.ERROR_BORDER);
+        }
+        if (isNullOrWhitespace(toProperty.get())) {
+            toBorderProperty.set(StylingConstants.ERROR_BORDER);
+        }
+        if (transportationProperty.get() == null) {
+            transportationBorderProperty.set(StylingConstants.ERROR_BORDER);
+        }
+        if (hillinessProperty.get() == null) {
+            hillinessBorderProperty.set(StylingConstants.ERROR_BORDER);
+        }
+    }
+
+    private void resetBorderStyles() {
+        nameBorderProperty.set(StylingConstants.NORMAL_BORDER);
+        descriptionBorderProperty.set(StylingConstants.NORMAL_BORDER);
+        fromBorderProperty.set(StylingConstants.NORMAL_BORDER);
+        toBorderProperty.set(StylingConstants.NORMAL_BORDER);
+        transportationBorderProperty.set(StylingConstants.NORMAL_BORDER);
+        hillinessBorderProperty.set(StylingConstants.NORMAL_BORDER);
     }
 
     public void handleClose() {
         logger.info("handling Close Button click, sending out event EXIT_FORM_TOUR_ACTION");
 
+        setDefaultText();
+
         eventAggregator.publish(Event.EXIT_FORM_TOUR_ACTION);
     }
 
+    private void updateTour() {
 
-    // Other methods and properties go here
+    }
 }

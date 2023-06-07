@@ -34,6 +34,7 @@ public class TourConverter {
         tour.setDistance(tourDaoModel.getDistance());
         tour.setEstimatedTime(tourDaoModel.getEstimatedTime());
         tour.setHilliness(Hilltype.valueOf(tourDaoModel.getHillType().name()));
+        tour.setId(tourDaoModel.getId());
         return tour;
     }
 }

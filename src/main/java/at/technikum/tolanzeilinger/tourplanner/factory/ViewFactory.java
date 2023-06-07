@@ -32,6 +32,7 @@ import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapV
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
+import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogsActionButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.MainTabPaneSwitcherViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
@@ -43,6 +44,7 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.Tou
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -94,6 +96,7 @@ public class ViewFactory {
     private  TourMiscViewModel tourMiscViewModel;
 
     private final TourListActionButtonsViewModel tourListActionButtonsViewModel;
+    private final TourListViewModel tourListViewModel;
     private final TourLogsActionButtonsViewModel tourLogsActionButtonsViewModel;
 
 
@@ -132,6 +135,8 @@ public class ViewFactory {
         this.pdFcViewModel = new PDFcViewModel();
 
         this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);
+        this.tourListViewModel = new TourListViewModel(eventAggregator, logger, tourService);
+
         this.tourLogsActionButtonsViewModel = new TourLogsActionButtonsViewModel(eventAggregator, logger);
 
         this.mainTabPaneSwitcherViewModel = new MainTabPaneSwitcherViewModel(eventAggregator, logger);
@@ -167,13 +172,22 @@ public class ViewFactory {
     }
 
     private void initializeViewMap() {
-        // CRUD Action Buttons
+        // List Pane
         viewMap.put(TourListActionButtonsView.class, () -> new TourListActionButtonsView(tourListActionButtonsViewModel));
+        viewMap.put(TourListView.class, () -> new TourListView(tourListViewModel));
+
+
         viewMap.put(TourLogsActionButtonsView.class, () -> new TourLogsActionButtonsView(tourLogsActionButtonsViewModel));
 
+        // Main Tab Pane
+        viewMap.put(MainTabPaneSwitcherView.class, () -> new MainTabPaneSwitcherView(mainTabPaneSwitcherViewModel));
+        viewMap.put(TourListActionButtonsView.class, () -> new TourListActionButtonsView(tourListActionButtonsViewModel));
+
+        viewMap.put(TourLogsActionButtonsView.class, () -> new TourLogsActionButtonsView(tourLogsActionButtonsViewModel));
+
+        // Main Tab Pane
         viewMap.put(MainTabPaneSwitcherView.class, () -> new MainTabPaneSwitcherView(mainTabPaneSwitcherViewModel));
     
-        // Tour CRUD + Pane switcher
         viewMap.put(TourDataPaneSwitcherView.class, () -> new TourDataPaneSwitcherView(tourDataPaneSwitcherViewModel));
         viewMap.put(TourDataCreateView.class, () -> new TourDataCreateView(tourDataCreateViewModel));
         viewMap.put(TourDataEditView.class, () -> new TourDataEditView(tourDataEditViewModel));

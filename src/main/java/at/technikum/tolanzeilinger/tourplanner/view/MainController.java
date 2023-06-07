@@ -24,19 +24,5 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        names.setItems(viewModel.getNames());
-        input.textProperty().bindBidirectional(viewModel.inputProperty());
-        names.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)
-                -> viewModel.setSelectedName(newValue));
-    }
-
-    @FXML
-    public void enter() {
-        viewModel.enterNewWord();
-    }
-
-    @FXML
-    public void delete() {
-        viewModel.deleteWord();
     }
 }

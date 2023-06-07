@@ -6,7 +6,9 @@ import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -29,6 +31,8 @@ public class TourDataCreateView implements View {
 
     @FXML
     private ComboBox<Hilltype> hillinessComboBox;
+    @FXML
+    public Button submitButton;
 
     private final TourDataCreateViewModel viewModel;
 
@@ -56,6 +60,8 @@ public class TourDataCreateView implements View {
         toTextField.borderProperty().bindBidirectional(viewModel.toBorderPropertyProperty());
         transportationComboBox.borderProperty().bindBidirectional(viewModel.transportationBorderPropertyProperty());
         hillinessComboBox.borderProperty().bindBidirectional(viewModel.hillinessBorderPropertyProperty());
+
+        submitButton.disableProperty().bindBidirectional(viewModel.submitButtonIsActiveProperty());
     }
 
     // Other methods and event handlers for the view can be added here
