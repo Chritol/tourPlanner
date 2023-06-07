@@ -60,7 +60,7 @@ public class TourDataDisplayViewModel implements ViewModel {
 
     @Override
     public void initializeEventListeners() {
-        eventAggregator.addSubscriber(Event.LOADED_TOUR_ACTION, this::onLoadedTourAction);
+        eventAggregator.addSubscriber(Event.OPEN_TOUR_ACTION, this::onLoadedTourAction);
     }
 
     public void onLoadedTourAction() {

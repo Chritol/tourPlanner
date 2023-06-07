@@ -35,7 +35,7 @@ public class TourDataPaneSwitcherViewModel implements ViewModel {
 
     @Override
     public void initializeEventListeners() {
-        eventAggregator.addSubscriber(Event.LOADED_TOUR_ACTION, this::switchToDisplay);
+        eventAggregator.addSubscriber(Event.OPEN_TOUR_ACTION, this::switchToDisplay);
         eventAggregator.addSubscriber(Event.EXIT_FORM_TOUR_ACTION, this::switchToDisplay);
         eventAggregator.addSubscriber(Event.EDIT_TOUR_ACTION, this::switchToEdit);
         eventAggregator.addSubscriber(Event.NEW_TOUR_ACTION, this::switchToCreate);

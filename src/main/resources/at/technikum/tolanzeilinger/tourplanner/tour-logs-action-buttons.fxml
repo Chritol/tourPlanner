@@ -8,7 +8,7 @@
 
 <HBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.TourLogsActionButtonsView"
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogsActionButtonsView"
             VBox.vgrow="ALWAYS">
     <Button text="+" onMouseClicked="#add"/>
     <Button text="-" onMouseClicked="#remove"/>

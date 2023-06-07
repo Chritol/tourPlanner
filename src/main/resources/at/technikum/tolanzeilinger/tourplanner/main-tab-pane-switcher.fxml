@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.MainTabPaneSwitcherView"
+            tabClosingPolicy="UNAVAILABLE"
+            fx:id="tabPane">
+    <tabs>
+        <Tab text="General">
+            <content>
+                <fx:include source="tourDataElements/tour-data-pane-switcher.fxml"></fx:include>
+
+
+            </content>
+        </Tab>
+        <Tab text="Route">
+            <content>
+                <VBox maxHeight="Infinity">
+                    <fx:include source="tour-map-view.fxml"></fx:include>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Misc">
+            <content>
+                <VBox maxHeight="Infinity">
+                    <fx:include source="tour-misc-view.fxml"></fx:include>
+                    <!-- Here is where misc goes -->
+                </VBox>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

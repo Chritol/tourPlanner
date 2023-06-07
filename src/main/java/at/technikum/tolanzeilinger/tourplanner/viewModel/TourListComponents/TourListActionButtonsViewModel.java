@@ -44,9 +44,9 @@ public class TourListActionButtonsViewModel implements ViewModel {
     }
 
     public void manual() {
-        logger.info("Publishing edit tour action");
+        logger.info("Publishing load misc tab action");
 
-        eventAggregator.publish(Event.EDIT_TOUR_ACTION);
+        eventAggregator.publish(Event.OPEN_MISC_ACTION);
     }
 
 

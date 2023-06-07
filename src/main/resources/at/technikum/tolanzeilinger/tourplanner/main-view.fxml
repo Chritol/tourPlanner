@@ -52,33 +52,7 @@
 
     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
         <children>
-            <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <tabs>
-                    <Tab text="General">
-                        <content>
-                            <fx:include source="tourDataElements/tour-data-pane-switcher.fxml"></fx:include>
-
-
-                        </content>
-                    </Tab>
-                    <Tab text="Route">
-                        <content>
-                            <VBox maxHeight="Infinity">
-                                <fx:include source="tour-map-view.fxml"></fx:include>
-                            </VBox>
-                        </content>
-                    </Tab>
-                    <Tab text="Misc">
-                        <content>
-                            <VBox maxHeight="Infinity">
-                                <fx:include source="tour-misc-view.fxml"></fx:include>
-                                <!-- Here is where misc goes -->
-                            </VBox>
-                        </content>
-                    </Tab>
-                </tabs>
-            </TabPane>
-
+            <fx:include source="main-tab-pane-switcher.fxml" maxHeight="Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" ></fx:include>
         </children>
     </AnchorPane>
 

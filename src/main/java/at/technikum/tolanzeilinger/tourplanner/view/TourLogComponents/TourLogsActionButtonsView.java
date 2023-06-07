@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.view;
+package at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents;
 
 import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;

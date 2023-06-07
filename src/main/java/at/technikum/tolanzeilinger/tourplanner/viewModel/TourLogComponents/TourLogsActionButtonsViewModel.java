@@ -32,19 +32,21 @@ public class TourLogsActionButtonsViewModel implements ViewModel {
     }
 
     public void add() {
-        System.out.println("add log");
+        logger.info("Publishing add log action");
 
-        eventAggregator.publish(Event.NEW_TOUR_ACTION);
+        eventAggregator.publish(Event.NEW_LOG_ACTION);
     }
 
     public void remove() {
-        System.out.println("remove log");
+        logger.info("Publishing remove log action");
 
-        eventAggregator.publish(Event.REMOVE_TOUR_ACTION);
+        eventAggregator.publish(Event.REMOVE_LOG_ACTION);
     }
 
     public void manual() {
-        System.out.println("manual log");
+        logger.info("Publishing load misc tab action");
+
+        eventAggregator.publish(Event.OPEN_MISC_ACTION);
     }
 
 

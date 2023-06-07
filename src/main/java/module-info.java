@@ -40,4 +40,6 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
     opens at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents to javafx.fxml;
+    exports at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents to javafx.fxml;
 }
