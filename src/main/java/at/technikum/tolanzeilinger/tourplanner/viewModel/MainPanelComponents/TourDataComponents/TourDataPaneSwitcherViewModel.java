@@ -12,7 +12,7 @@ public class TourDataPaneSwitcherViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
     private final Logger logger;
 
-    private BooleanProperty displayVisible= new SimpleBooleanProperty(true);
+    private BooleanProperty displayVisible= new SimpleBooleanProperty(false);
     private BooleanProperty createVisible= new SimpleBooleanProperty(false);
     private BooleanProperty editVisible = new SimpleBooleanProperty(false);
 
@@ -30,7 +30,7 @@ public class TourDataPaneSwitcherViewModel implements ViewModel {
 
     @Override
     public void initializeView() {
-
+        switchToDisplay();
     }
 
     @Override

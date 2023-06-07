@@ -10,14 +10,15 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView">
 
-    <VBox fx:id="display" visible="false" alignment="TOP_LEFT">
-        <fx:include source="tour-data-display.fxml"></fx:include>
-    </VBox>
+
     <VBox fx:id="create" visible="false" alignment="TOP_LEFT">
         <fx:include source="tour-data-create.fxml"></fx:include>
     </VBox>
     <VBox fx:id="edit" visible="false" alignment="TOP_LEFT">
         <fx:include source="tour-data-edit.fxml"></fx:include>
+    </VBox>
+    <VBox fx:id="display" visible="false" alignment="TOP_LEFT">
+        <fx:include source="tour-data-display.fxml"></fx:include>
     </VBox>
 
     <Label fx:id="youBrokeIt" text="If you see this nothing works"></Label>

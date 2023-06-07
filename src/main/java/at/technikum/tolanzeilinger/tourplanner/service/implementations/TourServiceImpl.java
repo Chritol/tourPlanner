@@ -28,7 +28,7 @@ public class TourServiceImpl implements TourService {
     private final MapquestService mapquestService;
 
     // Miscellaneous
-    private Tour activeTour;
+    private int activeTourIndex = -1;
 
     public TourServiceImpl(Logger logger, EventAggregator eventAggregator, TourRepository tourRepository, MapquestService mapquestService, MapquestUrlBuilderService mapquestUrlBuilderService) {
         this.logger = logger;

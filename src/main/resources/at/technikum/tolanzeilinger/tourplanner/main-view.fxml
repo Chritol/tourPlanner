@@ -56,7 +56,7 @@
                 <tabs>
                     <Tab text="General">
                         <content>
-                            <fx:include source="tourDataElements/tour-data-display.fxml"></fx:include>
+                            <fx:include source="tourDataElements/tour-data-pane-switcher.fxml"></fx:include>
 
 
                         </content>
