@@ -12,6 +12,4 @@ public interface TourRepository {
     List<TourDaoModel> findAll();
     TourDaoModel findFirst();
     TourDaoModel findFirst(String name);
-
-    TourDaoModel findFirst(long id);
 }

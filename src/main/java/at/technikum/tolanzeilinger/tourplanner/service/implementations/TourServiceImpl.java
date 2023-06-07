@@ -75,7 +75,7 @@ public class TourServiceImpl implements TourService {
 
     public Tour getActiveTour() {
         return TourConverter.toTour(
-                this.tourRepository.findFirst(this.activeTourIndex)
+                this.tourRepository.read(this.activeTourIndex)
         );
     }
 

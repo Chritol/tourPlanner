@@ -22,25 +22,25 @@
         <Label fx:id="nameLabel" style="-fx-font-size: 20px;" alignment="CENTER" />
     </VBox>
 
-    <Label text="Description:" />
+    <Label text="Description:" style="-fx-font-weight: bold;" />
     <Label fx:id="descriptionLabel" />
 
-    <Label text="From:" />
+    <Label text="From:" style="-fx-font-weight: bold;" />
     <Label fx:id="fromLabel" />
 
-    <Label text="To:" />
+    <Label text="To:" style="-fx-font-weight: bold;" />
     <Label fx:id="toLabel" />
 
-    <Label text="Transportation:" />
+    <Label text="Transportation:" style="-fx-font-weight: bold;" />
     <Label fx:id="transportationLabel" />
 
-    <Label text="Hilliness:" />
+    <Label text="Hilliness:" style="-fx-font-weight: bold;" />
     <Label fx:id="hillinessLabel" />
 
-    <Label text="Distance:" />
+    <Label text="Distance:" style="-fx-font-weight: bold;" />
     <Label fx:id="distanceLabel" />
 
-    <Label text="Estimated Time:" />
+    <Label text="Estimated Time:" style="-fx-font-weight: bold;" />
     <Label fx:id="estimatedTimeLabel" />
 
     <VBox alignment="CENTER_RIGHT">
