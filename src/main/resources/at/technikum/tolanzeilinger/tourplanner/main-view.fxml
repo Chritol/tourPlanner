@@ -38,21 +38,18 @@
                 <tabs>
                     <Tab text="Tours">
                         <content>
-                            <VBox maxHeight="Infinity">
-                                <ListView fx:id="names" VBox.vgrow="ALWAYS" />
-                                <TextField fx:id="input" onAction="#enter" promptText="Enter word" VBox.vgrow="ALWAYS" />
-                            </VBox>
+                            <fx:include source="listPanel/tour-list.fxml"></fx:include>
                         </content>
                     </Tab>
                 </tabs>
             </TabPane>
-            <fx:include AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" source="tour-list-action-buttons.fxml"></fx:include>
+            <fx:include AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" source="listPanel/tour-list-action-buttons.fxml"></fx:include>
         </children>
     </AnchorPane>
 
     <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
         <children>
-            <fx:include source="main-tab-pane-switcher.fxml" maxHeight="Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" ></fx:include>
+            <fx:include source="mainPanel/main-tab-pane-switcher.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" ></fx:include>
         </children>
     </AnchorPane>
 
@@ -76,7 +73,7 @@
                     </Tab>
                 </tabs>
             </TabPane>
-            <fx:include source="tour-logs-action-buttons.fxml" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0"></fx:include>
+            <fx:include source="logPanel/tour-logs-action-buttons.fxml" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0"></fx:include>
         </children>
     </AnchorPane>
 

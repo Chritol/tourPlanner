@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.listPanel.TourList"
+      maxHeight="Infinity">
+    <ListView fx:id="names" VBox.vgrow="ALWAYS" />
+    <TextField fx:id="input" onAction="#enter" promptText="Enter word" VBox.vgrow="ALWAYS" />
+</VBox>
