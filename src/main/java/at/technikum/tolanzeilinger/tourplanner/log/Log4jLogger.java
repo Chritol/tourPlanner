@@ -1,46 +1,23 @@
 package at.technikum.tolanzeilinger.tourplanner.log;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.builder.api.*;
-import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
+import at.technikum.tolanzeilinger.tourplanner.App;
+import org.apache.logging.log4j.LogManager;
 
-public class Log4jLogger implements Logger {
+public final class Log4jLogger implements Logger {
     private final org.apache.logging.log4j.Logger log;
 
+    private static Log4jLogger instance;
+
     // TODO change to singleton
-    public Log4jLogger() {
-        ConfigurationBuilder<BuiltConfiguration> builder
-                = ConfigurationBuilderFactory.newConfigurationBuilder();
+    private Log4jLogger() {
+        log = LogManager.getLogger(App.class);
+    }
 
-        LayoutComponentBuilder standard
-                = builder.newLayout("PatternLayout");
-        standard.addAttribute("pattern", "%d [%t] %-5level: %msg%n%throwable");
+    public static Log4jLogger getInstance(){
+        if(instance == null)
+            instance = new Log4jLogger();
 
-        AppenderComponentBuilder console
-                = builder.newAppender("stdout", "Console");
-
-        console.add(standard);
-        builder.add(console);
-
-        AppenderComponentBuilder file = builder
-                .newAppender("LogToFile", "File")
-                .addAttribute("fileName", "target/logging.log");
-
-        file.add(standard);
-        builder.add(file);
-
-        RootLoggerComponentBuilder rootLogger = builder
-                .newRootLogger(Level.ALL)
-                .add(builder.newAppenderRef("stdout"));
-
-        rootLogger.add(builder.newAppenderRef("LogToFile"));
-        builder.add(rootLogger);
-
-        LoggerContext context = Configurator.initialize(builder.build());
-        context.start();
-        log = context.getLogger("log");
+        return instance;
     }
 
     @Override
@@ -66,5 +43,15 @@ public class Log4jLogger implements Logger {
     @Override
     public void error(String message, Throwable throwable) {
         log.error(message, throwable);
+    }
+
+    @Override
+    public void fatal(String message, Throwable throwable) {
+        log.fatal(message, throwable);
+    }
+
+    @Override
+    public void fatal(String message) {
+        log.fatal(message);
     }
 }

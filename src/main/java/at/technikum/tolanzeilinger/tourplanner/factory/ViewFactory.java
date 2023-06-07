@@ -1,16 +1,17 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.TourRepository;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.TourRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.TourDao;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.TourLogDao;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.WordRepository;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.helperServices.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.properties.PropertyLoader;
 import at.technikum.tolanzeilinger.tourplanner.service.TourService;
@@ -30,31 +31,34 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class ViewFactory {
     private static ViewFactory instance;
 
-    private  EventAggregator eventAggregator;
+    private final Map<Class<?>, Supplier<Object>> viewMap;
+
+    private final EventAggregator eventAggregator;
 
     // Repositories
-    private  WordRepository wordRepository;
-    private  TourRepository tourRepository;
+    private final WordRepository wordRepository;
+    private final TourRepository tourRepository;
 
     // Services
-    private PropertyLoader propertyLoader;
-    private MapquestUrlBuilderService mapquestUrlBuilderService;
-    private  TourService tourService;
-    private  RouteService routeService;
+    private final PropertyLoader propertyLoader;
+    private final MapquestUrlBuilderService mapquestUrlBuilderService;
+    private final TourService tourService;
+    private final RouteService routeService;
 
     // View Models
-    private MainViewModel mainViewModel;
-    private  PDFcViewModel pdFcViewModel;
-
-    private  TourDataViewModel tourDataViewModel;
-    private  TourMapViewModel tourMapViewModel;
-    private  TourMiscViewModel tourMiscViewModel;
-
+    private final MainViewModel mainViewModel;
+    private final PDFcViewModel pdFcViewModel;
+    private final TourDataViewModel tourDataViewModel;
+    private final TourMapViewModel tourMapViewModel;
+    private final TourMiscViewModel tourMiscViewModel;
 
     // Logger
     private  Logger logger;
@@ -62,9 +66,13 @@ public class ViewFactory {
 
     private ViewFactory() {
 
-        this.logger = new Log4jLogger();
+        this.logger = Log4jLogger.getInstance();
         this.eventAggregator = new EventAggregator();
-        this.propertyLoader = new PropertyLoader("config.properties", logger, eventAggregator);
+
+        this.viewMap = new HashMap<>();
+        initializeViewMap();
+
+        this.propertyLoader = new PropertyLoader(DefaultConstants.CONFIG_PATH, logger, eventAggregator);
 
         // initialize Repositories
         this.wordRepository = new WordRepository(eventAggregator);
@@ -74,8 +82,6 @@ public class ViewFactory {
         this.mapquestUrlBuilderService = new MapquestUrlBuilderService(propertyLoader);
         this.routeService = new RouteService();
         this.tourService = new TourService(logger, eventAggregator, tourRepository, routeService, mapquestUrlBuilderService);
-
-
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger);
@@ -87,7 +93,7 @@ public class ViewFactory {
 
         HibernateSessionFactory hibernateSessionFactory = new HibernateSessionFactory();
 
-        addTestDataToDb(hibernateSessionFactory);
+        // addTestDataToDb(hibernateSessionFactory);
         checkDatabase(hibernateSessionFactory);
     }
 
@@ -97,21 +103,23 @@ public class ViewFactory {
         return instance;
     }
 
-    public Object create(Class<?> controllerClass) {
-        if(controllerClass == TourDataView.class)
-            return new TourDataView(tourDataViewModel);
-        if(controllerClass == TourMapView.class)
-            return new TourMapView(tourMapViewModel);
-        if(controllerClass == TourMiscView.class)
-            return new TourMiscView(tourMiscViewModel);
-        if(controllerClass == PDFcView.class)
-            return new PDFcView(pdFcViewModel);
-        if(controllerClass == MainController.class)
-            return new MainController(mainViewModel);
+    public Object createView(Class<?> controllerClass) {
+        Supplier<Object> controllerSupplier = viewMap.get(controllerClass);
+        if (controllerSupplier != null) {
+            return controllerSupplier.get();
+        }
 
-        System.out.println("No controller found for class: " + controllerClass.getName());
+        logger.fatal("No controller found for class: " + controllerClass.getName());
 
         throw new NullPointerException();
+    }
+
+    private void initializeViewMap() {
+        viewMap.put(TourDataView.class, () -> new TourDataView(tourDataViewModel));
+        viewMap.put(TourMapView.class, () -> new TourMapView(tourMapViewModel));
+        viewMap.put(TourMiscView.class, () -> new TourMiscView(tourMiscViewModel));
+        viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
+        viewMap.put(MainController.class, () -> new MainController(mainViewModel));
     }
 
     private void checkDatabase(HibernateSessionFactory sessionFactory) {

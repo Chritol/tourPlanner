@@ -6,4 +6,6 @@ public interface Logger {
     void warn(String message);
     void error(String message);
     void error(String message, Throwable throwable);
+    void fatal(String message);
+    void fatal(String message, Throwable throwable);
 }

@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.model.repositories;
+package at.technikum.tolanzeilinger.tourplanner.persistence.repositories;
 
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
@@ -15,7 +15,5 @@ public interface Repository<T> {
 
     List<T> findAll();
 
-    T findFirst(
-
-    );
+    T findFirst();
 }

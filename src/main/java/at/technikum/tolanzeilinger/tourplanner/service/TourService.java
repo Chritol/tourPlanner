@@ -3,7 +3,7 @@ package at.technikum.tolanzeilinger.tourplanner.service;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.TourRepository;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.TourRepository;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import at.technikum.tolanzeilinger.tourplanner.service.helperServices.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.RouteService;

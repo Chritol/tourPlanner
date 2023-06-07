@@ -2,8 +2,6 @@ package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.model.JsonObject;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.TourRepository;
-import at.technikum.tolanzeilinger.tourplanner.model.repositories.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.IRouteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
