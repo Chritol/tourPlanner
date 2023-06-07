@@ -6,7 +6,7 @@ import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
-import at.technikum.tolanzeilinger.tourplanner.service.TourService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

@@ -3,7 +3,6 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.service.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 
 public class TourListActionButtonsViewModel implements ViewModel {

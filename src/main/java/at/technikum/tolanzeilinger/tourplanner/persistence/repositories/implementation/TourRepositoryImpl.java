@@ -145,4 +145,20 @@ public class TourRepositoryImpl implements TourRepository {
             return null;
         }
     }
+
+    @Override
+    public TourDaoModel findFirst(long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM TourDaoModel WHERE id = :id", TourDaoModel.class);
+            query.setParameter("id", id);
+            query.setMaxResults(1);
+            return (TourDaoModel) query.getSingleResult();
+        } catch (NoResultException e) {
+            logger.warn("No tours available in the database with id: " + id);
+            return null;
+        } catch (Exception e) {
+            logger.error("Failed to retrieve first tour with id: " + id + ". Error: " + e.getMessage(), e);
+            return null;
+        }
+    }
 }

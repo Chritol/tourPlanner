@@ -4,13 +4,15 @@ import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import javafx.scene.image.Image;
 
 public interface TourService {
-    public void addTour(Tour tour);
+    void addTour(Tour tour);
 
-    public void setActiveTour(Tour activeTour);
+    void setActiveTourIndex(long index);
 
-    public Tour getActiveTour();
+    long getActiveTourIndex();
 
-    public Image loadTourImage();
+    Image loadTourImage();
 
-    public Image getActiveImage();
+    Tour getActiveTour();
+
+    Image getActiveImage();
 }

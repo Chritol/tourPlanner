@@ -3,7 +3,7 @@ package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDat
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.view.View;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -50,6 +50,12 @@ public class TourDataCreateView implements View {
         transportationComboBox.setItems(viewModel.getTransportationOptionsProperty().get());
         hillinessComboBox.setItems(viewModel.getHillinessOptionsProperty().get());
 
+        nameTextField.borderProperty().bindBidirectional(viewModel.nameBorderPropertyProperty());
+        descriptionTextField.borderProperty().bindBidirectional(viewModel.descriptionBorderPropertyProperty());
+        fromTextField.borderProperty().bindBidirectional(viewModel.fromBorderPropertyProperty());
+        toTextField.borderProperty().bindBidirectional(viewModel.toBorderPropertyProperty());
+        transportationComboBox.borderProperty().bindBidirectional(viewModel.transportationBorderPropertyProperty());
+        hillinessComboBox.borderProperty().bindBidirectional(viewModel.hillinessBorderPropertyProperty());
     }
 
     // Other methods and event handlers for the view can be added here
@@ -57,22 +63,6 @@ public class TourDataCreateView implements View {
     @FXML
     public void handleSubmitButtonClicked(ActionEvent actionEvent) {
         viewModel.submit();
-
-        String name = nameTextField.getText();
-        String description = descriptionTextField.getText();
-        String from = fromTextField.getText();
-        String to = toTextField.getText();
-        Transportation transportation = transportationComboBox.getValue();
-        Hilltype hilliness = hillinessComboBox.getValue();
-
-        System.out.println("Name: " + name);
-        System.out.println("Description: " + description);
-        System.out.println("From: " + from);
-        System.out.println("To: " + to);
-        System.out.println("Transportation: " + transportation);
-        System.out.println("Hilliness: " + hilliness);
-
-        viewModel.addTour();
     }
 
     public void handleClose(MouseEvent mouseEvent) {
