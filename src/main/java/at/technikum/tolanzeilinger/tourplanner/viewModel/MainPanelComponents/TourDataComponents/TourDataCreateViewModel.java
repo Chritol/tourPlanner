@@ -305,8 +305,8 @@ public class TourDataCreateViewModel implements ViewModel {
                 isNullOrWhitespace(descriptionProperty.get()) ||
                 isNullOrWhitespace(fromProperty.get()) ||
                 isNullOrWhitespace(toProperty.get()) ||
-                transportationProperty.get() != null ||
-                hillinessProperty.get() != null;
+                transportationProperty.get() == null ||
+                hillinessProperty.get() == null;
     }
 
     private void markNullFields() {
