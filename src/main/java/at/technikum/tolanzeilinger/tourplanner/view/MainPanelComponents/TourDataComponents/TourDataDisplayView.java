@@ -5,30 +5,39 @@ import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataDisplayViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class TourDataDisplayView implements View {
 
     @FXML
-    private Label nameLabel;
+    public Label nameLabel;
 
     @FXML
-    private Label descriptionLabel;
+    public Label descriptionLabel;
 
     @FXML
-    private Label fromLabel;
+    public Label fromLabel;
 
     @FXML
-    private Label toLabel;
+    public Label toLabel;
 
     @FXML
-    private Label transportationLabel;
+    public Label transportationLabel;
 
     @FXML
-    private Label hillinessLabel;
+    public Label hillinessLabel;
+    @FXML
+    public Label distanceLabel;
+    @FXML
+    public Label estimatedTimeLabel;
+
 
 
     private final TourDataDisplayViewModel viewModel;
+
+    @FXML
+    public Button submitButton;
 
     public TourDataDisplayView(TourDataDisplayViewModel viewModel) {
         this.viewModel = viewModel;
@@ -43,6 +52,14 @@ public class TourDataDisplayView implements View {
         transportationLabel.textProperty().bindBidirectional(viewModel.transportationTextProperty());
         hillinessLabel.textProperty().bindBidirectional(viewModel.hillinessTextProperty());
 
+        distanceLabel.textProperty().bindBidirectional(viewModel.distanceTextProperty());
+        estimatedTimeLabel.textProperty().bindBidirectional(viewModel.estimatedTimeTextProperty());
 
+        submitButton.disableProperty().bindBidirectional(viewModel.submitButtonIsActiveProperty());
+    }
+
+    @FXML
+    private void handleEditButtonClicked() {
+        viewModel.handleEditButtonClicked();
     }
 }

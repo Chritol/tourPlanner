@@ -24,12 +24,18 @@ import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBui
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataCreateView;
+import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataDisplayView;
+import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataEditView;
+import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourLogsActionButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataDisplayViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataEditViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMapViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMiscViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
@@ -73,7 +79,12 @@ public class ViewFactory {
     private MainViewModel mainViewModel;
     private  PDFcViewModel pdFcViewModel;
 
+    private TourDataPaneSwitcherViewModel tourDataPaneSwitcherViewModel;
+    private TourDataDisplayViewModel tourDataDisplayViewModel;
+    private TourDataEditViewModel tourDataEditViewModel;
     private TourDataCreateViewModel tourDataCreateViewModel;
+
+
 
     private  TourMapViewModel tourMapViewModel;
     private  TourMiscViewModel tourMiscViewModel;
@@ -119,7 +130,12 @@ public class ViewFactory {
         this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);
         this.tourLogsActionButtonsViewModel = new TourLogsActionButtonsViewModel(eventAggregator, logger);
 
-        this.tourDataCreateViewModel = new TourDataCreateViewModel(eventAggregator, tourService, logger);
+        this.tourDataPaneSwitcherViewModel = new TourDataPaneSwitcherViewModel(eventAggregator, logger);
+        this.tourDataDisplayViewModel = new TourDataDisplayViewModel(eventAggregator, logger, tourService);
+        this.tourDataEditViewModel = new TourDataEditViewModel(eventAggregator, logger, tourService);
+        this.tourDataCreateViewModel = new TourDataCreateViewModel(eventAggregator, logger, tourService);
+
+
         this.tourMapViewModel = new TourMapViewModel(eventAggregator, tourService, logger);
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
 
@@ -145,10 +161,21 @@ public class ViewFactory {
     }
 
     private void initializeViewMap() {
-        viewMap.put(TourDataView.class, () -> new TourDataView(tourDataViewModel));
+        // CRUD Action Buttons
+        viewMap.put(TourListActionButtonsView.class, () -> new TourListActionButtonsView(tourListActionButtonsViewModel));
+        viewMap.put(TourLogsActionButtonsView.class, () -> new TourLogsActionButtonsView(tourLogsActionButtonsViewModel));
+    
+        // Tour CRUD + Pane switcher
+        viewMap.put(TourDataPaneSwitcherView.class, () -> new TourDataPaneSwitcherView(tourDataPaneSwitcherViewModel));
+        viewMap.put(TourDataCreateView.class, () -> new TourDataCreateView(tourDataCreateViewModel));
+        viewMap.put(TourDataEditView.class, () -> new TourDataEditView(tourDataEditViewModel));
+        viewMap.put(TourDataDisplayView.class, () -> new TourDataDisplayView(tourDataDisplayViewModel));
+    
         viewMap.put(TourMapView.class, () -> new TourMapView(tourMapViewModel));
         viewMap.put(TourMiscView.class, () -> new TourMiscView(tourMiscViewModel));
+    
         viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
+    
         viewMap.put(MainController.class, () -> new MainController(mainViewModel));
     }
 

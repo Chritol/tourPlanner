@@ -3,10 +3,10 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.To
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import at.technikum.tolanzeilinger.tourplanner.service.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class TourDataDisplayViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
@@ -19,22 +19,43 @@ public class TourDataDisplayViewModel implements ViewModel {
     private StringProperty transportationText = new SimpleStringProperty();
     private StringProperty hillinessText = new SimpleStringProperty();
 
+    private StringProperty distanceText = new SimpleStringProperty();
+    private StringProperty estimatedTimeText = new SimpleStringProperty();
+
+    private BooleanProperty submitButtonIsActive = new SimpleBooleanProperty(false);
+
+
+    private final TourService tourService;
+
     public TourDataDisplayViewModel(
             EventAggregator eventAggregator,
-            Logger logger
-    ) {
+            Logger logger,
+            TourService tourService) {
         this.eventAggregator = eventAggregator;
         this.logger = logger;
+        this.tourService = tourService;
 
         initializeView();
         initializeEventListeners();
     }
 
-
-
     @Override
     public void initializeView() {
+        setDefaultText();
+    }
 
+    public void setDefaultText() {
+        nameText.set("Select a tour");
+        descriptionText.set("There is no tour selected. So there is nothing to see here.\nTry selecting a tour from the list on the left ;)");
+        fromText.set("-");
+        toText.set("-");
+        transportationText.set("-");
+        hillinessText.set("-");
+
+        distanceText.set("-");
+        estimatedTimeText.set("-");
+
+        submitButtonIsActive.set(false);
     }
 
     @Override
@@ -43,8 +64,43 @@ public class TourDataDisplayViewModel implements ViewModel {
     }
 
     public void onLoadedTourAction() {
+        logger.info("LOADED_TOUR_ACTION event received, getting active Tour and updating display");
 
+        Tour activeTour = this.tourService.getActiveTour();
+
+        if (activeTour == null) {
+            logger.warn("No active tour");
+            setDefaultText();
+        }else {
+            nameText.set(activeTour.getName());
+            descriptionText.set(activeTour.getDescription());
+            fromText.set(activeTour.getFrom());
+            toText.set(activeTour.getTo());
+            transportationText.set(activeTour.getTransportation().toString());
+            hillinessText.set(activeTour.getHilliness().toString());
+            distanceText.set(activeTour.getDistance()+" km");
+            estimatedTimeText.set(activeTour.getEstimatedTime()+" minutes");
+
+        }
     }
+
+    public void handleEditButtonClicked() {
+        logger.info("edit button in display view clicked, publishing event EDIT_TOUR_ACTION");
+
+        eventAggregator.publish(Event.EDIT_TOUR_ACTION);
+    }
+
+    public void checkActiveTour() {
+        // Replace this with your actual implementation of TourService
+        if (tourService.getActiveTour() != null) {
+            submitButtonIsActive.set(true);
+        } else {
+            submitButtonIsActive.set(false);
+        }
+    }
+
+
+
 
     //setters and getters
     public String getNameText() {
@@ -117,5 +173,41 @@ public class TourDataDisplayViewModel implements ViewModel {
 
     public void setHillinessText(String hillinessText) {
         this.hillinessText.set(hillinessText);
+    }
+
+    public String getDistanceText() {
+        return distanceText.get();
+    }
+
+    public StringProperty distanceTextProperty() {
+        return distanceText;
+    }
+
+    public void setDistanceText(String distanceText) {
+        this.distanceText.set(distanceText);
+    }
+
+    public String getEstimatedTimeText() {
+        return estimatedTimeText.get();
+    }
+
+    public StringProperty estimatedTimeTextProperty() {
+        return estimatedTimeText;
+    }
+
+    public void setEstimatedTimeText(String estimatedTimeText) {
+        this.estimatedTimeText.set(estimatedTimeText);
+    }
+
+    public boolean isSubmitButtonIsActive() {
+        return submitButtonIsActive.get();
+    }
+
+    public BooleanProperty submitButtonIsActiveProperty() {
+        return submitButtonIsActive;
+    }
+
+    public void setSubmitButtonIsActive(boolean submitButtonIsActive) {
+        this.submitButtonIsActive.set(submitButtonIsActive);
     }
 }

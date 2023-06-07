@@ -11,7 +11,7 @@
 
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataView"
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataDisplayView"
       maxHeight="Infinity">
 
     <padding>
@@ -37,8 +37,14 @@
     <Label text="Hilliness:" />
     <Label fx:id="hillinessLabel" />
 
+    <Label text="Distance:" />
+    <Label fx:id="distanceLabel" />
+
+    <Label text="Estimated Time:" />
+    <Label fx:id="estimatedTimeLabel" />
+
     <VBox alignment="CENTER_RIGHT">
-        <Button text="Edit Tour?" onAction="#handleEditButtonClicked" />
+        <Button text="Edit this Tour?" fx:id="submitButton" onAction="#handleEditButtonClicked" />
     </VBox>
 
 </VBox>

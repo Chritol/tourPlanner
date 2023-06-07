@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class TourDataCreateView implements View {
 
@@ -74,4 +75,7 @@ public class TourDataCreateView implements View {
         viewModel.addTour();
     }
 
+    public void handleClose(MouseEvent mouseEvent) {
+        viewModel.handleClose();
+    }
 }

@@ -10,7 +10,7 @@ public class Tour {
     int distance;
     int estimatedTime;
 
-    String tourImagePath;
+    String tourImageName;
 
     public Tour(String name, String description, String from, String to){
         this.name = name;

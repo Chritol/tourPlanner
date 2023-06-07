@@ -10,17 +10,25 @@
 <?import javafx.geometry.Insets?>
 
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataView"
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataEditView"
       maxHeight="Infinity">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20" />
     </padding>
 
-    <VBox alignment="CENTER">
-        <Label text="Edit new Tour" style="-fx-font-size: 20px;" alignment="CENTER" />
-    </VBox>
+    <StackPane>
+        <VBox alignment="CENTER">
+            <Label text="Edit this Tour" style="-fx-font-size: 20px;" alignment="CENTER" />
+        </VBox>
+
+        <VBox alignment="CENTER_RIGHT">
+            <Button text="X" fx:id="closeButton" onMouseClicked="#handleClose"></Button>
+        </VBox>
+    </StackPane>
 
     <Label text="Name:" />
     <TextField fx:id="nameTextField" />
@@ -41,7 +49,7 @@
     <ComboBox fx:id="hillinessComboBox" />
 
     <VBox alignment="CENTER_RIGHT">
-        <Button text="Submit" onAction="#handleSubmitButtonClicked" />
+        <Button text="Submit" fx:id="submitButton" onAction="#handleSubmitButtonClicked" />
     </VBox>
 
 </VBox>

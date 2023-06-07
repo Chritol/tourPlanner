@@ -33,19 +33,21 @@ public class TourListActionButtonsViewModel implements ViewModel {
     }
 
     public void add() {
-        System.out.println("add");
+        logger.info("Publishing add tour action");
 
         eventAggregator.publish(Event.NEW_TOUR_ACTION);
     }
 
     public void remove() {
-        System.out.println("remove");
+        logger.info("Publishing remove tour action");
 
         eventAggregator.publish(Event.REMOVE_TOUR_ACTION);
     }
 
     public void manual() {
-        System.out.println("manual");
+        logger.info("Publishing edit tour action");
+
+        eventAggregator.publish(Event.EDIT_TOUR_ACTION);
     }
 
 

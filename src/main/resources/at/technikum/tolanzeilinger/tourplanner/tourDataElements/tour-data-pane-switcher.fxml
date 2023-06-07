@@ -6,11 +6,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
+<StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView ">
-    <fx:include fx:id="display" visible="true" source="tour-data-display.fxml"></fx:include>
-    <fx:include fx:id="create" visible="false" source="tour-data-create.fxml"></fx:include>
-    <fx:include fx:id="edit" visible="false" source="tour-data-edit.fxml"></fx:include>
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView">
 
-</VBox>
+    <VBox fx:id="display" visible="false" alignment="TOP_LEFT">
+        <fx:include source="tour-data-display.fxml"></fx:include>
+    </VBox>
+    <VBox fx:id="create" visible="false" alignment="TOP_LEFT">
+        <fx:include source="tour-data-create.fxml"></fx:include>
+    </VBox>
+    <VBox fx:id="edit" visible="false" alignment="TOP_LEFT">
+        <fx:include source="tour-data-edit.fxml"></fx:include>
+    </VBox>
+
+    <Label fx:id="youBrokeIt" text="If you see this nothing works"></Label>
+
+</StackPane>

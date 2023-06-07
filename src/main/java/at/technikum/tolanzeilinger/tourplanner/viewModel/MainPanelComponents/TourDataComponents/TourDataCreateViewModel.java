@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents;
 
+import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
@@ -31,8 +32,8 @@ public class TourDataCreateViewModel implements ViewModel {
 
     public TourDataCreateViewModel(
             EventAggregator eventAggregator,
-            TourService tourService,
-            Logger logger
+            Logger logger,
+            TourService tourService
     ) {
         this.eventAggregator = eventAggregator;
         this.tourService = tourService;
@@ -122,6 +123,12 @@ public class TourDataCreateViewModel implements ViewModel {
 
     public void submit() {
         //TODO: Handle the submission of the data
+    }
+
+    public void handleClose() {
+        logger.info("handling Close Button click, sending out event EXIT_FORM_TOUR_ACTION");
+
+        eventAggregator.publish(Event.EXIT_FORM_TOUR_ACTION);
     }
 
 
