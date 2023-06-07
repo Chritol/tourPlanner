@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents;
+package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents;
 
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class TourDataViewModel implements ViewModel {
+public class TourDataCreateViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
     private final TourService tourService;
     private final Logger logger;
@@ -29,7 +29,7 @@ public class TourDataViewModel implements ViewModel {
     private SimpleObjectProperty<ObservableList<Transportation>> transportationOptionsProperty = new SimpleObjectProperty<>();
     private SimpleObjectProperty<ObservableList<Hilltype>> hillinessOptionsProperty = new SimpleObjectProperty<>();
 
-    public TourDataViewModel(
+    public TourDataCreateViewModel(
             EventAggregator eventAggregator,
             TourService tourService,
             Logger logger
@@ -118,6 +118,10 @@ public class TourDataViewModel implements ViewModel {
 
     public void setHillinessOptionsProperty(ObservableList<Hilltype> hillinessOptions) {
         this.hillinessOptionsProperty.set(hillinessOptions);
+    }
+
+    public void submit() {
+        //TODO: Handle the submission of the data
     }
 
 

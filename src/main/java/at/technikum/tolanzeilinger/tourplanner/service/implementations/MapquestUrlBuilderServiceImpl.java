@@ -16,8 +16,8 @@ public class MapquestUrlBuilderServiceImpl implements MapquestUrlBuilderService 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("https://www.mapquestapi.com/directions/v2/route?")
                 .append("key=").append(properties.getProperty("mapquest.apikey"))
-                .append("&from=").append(tour.getFrom().getLocationName())
-                .append("&to=").append(tour.getTo().getLocationName())
+                .append("&from=").append(tour.getFrom())
+                .append("&to=").append(tour.getTo())
                 .append("&unit=K");
 
         return stringBuilder.toString();

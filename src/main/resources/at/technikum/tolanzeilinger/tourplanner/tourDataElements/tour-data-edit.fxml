@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataView"
+      maxHeight="Infinity">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+
+    <VBox alignment="CENTER">
+        <Label text="Edit new Tour" style="-fx-font-size: 20px;" alignment="CENTER" />
+    </VBox>
+
+    <Label text="Name:" />
+    <TextField fx:id="nameTextField" />
+
+    <Label text="Description:" />
+    <TextField fx:id="descriptionTextField" />
+
+    <Label text="From:" />
+    <TextField fx:id="fromTextField" />
+
+    <Label text="To:" />
+    <TextField fx:id="toTextField" />
+
+    <Label text="Transportation:" />
+    <ComboBox fx:id="transportationComboBox" />
+
+    <Label text="Hilliness:" />
+    <ComboBox fx:id="hillinessComboBox" />
+
+    <VBox alignment="CENTER_RIGHT">
+        <Button text="Submit" onAction="#handleSubmitButtonClicked" />
+    </VBox>
+
+</VBox>

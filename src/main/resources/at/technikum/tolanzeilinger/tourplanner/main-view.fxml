@@ -46,11 +46,7 @@
                     </Tab>
                 </tabs>
             </TabPane>
-            <HBox AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" VBox.vgrow="ALWAYS">
-                <Button text="+" />
-                <Button text="-" />
-                <Button text="..." />
-            </HBox>
+            <fx:include AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" source="tour-list-action-buttons.fxml"></fx:include>
         </children>
     </AnchorPane>
 
@@ -60,10 +56,9 @@
                 <tabs>
                     <Tab text="General">
                         <content>
-                            <VBox maxHeight="Infinity" prefHeight="229.0" prefWidth="579.0">
-                                <fx:include source="tour-data-view.fxml"></fx:include>
+                            <fx:include source="tourDataElements/tour-data-display.fxml"></fx:include>
 
-                            </VBox>
+
                         </content>
                     </Tab>
                     <Tab text="Route">
@@ -107,13 +102,7 @@
                     </Tab>
                 </tabs>
             </TabPane>
-            <ImageView fitHeight="100" VBox.vgrow="ALWAYS" />
-            <HBox AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0" VBox.vgrow="ALWAYS">
-                <Button text="" />
-                <Button text="+" />
-                <Button text="-" />
-                <Button text="..." />
-            </HBox>
+            <fx:include source="tour-logs-action-buttons.fxml" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0"></fx:include>
         </children>
     </AnchorPane>
 

@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents;
+package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
 
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class TourDataView implements View {
+public class TourDataCreateView implements View {
 
     @FXML
     private TextField nameTextField;
@@ -29,9 +29,9 @@ public class TourDataView implements View {
     @FXML
     private ComboBox<Hilltype> hillinessComboBox;
 
-    private final TourDataViewModel viewModel;
+    private final TourDataCreateViewModel viewModel;
 
-    public TourDataView(TourDataViewModel viewModel) {
+    public TourDataCreateView(TourDataCreateViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
@@ -55,6 +55,8 @@ public class TourDataView implements View {
 
     @FXML
     public void handleSubmitButtonClicked(ActionEvent actionEvent) {
+        viewModel.submit();
+
         String name = nameTextField.getText();
         String description = descriptionTextField.getText();
         String from = fromTextField.getText();

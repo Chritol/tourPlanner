@@ -34,4 +34,10 @@ module at.technikum.tolanzeilinger.tourplanner {
     exports at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents;
     opens at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents to javafx.fxml;
     opens at.technikum.tolanzeilinger.tourplanner.persistence.dao.models to org.hibernate.orm.core;
+    exports at.technikum.tolanzeilinger.tourplanner.view.TourListComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.view.TourListComponents to javafx.fxml;
+    exports at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents to javafx.fxml;
+    exports at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
+    opens at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents to javafx.fxml;
 }

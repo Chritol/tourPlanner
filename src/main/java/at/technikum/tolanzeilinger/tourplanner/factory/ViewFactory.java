@@ -23,15 +23,19 @@ import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestServic
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataView;
+import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataCreateView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataViewModel;
+import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
+import at.technikum.tolanzeilinger.tourplanner.view.TourLogsActionButtonsView;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMapViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMiscViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.HibernateException;
@@ -66,11 +70,18 @@ public class ViewFactory {
     private final MapquestService mapquestService;
 
     // View Models
-    private final MainViewModel mainViewModel;
-    private final PDFcViewModel pdFcViewModel;
-    private final TourDataViewModel tourDataViewModel;
-    private final TourMapViewModel tourMapViewModel;
-    private final TourMiscViewModel tourMiscViewModel;
+    private MainViewModel mainViewModel;
+    private  PDFcViewModel pdFcViewModel;
+
+    private TourDataCreateViewModel tourDataCreateViewModel;
+
+    private  TourMapViewModel tourMapViewModel;
+    private  TourMiscViewModel tourMiscViewModel;
+
+    private final TourListActionButtonsViewModel tourListActionButtonsViewModel;
+    private final TourLogsActionButtonsViewModel tourLogsActionButtonsViewModel;
+
+
 
     // Logger
     private  Logger logger;
@@ -102,9 +113,13 @@ public class ViewFactory {
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger);
+
         this.pdFcViewModel = new PDFcViewModel();
 
-        this.tourDataViewModel = new TourDataViewModel(eventAggregator, tourService, logger);
+        this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);
+        this.tourLogsActionButtonsViewModel = new TourLogsActionButtonsViewModel(eventAggregator, logger);
+
+        this.tourDataCreateViewModel = new TourDataCreateViewModel(eventAggregator, tourService, logger);
         this.tourMapViewModel = new TourMapViewModel(eventAggregator, tourService, logger);
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
 
