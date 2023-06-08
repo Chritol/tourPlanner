@@ -29,4 +29,8 @@ public class TourLogsActionButtonsView  implements View {
     public void manual(MouseEvent mouseEvent) {
         viewModel.manual();
     }
+
+    public void edit(MouseEvent mouseEvent) {
+        viewModel.edit();
+    }
 }
