@@ -12,7 +12,6 @@ import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestSe
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -118,7 +117,7 @@ public class TourServiceImpl implements TourService {
     private void setActiveTour() {
         if(activeTour == null || activeTourIndex != activeTour.getId()) {
             activeTour = TourConverter.toTour(
-                    this.tourRepository.read(this.activeTourIndex)
+                    this.tourRepository.find(this.activeTourIndex)
             );
         }
     }

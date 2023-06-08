@@ -22,12 +22,14 @@ import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfac
 import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestUrlBuilderServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.PropertyLoaderServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.ImageStorageStorageServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourLogServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.MainTabPaneSwitcherView;
@@ -70,23 +72,20 @@ import java.util.function.Supplier;
 public class ViewFactory {
     private static ViewFactory instance;
     private final HibernateSessionFactory hibernateSessionFactory;
-
     private final Map<Class<?>, Supplier<Object>> viewMap;
-
     private final EventAggregator eventAggregator;
 
     // Repositories
     private final WordRepository wordRepository;
     private final TourRepository tourRepository;
-
     private final TourLogRepository tourLogRepository;
 
     // Services
     private final PropertyLoaderService propertyLoaderService;
     private final MapquestUrlBuilderService mapquestUrlBuilderService;
     private final TourService tourService;
+    private final TourLogService tourLogService;
     private final MapquestService mapquestService;
-
     private final ImageStorageService imageStorageService;
 
     // View Models
@@ -100,8 +99,6 @@ public class ViewFactory {
     private TourDataEditViewModel tourDataEditViewModel;
     private TourDataCreateViewModel tourDataCreateViewModel;
 
-
-
     private  TourMapViewModel tourMapViewModel;
     private  TourMiscViewModel tourMiscViewModel;
 
@@ -109,11 +106,8 @@ public class ViewFactory {
     private final TourListViewModel tourListViewModel;
     private final TourLogsActionButtonsViewModel tourLogsActionButtonsViewModel;
 
-
-
     // Logger
     private  Logger logger;
-
 
     private ViewFactory() {
 
@@ -138,6 +132,7 @@ public class ViewFactory {
         this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
+        this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourRepository, logger, eventAggregator);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);

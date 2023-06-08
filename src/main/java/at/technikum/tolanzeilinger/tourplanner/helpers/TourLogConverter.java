@@ -4,8 +4,7 @@ import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 
 public class TourLogConverter {
-    // TODO
-    public static TourLog fromDaoModel(TourLogDaoModel daoModel) {
+    public static TourLog toTourLog(TourLogDaoModel daoModel) {
         if(daoModel == null) return null;
 
         TourLog tourLog = new TourLog(
@@ -20,7 +19,7 @@ public class TourLogConverter {
         return tourLog;
     }
 
-    public TourLogDaoModel toDaoModel(TourLog tourLog) {
+    public static TourLogDaoModel toTourLogDaoModel(TourLog tourLog) {
 
         TourLogDaoModel daoModel = new TourLogDaoModel(
                 tourLog.getTour(),

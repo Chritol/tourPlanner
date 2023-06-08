@@ -9,6 +9,7 @@ import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoMod
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 
@@ -48,7 +49,7 @@ public class TourLogRepositoryImpl implements TourLogRepository {
     }
 
     @Override
-    public TourLogDaoModel read(Long id) {
+    public TourLogDaoModel find(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return session.get(TourLogDaoModel.class, id);
         } catch (NoResultException e) {
@@ -101,7 +102,7 @@ public class TourLogRepositoryImpl implements TourLogRepository {
     }
 
     @Override
-    public List<TourLogDaoModel> findAllLogs(TourDaoModel tour) {
+    public List<TourLogDaoModel> findAllOfTour(TourDaoModel tour) {
         if (tour == null) {
             logger.warn("Cannot delete null tour");
             return null;
@@ -117,6 +118,20 @@ public class TourLogRepositoryImpl implements TourLogRepository {
                 logger.error("Failed to retrieve logs for tour with ID: " + tour.getId() + ". Error: " + e.getMessage(), e);
                 return null;
             }
+        }
+    }
+
+    @Override
+    public List<TourLogDaoModel> findAll() {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM TourDaoModel", TourDaoModel.class);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            logger.warn("No tour logs available in the database");
+            return null;
+        } catch (Exception e) {
+            logger.error("Failed to retrieve logs for model. Error: " + e.getMessage(), e);
+            return null;
         }
     }
 }
