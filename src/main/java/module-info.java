@@ -23,7 +23,6 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.service.implementations to java.net.http, com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.model to com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.persistence to org.hibernate.orm.core;
-    opens at.technikum.tolanzeilinger.tourplanner.model.tours to com.fasterxml.jackson.databind;
     opens at.technikum.tolanzeilinger.tourplanner.persistence.repositories to com.fasterxml.jackson.databind;
     exports at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents;
     opens at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents to javafx.fxml;
@@ -44,4 +43,7 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents;
     opens at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents to javafx.fxml;
+    opens at.technikum.tolanzeilinger.tourplanner.service.api.interfaces to com.fasterxml.jackson.databind, java.net.http;
+    opens at.technikum.tolanzeilinger.tourplanner.service.api.implementations to com.fasterxml.jackson.databind, java.net.http;
+    opens at.technikum.tolanzeilinger.tourplanner.service.api.models to com.fasterxml.jackson.databind, java.net.http;
 }

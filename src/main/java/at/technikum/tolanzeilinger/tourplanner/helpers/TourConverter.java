@@ -1,8 +1,8 @@
 package at.technikum.tolanzeilinger.tourplanner.helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.model.tours.Hilltype;
-import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
-import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
+import at.technikum.tolanzeilinger.tourplanner.model.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.Tour;
+import at.technikum.tolanzeilinger.tourplanner.model.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;

@@ -1,8 +1,76 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-actor User
-"Use the application" as (Use)
+package "Tourplanner" {
+    package "View" {
+        interface View
+        class MainView
+        class LoginView
+        class DashboardView
+        View <|.. MainView
+        View <|.. LoginView
+        View <|.. DashboardView
+    }
 
-User --> Use
+    package "ViewModel" {
+        interface ViewModel
+        class MainViewModel
+        class LoginViewModel
+        class DashboardViewModel
+        ViewModel <|.. MainViewModel
+        ViewModel <|.. LoginViewModel
+        ViewModel <|.. DashboardViewModel
+    }
+
+    package "Model" {
+        class Model
+    }
+
+    package "Controller" {
+        class Controller
+        Controller --> View
+        Controller --> ViewModel
+        Controller --> Model
+    }
+
+    package "Repositories" {
+        class UserRepository
+        class ProductRepository
+        UserRepository ..> Model
+        ProductRepository ..> Model
+    }
+
+    View --> ViewModel
+    ViewModel --> Model
+    Model --> UserRepository
+    Model --> ProductRepository
+
+    package "Layers" {
+        package "Presentation Layer" {
+            MainView --[hidden] LoginView
+            LoginView --[hidden] DashboardView
+            MainView -- ViewModel
+            LoginView -- ViewModel
+            DashboardView -- ViewModel
+        }
+
+        package "Business Layer" {
+            ViewModel -- Controller
+        }
+
+        package "Data Layer" {
+            Model -- UserRepository
+            Model -- ProductRepository
+            UserRepository -- Database
+            ProductRepository -- Database
+        }
+    }
+
+    package "Database" {
+        class Database
+    }
+
+    Controller -- Database
+}
+
 @enduml
