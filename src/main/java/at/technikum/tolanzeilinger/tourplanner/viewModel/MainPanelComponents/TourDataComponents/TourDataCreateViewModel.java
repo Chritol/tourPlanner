@@ -356,11 +356,10 @@ public class TourDataCreateViewModel implements ViewModel {
         );
         tour.setTransportation(transportationProperty.get());
 
-        // TODO - hier routeservice call - service war down als ich das grad geschrieben habe
-        // routeService.
+        tourService.addTour(tour);
 
-        tour.setDistance(500);
-        tour.setEstimatedTime(500);
+        tour.setDistance(0);
+        tour.setEstimatedTime(0);
 
         tour.setHilliness(hillinessProperty.get());
 
