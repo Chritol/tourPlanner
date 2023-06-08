@@ -15,12 +15,15 @@ import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implemen
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourRepositoryImpl;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.MapquestUrlBuilderServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.properties.PropertyLoader;
+import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestUrlBuilderServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.PropertyLoaderServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.ImageStorageStorageServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.MapquestServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.MainTabPaneSwitcherView;
@@ -48,6 +51,7 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.Tour
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import javafx.scene.image.Image;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -74,14 +78,16 @@ public class ViewFactory {
     private final TourLogRepository tourLogRepository;
 
     // Services
-    private final PropertyLoader propertyLoader;
+    private final PropertyLoaderService propertyLoaderService;
     private final MapquestUrlBuilderService mapquestUrlBuilderService;
     private final TourService tourService;
     private final MapquestService mapquestService;
 
+    private final ImageStorageService imageStorageService;
+
     // View Models
     private MainViewModel mainViewModel;
-    private  PDFcViewModel pdFcViewModel;
+    private PDFcViewModel pdFcViewModel;
 
     private MainTabPaneSwitcherViewModel mainTabPaneSwitcherViewModel;
 
@@ -117,20 +123,20 @@ public class ViewFactory {
         this.viewMap = new HashMap<>();
         initializeViewMap();
 
-        this.propertyLoader = new PropertyLoader(DefaultConstants.CONFIG_PATH, logger, eventAggregator);
-
         // initialize Repositories
         this.wordRepository = new WordRepository(eventAggregator);
         this.tourRepository = new TourRepositoryImpl(hibernateSessionFactory, eventAggregator, logger);
         this.tourLogRepository = new TourLogRepositoryImpl(hibernateSessionFactory, eventAggregator, logger);
 
         // initialize Services
-        this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoader);
-        this.mapquestService = new MapquestServiceImpl();
-        this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService);
+        this.propertyLoaderService = new PropertyLoaderServiceImpl(DefaultConstants.CONFIG_PATH, logger, eventAggregator);
+        this.imageStorageService = new ImageStorageStorageServiceImpl(propertyLoaderService, eventAggregator, logger);
+        this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
+        this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
+        this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
 
         // initialize ViewModels
-        this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger);
+        this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
 
         this.pdFcViewModel = new PDFcViewModel();
 
@@ -150,8 +156,8 @@ public class ViewFactory {
         this.tourMapViewModel = new TourMapViewModel(eventAggregator, tourService, logger);
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
 
-        // addTestDataToDb(hibernateSessionFactory);
-        checkDatabase(hibernateSessionFactory);
+        // checkDatabase(hibernateSessionFactory);
+        testImageSavingAndRetrieving();
     }
 
     public static ViewFactory getInstance() {
@@ -228,29 +234,16 @@ public class ViewFactory {
         }
     }
 
-    private void addTestDataToDb(HibernateSessionFactory sessionFactory) {
-        // TODO remove later - logic needed for repositories
-        try (Session session = sessionFactory.openSession()) {
-            Transaction tx = session.beginTransaction();
+    private void testImageSavingAndRetrieving() {
+        // TODO remove later
 
-            TourDaoModel tour1 = new TourDaoModel("Tour 1", "Description 1", "From 1", "To 1",
-                    TransportationType.CAR, 100, 120, HillType.AVOID_ALL_HILLS);
-            TourDaoModel tour2 = new TourDaoModel("Tour 2", "Description 2", "From 2", "To 2",
-                    TransportationType.BIKE, 150, 180, HillType.FAVOR_UP_HILL);
-            session.persist(tour1);
-            session.persist(tour2);
+        TourDaoModel tour1 = new TourDaoModel("Tour 1", "Description 1", "Wien", "Linz",
+                TransportationType.CAR, 100, 120, HillType.AVOID_ALL_HILLS);
 
-            TourLogDaoModel log1 = new TourLogDaoModel(tour1, LocalDateTime.now(), "Comment 1",
-                    Difficulty.EASY, 5, 4);
-            TourLogDaoModel log2 = new TourLogDaoModel(tour1, LocalDateTime.now(), "Comment 2",
-                    Difficulty.INTERMEDIATE, 6, 3);
-            TourLogDaoModel log3 = new TourLogDaoModel(tour2, LocalDateTime.now(), "Comment 3",
-                    Difficulty.HARD, 6, 5);
-            session.persist(log1);
-            session.persist(log2);
-            session.persist(log3);
-
-            tx.commit();
-        }
+        long id = tourRepository.create(tour1);
+        tourService.setActiveTourIndex(id);
+        Image image = tourService.getActiveImage();
+        if(image != null)
+            logger.info("HOOOOOORAYYYYYYY");
     }
 }

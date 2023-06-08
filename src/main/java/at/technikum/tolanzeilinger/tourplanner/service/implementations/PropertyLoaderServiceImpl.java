@@ -1,8 +1,9 @@
-package at.technikum.tolanzeilinger.tourplanner.properties;
+package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,14 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertyLoader {
+public class PropertyLoaderServiceImpl implements PropertyLoaderService {
     private final EventAggregator eventAggregator;
     private final Logger logger;
     private final String propertyFileName;
     private final Map<String, String> propertiesMap;
 
 
-    public PropertyLoader(String propertyFileName, Logger logger, EventAggregator eventAggregator) {
+    public PropertyLoaderServiceImpl(String propertyFileName, Logger logger, EventAggregator eventAggregator) {
         this.eventAggregator = eventAggregator;
         this.logger = logger;
 

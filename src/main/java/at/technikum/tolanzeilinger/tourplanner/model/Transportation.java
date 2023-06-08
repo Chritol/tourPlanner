@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.model.tours;
+package at.technikum.tolanzeilinger.tourplanner.model;
 
 public enum Transportation {
     BIKE,

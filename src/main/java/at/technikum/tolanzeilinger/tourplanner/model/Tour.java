@@ -1,6 +1,8 @@
-package at.technikum.tolanzeilinger.tourplanner.model.tours;
+package at.technikum.tolanzeilinger.tourplanner.model;
 
 public class Tour {
+
+    long id;
     String name;
     String description;
     String from;
@@ -10,16 +12,13 @@ public class Tour {
     int distance;
     int estimatedTime;
 
-    String tourImageName;
     private Long id;
-
     public Tour(String name, String description, String from, String to){
         this.name = name;
         this.description = description;
         this.from = new String(from);
         this.to = new String(to);
     }
-
 
     public String getName() {
         return name;
@@ -85,11 +84,11 @@ public class Tour {
         this.estimatedTime = estimatedTime;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public long getId() {
+        return id;
     }
 
-    public Long getId() {
-        return id;
+    public void setId(long id) {
+        this.id = id;
     }
 }

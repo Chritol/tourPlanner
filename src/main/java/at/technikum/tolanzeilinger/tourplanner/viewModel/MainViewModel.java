@@ -3,10 +3,11 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
+import at.technikum.tolanzeilinger.tourplanner.service.api.models.TourDtoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.MapquestServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,9 @@ public class MainViewModel {
     private final WordRepository wordRepository;
     private final EventAggregator eventAggregator;
 
-    private final MapquestService routeService;
+    private final MapquestService mapquestService;
+
+    private final ImageStorageService imageStorageService;
 
     private final Logger log;
 
@@ -32,12 +35,15 @@ public class MainViewModel {
     public MainViewModel(
             EventAggregator eventAggregator,
             WordRepository wordRepository,
-            Logger logger
+            Logger logger,
+            MapquestService mapquestService,
+            ImageStorageService imageStorageService
     ) {
         this.eventAggregator = eventAggregator;
         this.wordRepository = wordRepository;
         this.log = logger;
-        this.routeService = new MapquestServiceImpl();
+        this.mapquestService = mapquestService;
+        this.imageStorageService = imageStorageService;
 
         initializeView();
         initializeEventListeners();
@@ -77,18 +83,6 @@ public class MainViewModel {
     }
 
     public Image getRouteImage() {
-        try {
-            RouteItem asd = routeService.loadRouteFromUrl("https://www.mapquestapi.com/directions/v2/route?key=XSqMMjiT0vjeJtxPj22gTLZ2X2LNiDqj&from=Wien&to=Koeln&unit=K", null);
-            Image image = routeService.getRouteImage("https://www.mapquestapi.com/staticmap/v5/map?key=XSqMMjiT0vjeJtxPj22gTLZ2X2LNiDqj&session=", asd.getSessionId());
-            log.info("Received route with sessionId:"+asd.getSessionId());
-            return image;
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        } catch (URISyntaxException e) {
-            log.error(e.getMessage(), e);
-        } catch (InterruptedException e) {
-            log.error(e.getMessage(), e);
-        }
         return null;
     }
 

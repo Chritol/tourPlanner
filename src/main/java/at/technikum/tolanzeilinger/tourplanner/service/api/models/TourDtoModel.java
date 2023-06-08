@@ -1,6 +1,6 @@
-package at.technikum.tolanzeilinger.tourplanner.model;
+package at.technikum.tolanzeilinger.tourplanner.service.api.models;
 
-public class RouteItem {
+public class TourDtoModel {
     private String sessionId;
     private int distance;
     private int time;

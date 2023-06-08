@@ -3,7 +3,7 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.To
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
+import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.beans.property.*;
