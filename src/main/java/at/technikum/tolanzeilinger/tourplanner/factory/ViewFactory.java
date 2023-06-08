@@ -1,6 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
 import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
+import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogService;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
@@ -88,6 +89,7 @@ public class ViewFactory {
     private final MapquestService mapquestService;
 
     private final ImageStorageService imageStorageService;
+    private final DialogService dialogService;
 
     // View Models
     private MainViewModel mainViewModel;
@@ -138,6 +140,8 @@ public class ViewFactory {
         this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
+
+        this.dialogService = new DialogService(logger, eventAggregator);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
