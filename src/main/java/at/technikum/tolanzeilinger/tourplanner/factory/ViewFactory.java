@@ -122,7 +122,7 @@ public class ViewFactory {
         this.hibernateSessionFactory = new HibernateSessionFactory();
 
         // TODO - COMMENT IF NOT NEEDED
-        clearDatabase(hibernateSessionFactory);
+        // clearDatabase(hibernateSessionFactory);
 
         this.viewMap = new HashMap<>();
         initializeViewMap();
@@ -161,7 +161,6 @@ public class ViewFactory {
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
 
         // checkDatabase(hibernateSessionFactory);
-        testImageSavingAndRetrieving();
     }
 
     public static ViewFactory getInstance() {
@@ -236,22 +235,5 @@ public class ViewFactory {
         } catch (HibernateException e) {
             logger.error(e.getMessage(), e);
         }
-    }
-
-    private void testImageSavingAndRetrieving() {
-        // TODO remove later
-
-        Tour tour = new Tour("Tour 1", "Description", "Wien", "Linz");
-        tour.setTransportation(Transportation.BIKE);
-        tour.setDistance(100);
-        tour.setEstimatedTime(100);
-        tour.setHilliness(Hilltype.AVOID_ALL_HILLS);
-
-        tourService.addTour(tour);
-        TourDaoModel tourDao = tourRepository.findFirst("Tour 1");
-        tourService.setActiveTourIndex(tourDao.getId());
-        Image image = tourService.getActiveImage();
-        if(image != null)
-            logger.info("HOOOOOORAYYYYYYY");
     }
 }
