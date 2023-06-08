@@ -5,8 +5,11 @@ import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers.LogCUDialo
 import at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets.LogCUDialogResult;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
+import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 
 /**
@@ -18,11 +21,13 @@ public class DialogService {
     private final DialogFactory dialogFactory;
 
     private final TourService tourService;
+    private final TourLogService tourLogService;
 
-    public DialogService(Logger logger, EventAggregator eventAggregator, TourService tourService){
+    public DialogService(Logger logger, EventAggregator eventAggregator, TourService tourService, TourLogService tourLogService){
         this.logger = logger;
         this.eventAggregator = eventAggregator;
         this.tourService = tourService;
+        this.tourLogService = tourLogService;
 
         this.dialogFactory = new DialogFactory();
 
@@ -71,6 +76,20 @@ public class DialogService {
 
         LogCUDialogResult results = dialogWrapper.showAndReturn();
 
-        System.out.println(results.getDistance());
+        if (results!= null) {
+            TourLog newLog = new TourLog();
+
+            /**
+            newLog.setComment(results.getComment());
+            newLog.setDifficulty(results.getDifficulty());
+            newLog.setLogDateTime(results.getDateTime());
+
+            newLog.setTour(
+                    TourConverter.toTourDaoModel(tourService.getActiveTour())
+            );
+            */
+
+            tourLogService.addLog(newLog);
+        }
     }
 }
