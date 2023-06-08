@@ -3,8 +3,11 @@ package at.technikum.tolanzeilinger.tourplanner.factory;
 import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
 import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogService;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.model.Tour;
+import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
@@ -15,15 +18,10 @@ import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfac
 import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestUrlBuilderServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.*;
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.ImageStorageStorageServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.PropertyLoaderServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourLogServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.*;
 import at.technikum.tolanzeilinger.tourplanner.view.MainController;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.MainTabPaneSwitcherView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataCreateView;
@@ -52,10 +50,12 @@ import at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogLis
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourLogComponents.TourLogListViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import javafx.scene.image.Image;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +80,7 @@ public class ViewFactory {
     private final MapquestService mapquestService;
     private final ImageStorageService imageStorageService;
     private final DialogService dialogService;
+    private final PdfService pdfService;
 
     // View Models
     private MainViewModel mainViewModel;
@@ -128,6 +129,7 @@ public class ViewFactory {
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
         this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator);
+        this.pdfService = new PdfServiceImpl(logger, eventAggregator);
 
         this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
@@ -219,7 +221,7 @@ public class ViewFactory {
         }
     }
 
-    public void clearDatabase(HibernateSessionFactory sessionFactory) {
+    private void clearDatabase(HibernateSessionFactory sessionFactory) {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
             Query query = session.createNativeQuery("TRUNCATE TABLE tp_tour, tp_tour_log");

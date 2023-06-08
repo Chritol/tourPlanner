@@ -126,7 +126,9 @@ public class TourServiceImpl implements TourService {
 
     private void setActiveTourImage() {
         try {
-            activeTourImage = imageStorageService.loadImage(activeTour.getId());
+            if(activeTourIndex >= 0) {
+                activeTourImage = imageStorageService.loadImage(activeTour.getId());
+            }
         } catch (NullPointerException e) {
             logger.error(e.getMessage(), e);
         }
