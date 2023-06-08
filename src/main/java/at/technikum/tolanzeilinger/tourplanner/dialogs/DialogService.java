@@ -6,6 +6,7 @@ import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers.LogCUDialo
 import at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets.LogCUDialogResult;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
@@ -92,15 +93,15 @@ public class DialogService {
         if (results!= null) {
             TourLog newLog = new TourLog();
 
-            /**
-            newLog.setComment(results.getComment());
-            newLog.setDifficulty(results.getDifficulty());
             newLog.setLogDateTime(results.getDateTime());
+            newLog.setDifficulty(results.getDifficulty());
+            newLog.setComment(results.getComment());
+            newLog.setRating( Integer.parseInt(results.getRating()));
+            newLog.setTotalTime( Integer.parseInt(results.getTotalTime()));
 
             newLog.setTour(
                     TourConverter.toTourDaoModel(tourService.getActiveTour())
             );
-            */
 
             tourLogService.addLog(newLog);
         }

@@ -2,20 +2,16 @@ package at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers;
 
 import at.technikum.tolanzeilinger.tourplanner.constants.StylingConstants;
 import at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets.LogCUDialogResult;
-import at.technikum.tolanzeilinger.tourplanner.model.Difficulty;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.GridPane;
-import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.*;
 
