@@ -18,4 +18,8 @@ public class StringUtilities {
 
         return input.trim().isEmpty();
     }
+
+    public static boolean isTextTooLong(String text, int maxLength) {
+        return text != null && text.length() > maxLength;
+    }
 }

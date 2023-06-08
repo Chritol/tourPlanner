@@ -1,19 +1,12 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
 import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
+import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogService;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
-import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.Hilltype;
-import at.technikum.tolanzeilinger.tourplanner.model.Tour;
-import at.technikum.tolanzeilinger.tourplanner.model.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourLogRepositoryImpl;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourRepositoryImpl;
@@ -57,13 +50,10 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.Tour
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import javafx.scene.image.Image;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +77,7 @@ public class ViewFactory {
     private final TourLogService tourLogService;
     private final MapquestService mapquestService;
     private final ImageStorageService imageStorageService;
+    private final DialogService dialogService;
 
     // View Models
     private MainViewModel mainViewModel;
@@ -133,6 +124,8 @@ public class ViewFactory {
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
         this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourRepository, logger, eventAggregator);
+
+        this.dialogService = new DialogService(logger, eventAggregator, tourService);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);

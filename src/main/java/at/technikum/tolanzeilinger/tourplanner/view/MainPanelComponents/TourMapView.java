@@ -4,12 +4,15 @@ import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMapViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 public class TourMapView implements View {
 
     @FXML
-    private ImageView routeimage;
+    public Label nameLabel;
+    @FXML
+    public ImageView mapImageView;
 
     private final TourMapViewModel viewModel;
 
@@ -19,7 +22,8 @@ public class TourMapView implements View {
 
     @FXML
     public void initialize() {
-        routeimage.setImage( ((TourMapViewModel) viewModel).getRouteImage() );
-    }
+        nameLabel.textProperty().bindBidirectional(viewModel.nameTextProperty());
+
+        mapImageView.imageProperty().bind(viewModel.imagePropertyProperty());    }
 
 }

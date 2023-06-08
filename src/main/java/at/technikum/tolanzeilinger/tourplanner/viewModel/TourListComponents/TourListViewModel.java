@@ -7,12 +7,10 @@ import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TourListViewModel implements ViewModel {
@@ -75,7 +73,7 @@ public class TourListViewModel implements ViewModel {
 
         tourService.setActiveTourIndex(id);
 
-        eventAggregator.publish(Event.ACTIVE_TOUR_SELECTED);
+        eventAggregator.publish(Event.SELECT_NEW_ACTIVE_TOUR_ACTION);
         eventAggregator.publish(Event.OPEN_TOUR_ACTION);
     }
 

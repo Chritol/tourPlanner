@@ -8,10 +8,17 @@
 
 <?import javafx.scene.image.ImageView?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView"
-            prefHeight="400.0" prefWidth="600.0">
-    <ImageView fx:id="routeimage" />
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView">
+    <VBox alignment="CENTER">
+        <Label fx:id="nameLabel" style="-fx-font-size: 20px;" alignment="CENTER" />
+    </VBox>
 
-</AnchorPane>
+    <ScrollPane fitToWidth="true" fitToHeight="true">
+        <VBox alignment="CENTER">
+            <ImageView fx:id="mapImageView" preserveRatio="true"/>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

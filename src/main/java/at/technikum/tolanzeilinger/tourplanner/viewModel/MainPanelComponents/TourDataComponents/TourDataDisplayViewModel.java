@@ -63,11 +63,12 @@ public class TourDataDisplayViewModel implements ViewModel {
 
     @Override
     public void initializeEventListeners() {
+        eventAggregator.addSubscriber(Event.TOUR_CHANGED, this::onLoadedTourAction);
         eventAggregator.addSubscriber(Event.OPEN_TOUR_ACTION, this::onLoadedTourAction);
     }
 
     public void onLoadedTourAction() {
-        logger.info("LOADED_TOUR_ACTION event received, getting active Tour and updating display");
+        logger.info("event received, getting active Tour and updating display");
 
         Tour activeTour = tourService.getActiveTour();
 

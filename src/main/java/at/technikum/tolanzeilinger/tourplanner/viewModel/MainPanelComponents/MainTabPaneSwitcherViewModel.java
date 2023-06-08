@@ -42,6 +42,8 @@ public class MainTabPaneSwitcherViewModel implements ViewModel {
         eventAggregator.addSubscriber(Event.EXIT_FORM_TOUR_ACTION, this::switchToGeneral);
         eventAggregator.addSubscriber(Event.EDIT_TOUR_ACTION, this::switchToGeneral);
         eventAggregator.addSubscriber(Event.NEW_TOUR_ACTION, this::switchToGeneral);
+        eventAggregator.addSubscriber(Event.TOUR_CHANGED, this::switchToGeneral);
+
 
         eventAggregator.addSubscriber(Event.OPEN_MAP_ACTION, this::switchToMap);
 
