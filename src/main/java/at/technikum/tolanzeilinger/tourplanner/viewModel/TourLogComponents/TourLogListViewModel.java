@@ -43,6 +43,7 @@ public class TourLogListViewModel implements ViewModel {
     }
 
     private void populateDataFromService() {
+        tourLogs.clear();
 
         List<TourLog> allTourLogs = tourLogService.getAllTourLogsForTour();
         for (TourLog tourLog : allTourLogs) {
