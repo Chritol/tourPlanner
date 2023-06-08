@@ -12,7 +12,6 @@ import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestSe
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -140,6 +139,19 @@ public class TourServiceImpl implements TourService {
         } catch (NullPointerException e) {
             logger.error(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void deleteTourByIndex(long id) {
+        var tour = tourRepository.read(id);
+        tourRepository.delete(tour);
+    }
+
+    @Override
+    public void updateTourByIndex(long id, Tour tour) {
+        var oldTour = tourRepository.read(id);
+        var newTour = TourConverter.toTourDaoModel(tour);
+        newTour.setId(oldTour.getId());
     }
 
     @Override

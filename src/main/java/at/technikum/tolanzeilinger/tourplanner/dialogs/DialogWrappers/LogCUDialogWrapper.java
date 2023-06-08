@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
 
-public class LogCUDialogWrapper implements DialogWrapper {
+public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
 
     Dialog<LogCUDialogResult> dialog;
 
@@ -78,7 +78,13 @@ public class LogCUDialogWrapper implements DialogWrapper {
         dialog.showAndWait();
     }
 
-    public Optional<LogCUDialogResult> showAndReturn() {
-        return dialog.showAndWait();
+    @Override
+    public LogCUDialogResult showAndReturn() {
+        var result = dialog.showAndWait();
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return null;
+        }
     }
 }

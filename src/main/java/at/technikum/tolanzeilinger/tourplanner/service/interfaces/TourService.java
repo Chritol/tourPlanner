@@ -16,5 +16,9 @@ public interface TourService {
 
     Image getActiveImage();
 
+    void deleteTourByIndex(long id);
+
+    void updateTourByIndex(long id, Tour tour);
+
     List<Tour> getTours();
 }

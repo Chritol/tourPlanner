@@ -1,8 +1,11 @@
 package at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
-public class GenericDialogWrapper implements DialogWrapper{
+import java.util.Optional;
+
+public class GenericDialogWrapper implements DialogWrapper<Boolean>{
 
     Alert dialog;
 
@@ -28,5 +31,15 @@ public class GenericDialogWrapper implements DialogWrapper{
     @Override
     public void show() {
         dialog.showAndWait();
+    }
+
+    @Override
+    public Boolean showAndReturn() {
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -5,11 +5,11 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-public class LogDDialogWrapper implements DialogWrapper{
+public class DeleteConfirmationDialogWrapper implements DialogWrapper<Boolean> {
 
     Alert dialog;
 
-    public LogDDialogWrapper(){
+    public DeleteConfirmationDialogWrapper(){
         this.dialog = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
@@ -33,7 +33,8 @@ public class LogDDialogWrapper implements DialogWrapper{
         dialog.showAndWait();
     }
 
-    public boolean showAndReturn() {
+    @Override
+    public Boolean showAndReturn() {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.get() == ButtonType.OK){
             return true;
