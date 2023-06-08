@@ -18,15 +18,12 @@
         <RowConstraints fillHeight="true" />
     </rowConstraints>
 
-    <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
-        <Button maxWidth="Infinity" text="File" HBox.hgrow="ALWAYS" />
-        <Button maxWidth="Infinity" text="Edit" HBox.hgrow="ALWAYS" />
-        <Button maxWidth="Infinity" text="Options" HBox.hgrow="ALWAYS" />
-        <Button maxWidth="Infinity" HBox.hgrow="ALWAYS" />
-        <Button maxWidth="Infinity" HBox.hgrow="ALWAYS" />
-        <Button maxWidth="Infinity" text="Help" HBox.hgrow="ALWAYS" />
-    </HBox>
+    <!--
+    <fx:include source="miscElements/top-buttons.fxml" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"></fx:include>
+    -->
+
     <TextField promptText="Search" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+
     <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.rowSpan="2">
         <children>
             <TabPane maxHeight="Infinity" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -54,16 +51,7 @@
                 <tabs>
                     <Tab text="Tour Logs">
                         <content>
-                            <VBox maxHeight="Infinity">
-                                <TableView VBox.vgrow="ALWAYS">
-                                    <columns>
-                                        <TableColumn text="Date" />
-                                        <TableColumn text="Duration" />
-                                        <TableColumn text="Distance" />
-                                    </columns>
-                                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
-                                </TableView>
-                            </VBox>
+                            <fx:include source="logPanel/tour-log-list.fxml"></fx:include>
                         </content>
                     </Tab>
                 </tabs>

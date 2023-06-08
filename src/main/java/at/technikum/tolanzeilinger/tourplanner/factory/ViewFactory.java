@@ -12,14 +12,14 @@ import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implemen
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourRepositoryImpl;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestUrlBuilderServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.PropertyLoaderServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.ImageStorageStorageServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourLogServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestUrlBuilderServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.ImageStorageStorageServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.PropertyLoaderServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourLogServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.service.implementations.TourServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
@@ -48,6 +48,8 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcView
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
+import at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogListView;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.TourLogComponents.TourLogListViewModel;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.HibernateException;
@@ -97,6 +99,8 @@ public class ViewFactory {
     private final TourListViewModel tourListViewModel;
     private final TourLogsActionButtonsViewModel tourLogsActionButtonsViewModel;
 
+    private final TourLogListViewModel tourLogListViewModel;
+
     // Logger
     private  Logger logger;
 
@@ -123,9 +127,9 @@ public class ViewFactory {
         this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
-        this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourRepository, logger, eventAggregator);
+        this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator);
 
-        this.dialogService = new DialogService(logger, eventAggregator, tourService);
+        this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
@@ -136,6 +140,7 @@ public class ViewFactory {
         this.tourListViewModel = new TourListViewModel(eventAggregator, logger, tourService);
 
         this.tourLogsActionButtonsViewModel = new TourLogsActionButtonsViewModel(eventAggregator, logger);
+        this.tourLogListViewModel = new TourLogListViewModel(eventAggregator, logger, tourLogService);
 
         this.mainTabPaneSwitcherViewModel = new MainTabPaneSwitcherViewModel(eventAggregator, logger);
 
@@ -173,8 +178,8 @@ public class ViewFactory {
         viewMap.put(TourListActionButtonsView.class, () -> new TourListActionButtonsView(tourListActionButtonsViewModel));
         viewMap.put(TourListView.class, () -> new TourListView(tourListViewModel));
 
-
         viewMap.put(TourLogsActionButtonsView.class, () -> new TourLogsActionButtonsView(tourLogsActionButtonsViewModel));
+        viewMap.put(TourLogListView.class, () -> new TourLogListView(tourLogListViewModel));
 
         // Main Tab Pane
         viewMap.put(MainTabPaneSwitcherView.class, () -> new MainTabPaneSwitcherView(mainTabPaneSwitcherViewModel));

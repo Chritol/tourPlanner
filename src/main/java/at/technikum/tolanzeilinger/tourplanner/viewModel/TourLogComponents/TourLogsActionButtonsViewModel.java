@@ -50,5 +50,10 @@ public class TourLogsActionButtonsViewModel implements ViewModel {
     }
 
 
+    public void edit() {
+        logger.info("Publishing load misc tab action");
+
+        eventAggregator.publish(Event.EDIT_LOG_ACTION);
+    }
 }
 

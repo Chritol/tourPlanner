@@ -161,7 +161,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void deleteTourByIndex(long id) {
-        var tour = tourRepository.read(id);
+        var tour = tourRepository.find(id);
         tourRepository.delete(tour);
 
         setActiveTourIndex(-1);
@@ -169,7 +169,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void updateTourByIndex(long id, Tour newTour) {
-        Tour oldTour = TourConverter.toTour(tourRepository.read(id));
+        Tour oldTour = TourConverter.toTour(tourRepository.find(id));
 
         if (newTour.getName() != null && !newTour.getName().isEmpty() && newTour.getName().length() <= 50) {
             oldTour.setName(newTour.getName());

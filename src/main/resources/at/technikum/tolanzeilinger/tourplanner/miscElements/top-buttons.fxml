@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.miscElements.TopButtons">
+
+    <Button maxWidth="Infinity" text="File" HBox.hgrow="ALWAYS" />
+    <Button maxWidth="Infinity" text="Edit" HBox.hgrow="ALWAYS" />
+    <Button maxWidth="Infinity" text="Options" HBox.hgrow="ALWAYS" />
+    <Button maxWidth="Infinity" text="Map" HBox.hgrow="ALWAYS" />
+    <Button maxWidth="Infinity" text="Pictures" HBox.hgrow="ALWAYS" />
+    <Button maxWidth="Infinity" text="Help" HBox.hgrow="ALWAYS" />
+</HBox>

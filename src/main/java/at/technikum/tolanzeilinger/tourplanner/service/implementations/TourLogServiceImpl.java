@@ -1,18 +1,23 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourLogConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TourLogServiceImpl implements TourLogService {
     private final TourLogRepository tourLogRepository;
-    private final TourRepository tourRepository;
+    private final TourService tourService;
     private final Logger logger;
     private final EventAggregator eventAggregator;
 
@@ -20,9 +25,9 @@ public class TourLogServiceImpl implements TourLogService {
     private long activeTourLogIndex = -1;
 
 
-    public TourLogServiceImpl(TourLogRepository tourLogRepository, TourRepository tourRepository, Logger logger, EventAggregator eventAggregator) {
+    public TourLogServiceImpl(TourLogRepository tourLogRepository, TourService tourService, Logger logger, EventAggregator eventAggregator) {
         this.tourLogRepository = tourLogRepository;
-        this.tourRepository = tourRepository;
+        this.tourService = tourService;
         this.logger = logger;
         this.eventAggregator = eventAggregator;
     }
@@ -59,18 +64,22 @@ public class TourLogServiceImpl implements TourLogService {
 
     @Override
     public List<TourLog> getAllTourLogs() {
-        return tourLogRepository
-                .findAll()
-                .stream()
-                .map(it -> TourLogConverter.toTourLog(it))
-                .toList();
+        List<TourLog> tourLogs = new ArrayList<>();
+        List<TourLogDaoModel> tourDaoLogs = tourLogRepository.findAll();
+
+        for(TourLogDaoModel tourDaoLog : tourDaoLogs) {
+            tourLogs.add(TourLogConverter.toTourLog(tourDaoLog));
+        }
+
+        return tourLogs;
     }
 
     @Override
     public List<TourLog> getAllTourLogsForTour() {
-        if(activeTourLogIndex >= 0) {
-            return tourLogRepository.findAllOfTour(tourRepository.find(activeTourLogIndex))
-                    .stream()
+        if(tourService.getActiveTourIndex() >= 0) {
+            return tourLogRepository.findAllOfTour(
+                        TourConverter.toTourDaoModel(tourService.getActiveTour())
+                    ).stream()
                     .map(it -> TourLogConverter.toTourLog(it))
                     .toList();
         } else {
