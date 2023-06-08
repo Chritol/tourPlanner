@@ -7,6 +7,7 @@ import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.beans.property.*;
+import javafx.scene.image.Image;
 
 public class TourDataDisplayViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
@@ -23,6 +24,8 @@ public class TourDataDisplayViewModel implements ViewModel {
     private StringProperty estimatedTimeText = new SimpleStringProperty();
 
     private BooleanProperty submitButtonIsActive = new SimpleBooleanProperty(false);
+
+    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
 
 
     private final TourService tourService;
@@ -66,12 +69,12 @@ public class TourDataDisplayViewModel implements ViewModel {
     public void onLoadedTourAction() {
         logger.info("LOADED_TOUR_ACTION event received, getting active Tour and updating display");
 
-        Tour activeTour = this.tourService.getActiveTour();
+        Tour activeTour = tourService.getActiveTour();
 
         if (activeTour == null) {
             logger.warn("No active tour");
             setDefaultText();
-        }else {
+        } else {
             nameText.set(activeTour.getName());
             descriptionText.set(activeTour.getDescription());
             fromText.set(activeTour.getFrom());
@@ -81,6 +84,7 @@ public class TourDataDisplayViewModel implements ViewModel {
             distanceText.set(activeTour.getDistance()+" km");
             estimatedTimeText.set(activeTour.getEstimatedTime()+" minutes");
 
+            imageProperty.set(tourService.getActiveImage());
         }
     }
 
@@ -205,6 +209,14 @@ public class TourDataDisplayViewModel implements ViewModel {
 
     public BooleanProperty submitButtonIsActiveProperty() {
         return submitButtonIsActive;
+    }
+
+    public Image getImageProperty() {
+        return imageProperty.get();
+    }
+
+    public ObjectProperty<Image> imagePropertyProperty() {
+        return imageProperty;
     }
 
     public void setSubmitButtonIsActive(boolean submitButtonIsActive) {

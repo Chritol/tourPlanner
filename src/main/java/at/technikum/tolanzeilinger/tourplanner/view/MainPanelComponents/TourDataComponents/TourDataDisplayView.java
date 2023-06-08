@@ -7,6 +7,7 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.Tou
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 public class TourDataDisplayView implements View {
 
@@ -32,6 +33,9 @@ public class TourDataDisplayView implements View {
     @FXML
     public Label estimatedTimeLabel;
 
+    @FXML
+    public ImageView mapImageView;
+
 
 
     private final TourDataDisplayViewModel viewModel;
@@ -56,6 +60,8 @@ public class TourDataDisplayView implements View {
         estimatedTimeLabel.textProperty().bindBidirectional(viewModel.estimatedTimeTextProperty());
 
         submitButton.disableProperty().bindBidirectional(viewModel.submitButtonIsActiveProperty());
+
+        mapImageView.imageProperty().bind(viewModel.imagePropertyProperty());
     }
 
     @FXML
