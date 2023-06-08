@@ -1,27 +1,42 @@
 package at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets;
 
+import at.technikum.tolanzeilinger.tourplanner.model.Difficulty;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class LogCUDialogResult {
-    private final LocalDate date;
-    private final String duration;
-    private final String distance;
+    private final LocalDateTime dateTime;
+    private final String comment;
+    private final Difficulty difficulty;
+    private final String totalTime;
+    private final String rating;
 
-    public LogCUDialogResult(LocalDate date, String duration, String distance) {
-        this.date = date;
-        this.duration = duration;
-        this.distance = distance;
+    public LogCUDialogResult(LocalDateTime dateTime, String comment, Difficulty difficulty, String totalTime, String rating) {
+        this.dateTime = dateTime;
+        this.comment = comment;
+        this.difficulty = difficulty;
+        this.totalTime = totalTime;
+        this.rating = rating;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getComment() {
+        return comment;
     }
 
-    public String getDistance() {
-        return distance;
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public String getTotalTime() {
+        return totalTime;
+    }
+
+    public String getRating() {
+        return rating;
     }
 }
