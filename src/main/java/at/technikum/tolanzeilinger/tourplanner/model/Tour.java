@@ -2,17 +2,16 @@ package at.technikum.tolanzeilinger.tourplanner.model;
 
 public class Tour {
 
-    long id;
-    String name;
-    String description;
-    String from;
-    String to;
-    Transportation transportation;
-    Hilltype hilliness;
-    int distance;
-    int estimatedTime;
+    private long id;
+    private String name;
+    private String description;
+    private String from;
+    private String to;
+    private Transportation transportation;
+    private Hilltype hilliness;
+    private int distance;
+    private int estimatedTime;
 
-    private Long id;
     public Tour(String name, String description, String from, String to){
         this.name = name;
         this.description = description;

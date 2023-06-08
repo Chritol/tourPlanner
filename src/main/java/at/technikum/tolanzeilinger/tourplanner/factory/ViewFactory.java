@@ -2,8 +2,12 @@ package at.technikum.tolanzeilinger.tourplanner.factory;
 
 import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.model.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.Tour;
+import at.technikum.tolanzeilinger.tourplanner.model.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
@@ -118,7 +122,7 @@ public class ViewFactory {
         this.hibernateSessionFactory = new HibernateSessionFactory();
 
         // TODO - COMMENT IF NOT NEEDED
-        //clearDatabase(hibernateSessionFactory);
+        clearDatabase(hibernateSessionFactory);
 
         this.viewMap = new HashMap<>();
         initializeViewMap();
@@ -237,11 +241,15 @@ public class ViewFactory {
     private void testImageSavingAndRetrieving() {
         // TODO remove later
 
-        TourDaoModel tour1 = new TourDaoModel("Tour 1", "Description 1", "Wien", "Linz",
-                TransportationType.CAR, 100, 120, HillType.AVOID_ALL_HILLS);
+        Tour tour = new Tour("Tour 1", "Description", "Wien", "Linz");
+        tour.setTransportation(Transportation.BIKE);
+        tour.setDistance(100);
+        tour.setEstimatedTime(100);
+        tour.setHilliness(Hilltype.AVOID_ALL_HILLS);
 
-        long id = tourRepository.create(tour1);
-        tourService.setActiveTourIndex(id);
+        tourService.addTour(tour);
+        TourDaoModel tourDao = tourRepository.findFirst("Tour 1");
+        tourService.setActiveTourIndex(tourDao.getId());
         Image image = tourService.getActiveImage();
         if(image != null)
             logger.info("HOOOOOORAYYYYYYY");

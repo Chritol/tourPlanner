@@ -130,7 +130,7 @@ public class TourServiceImpl implements TourService {
     @Override
     public List<Tour> getTours() {
         // Get all tours
-        List<Tour> tours = new ArrayList<Tour>();
+        List<Tour> tours = new ArrayList<>();
 
         List<TourDaoModel> tourDaoModels = tourRepository.findAll();
 
