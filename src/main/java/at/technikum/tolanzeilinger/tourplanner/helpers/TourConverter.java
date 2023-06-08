@@ -9,7 +9,9 @@ import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoMod
 
 public class TourConverter {
     public static TourDaoModel toTourDaoModel(Tour tour) {
-        return new TourDaoModel(
+        if(tour == null) return null;
+
+        TourDaoModel daoModel = new TourDaoModel(
                 tour.getName(),
                 tour.getDescription(),
                 tour.getFrom(),
@@ -19,6 +21,11 @@ public class TourConverter {
                 tour.getEstimatedTime(),
                 HillType.valueOf(tour.getHilliness().name())
         );
+
+        if(tour.getId() != null)
+            daoModel.setId(tour.getId());
+
+        return daoModel;
     }
 
     public static Tour toTour(TourDaoModel tourDaoModel) {
