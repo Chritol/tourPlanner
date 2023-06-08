@@ -11,67 +11,53 @@
 
 
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataDisplayView"
->
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataDisplayView">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20" />
     </padding>
 
-    <VBox alignment="CENTER">
-        <Label fx:id="nameLabel" style="-fx-font-size: 20px;" alignment="CENTER" />
-    </VBox>
+    <GridPane>
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25" />
+            <ColumnConstraints percentWidth="25" />
+            <ColumnConstraints percentWidth="50" />
+        </columnConstraints>
 
-    <Label text="Description:" style="-fx-font-weight: bold;" />
-    <Label fx:id="descriptionLabel" />
+        <Label fx:id="nameLabel" style="-fx-font-size: 20px;" alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" />
 
-    <HBox>
-        <padding>
-            <Insets top="5" right="0" bottom="5" left="0" />
-        </padding>
-
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
+            <Label text="Description:" style="-fx-font-weight: bold;" />
+            <Label fx:id="descriptionLabel" />
+        </VBox>
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="2" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
             <Label text="From:" style="-fx-font-weight: bold;" />
             <Label fx:id="fromLabel" />
         </VBox>
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
             <Label text="To:" style="-fx-font-weight: bold;" />
             <Label fx:id="toLabel" />
         </VBox>
-    </HBox>
-
-    <HBox>
-        <padding>
-            <Insets top="5" right="0" bottom="5" left="0" />
-        </padding>
-
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="3" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
             <Label text="Transportation:" style="-fx-font-weight: bold;" />
             <Label fx:id="transportationLabel" />
         </VBox>
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="3" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
             <Label text="Hilliness:" style="-fx-font-weight: bold;" />
             <Label fx:id="hillinessLabel" />
         </VBox>
-    </HBox>
-
-    <HBox>
-        <padding>
-            <Insets top="5" right="0" bottom="5" left="0" />
-        </padding>
-
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
             <Label text="Distance:" style="-fx-font-weight: bold;" />
             <Label fx:id="distanceLabel" />
         </VBox>
-        <VBox HBox.hgrow="ALWAYS">
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="4" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
             <Label text="Estimated Time:" style="-fx-font-weight: bold;" />
             <Label fx:id="estimatedTimeLabel" />
         </VBox>
-    </HBox>
-
-    <VBox alignment="CENTER_RIGHT">
-        <Button text="Edit this Tour?" fx:id="submitButton" onAction="#handleEditButtonClicked" />
-    </VBox>
-
+        <ImageView GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="6" fx:id="mapImageView" />
+        <Button GridPane.columnIndex="0" GridPane.rowIndex="5" text="Edit this Tour?" fx:id="submitButton" onAction="#handleEditButtonClicked" />
+    </GridPane>
 </VBox>

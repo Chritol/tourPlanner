@@ -39,6 +39,7 @@ public class ImageStorageStorageServiceImpl implements ImageStorageService {
 
             // Publish the image saved event
             eventAggregator.publish(Event.IMAGE_SAVED);
+            logger.info("Stored new image. Path: " + imagePath);
 
             return true;
         } catch (IOException e) {
@@ -52,6 +53,7 @@ public class ImageStorageStorageServiceImpl implements ImageStorageService {
 
         try {
             try (InputStream inputStream = new FileInputStream(imagePath)) {
+                logger.info("Trying to load image with path: " + imagePath);
                 return new Image(inputStream);
             }
         } catch (IOException e) {
