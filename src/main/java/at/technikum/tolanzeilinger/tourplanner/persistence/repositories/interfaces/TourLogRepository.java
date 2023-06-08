@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface TourLogRepository {
     Long create(TourLogDaoModel tour);
-    TourLogDaoModel read(Long id);
+    TourLogDaoModel find(Long id);
     boolean update(TourLogDaoModel tour);
     boolean delete(TourLogDaoModel tour);
-    List<TourLogDaoModel> findAllLogs(TourDaoModel tour);
+    List<TourLogDaoModel> findAllOfTour(TourDaoModel tour);
+    List<TourLogDaoModel> findAll();
 }

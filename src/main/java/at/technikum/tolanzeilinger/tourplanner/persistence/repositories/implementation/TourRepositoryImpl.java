@@ -49,7 +49,7 @@ public class TourRepositoryImpl implements TourRepository {
     }
 
     @Override
-    public TourDaoModel read(Long id) {
+    public TourDaoModel find(Long id) {
         try (Session session = sessionFactory.openSession()) {
             return session.get(TourDaoModel.class, id);
         } catch (NoResultException e) {

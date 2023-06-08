@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TourRepository {
     Long create(TourDaoModel tour);
-    TourDaoModel read(Long id);
+    TourDaoModel find(Long id);
     boolean update(TourDaoModel tour);
     boolean delete(TourDaoModel tour);
     List<TourDaoModel> findAll();

@@ -16,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +119,7 @@ public class TourRepositoryTest {
         when(sessionMock.get(TourDaoModel.class, tourId)).thenReturn(expectedTour);
 
         // Act
-        TourDaoModel result = tourRepository.read(tourId);
+        TourDaoModel result = tourRepository.find(tourId);
 
         // Assert
         assertEquals(expectedTour, result);
@@ -136,7 +135,7 @@ public class TourRepositoryTest {
         when(sessionMock.get(TourDaoModel.class, tourId)).thenReturn(null);
 
         // Act
-        TourDaoModel result = tourRepository.read(tourId);
+        TourDaoModel result = tourRepository.find(tourId);
 
         // Assert
         assertNull(result);
