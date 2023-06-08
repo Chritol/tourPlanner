@@ -37,6 +37,12 @@ public class DialogService {
         eventAggregator.addSubscriber(Event.REMOVE_LOG_ACTION, this::removeLogForm);
     }
 
+    private void updateLogForm() {
+    }
+
+    private void removeLogForm() {
+    }
+
     private void removeTourForm() {
         Tour activeTour = tourService.getActiveTour();
         DeleteConfirmationDialogWrapper dialogWrapper = (DeleteConfirmationDialogWrapper) dialogFactory.createDialog(
@@ -63,7 +69,7 @@ public class DialogService {
                 "Create a new Log for the selected tour"
         );
 
-        LogCUDialogResult results = dialogWrapper.showAndReturn().get();
+        LogCUDialogResult results = dialogWrapper.showAndReturn();
 
         System.out.println(results.getDistance());
     }

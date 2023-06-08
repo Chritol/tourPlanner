@@ -59,6 +59,11 @@ public class TourServiceImpl implements TourService {
         this.imageStorageService = imageStorageService;
 
         // Miscellaneous
+        var allTours = this.tourRepository.findAll();
+        if (allTours.size() > 0) {
+            setActiveTourIndex(allTours.get(0).getId());
+        }
+
         eventAggregator.publish(Event.TOUR_LOADED);
     }
 
@@ -74,17 +79,28 @@ public class TourServiceImpl implements TourService {
             logger.error(e.getMessage(), e);
         }
 
+        long id = activeTourIndex;
+
         if(routeFromUrl != null) {
             tour.setDistance(routeFromUrl.getDistance());
             tour.setEstimatedTime(routeFromUrl.getTime());
 
-            long id = tourRepository.create(TourConverter.toTourDaoModel(tour));
+            id = tourRepository.create(TourConverter.toTourDaoModel(tour));
 
             if (id > 0) {
                 fetchImageForRouteAndSave(id, routeFromUrl.getSessionId());
                 logger.info("NEW TOUR ID:" + id);
             }
+        } else {
+            logger.warn("Could not fetch route from MapQuest");
+
+            tour.setDistance(0);
+            tour.setEstimatedTime(0);
+
+            id = tourRepository.create(TourConverter.toTourDaoModel(tour));
         }
+
+        setActiveTourIndex(id);
     }
 
     public void setActiveTourIndex(long index) {
@@ -92,6 +108,8 @@ public class TourServiceImpl implements TourService {
 
         setActiveTour();
         setActiveTourImage();
+
+        eventAggregator.publish(Event.TOUR_CHANGED);
     }
 
     public long getActiveTourIndex() {
@@ -145,13 +163,68 @@ public class TourServiceImpl implements TourService {
     public void deleteTourByIndex(long id) {
         var tour = tourRepository.read(id);
         tourRepository.delete(tour);
+
+        setActiveTourIndex(-1);
     }
 
     @Override
-    public void updateTourByIndex(long id, Tour tour) {
-        var oldTour = tourRepository.read(id);
-        var newTour = TourConverter.toTourDaoModel(tour);
-        newTour.setId(oldTour.getId());
+    public void updateTourByIndex(long id, Tour newTour) {
+        Tour oldTour = TourConverter.toTour(tourRepository.read(id));
+
+        if (newTour.getName() != null && !newTour.getName().isEmpty() && newTour.getName().length() <= 50) {
+            oldTour.setName(newTour.getName());
+        }
+
+        if (newTour.getDescription() != null && !newTour.getDescription().isEmpty() && newTour.getDescription().length() <= 100) {
+            oldTour.setDescription(newTour.getDescription());
+        }
+
+        if (newTour.getFrom() != null && !newTour.getFrom().isEmpty() && newTour.getFrom().length() <= 100) {
+            oldTour.setFrom(newTour.getFrom());
+        }
+
+        if (newTour.getTo() != null && !newTour.getTo().isEmpty() && newTour.getTo().length() <= 100) {
+            oldTour.setTo(newTour.getTo());
+        }
+
+        if (newTour.getTransportation() != null) {
+            oldTour.setTransportation(newTour.getTransportation());
+        }
+
+        if (newTour.getHilliness() != null) {
+            oldTour.setHilliness(newTour.getHilliness());
+        }
+
+        TourDtoModel routeFromUrl = null;
+        try {
+            routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(oldTour.getFrom(), oldTour.getTo()));
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        } catch (URISyntaxException e) {
+            logger.error(e.getMessage(), e);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+
+        if(routeFromUrl != null) {
+            oldTour.setDistance(routeFromUrl.getDistance());
+            oldTour.setEstimatedTime(routeFromUrl.getTime());
+
+            if (id > 0) {
+                fetchImageForRouteAndSave(id, routeFromUrl.getSessionId());
+                logger.info("NEW TOUR ID:" + id);
+            }
+        } else {
+            logger.warn("Could not fetch route from MapQuest");
+        }
+
+        TourDaoModel resultTour = TourConverter.toTourDaoModel(oldTour);
+        resultTour.setId(id);
+
+        tourRepository.update(resultTour);
+
+        setActiveTourIndex(id);
     }
 
     @Override

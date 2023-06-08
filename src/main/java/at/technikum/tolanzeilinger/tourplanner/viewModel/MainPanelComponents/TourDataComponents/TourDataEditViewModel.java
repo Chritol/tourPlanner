@@ -14,8 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Border;
 
-import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.clearTrailingWhitespaces;
-import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.isNullOrWhitespace;
+import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.*;
 
 public class TourDataEditViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
@@ -296,7 +295,7 @@ public class TourDataEditViewModel implements ViewModel {
 
         cleanInputs();
 
-        if (!isAnyPropertyNull()) {
+        if (!isAnyPropertyInvalid()) {
             // All properties are not null
             logger.info("If you see this pray to god!");
 
@@ -309,7 +308,7 @@ public class TourDataEditViewModel implements ViewModel {
             // At least one property is null
             logger.warn("At least one property is null");
 
-            markNullFields();
+            markInvalidFields();
         }
     }
 
@@ -321,26 +320,30 @@ public class TourDataEditViewModel implements ViewModel {
         toProperty.set(clearTrailingWhitespaces(toProperty.get()));
     }
 
-    private boolean isAnyPropertyNull() {
+    private boolean isAnyPropertyInvalid() {
         return isNullOrWhitespace(nameProperty.get()) ||
                 isNullOrWhitespace(descriptionProperty.get()) ||
                 isNullOrWhitespace(fromProperty.get()) ||
                 isNullOrWhitespace(toProperty.get()) ||
+                isTextTooLong(nameProperty.get(), 50) ||
+                isTextTooLong(descriptionProperty.get(), 100) ||
+                isTextTooLong(fromProperty.get(), 100) ||
+                isTextTooLong(toProperty.get(), 100) ||
                 transportationProperty.get() == null ||
                 hillinessProperty.get() == null;
     }
 
-    private void markNullFields() {
-        if (isNullOrWhitespace(nameProperty.get())) {
+    private void markInvalidFields() {
+        if (isNullOrWhitespace(nameProperty.get()) || isTextTooLong(nameProperty.get(), 50)) {
             nameBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
-        if (isNullOrWhitespace(descriptionProperty.get())) {
+        if (isNullOrWhitespace(descriptionProperty.get()) || isTextTooLong(descriptionProperty.get(), 100)) {
             descriptionBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
-        if (isNullOrWhitespace(fromProperty.get())) {
+        if (isNullOrWhitespace(fromProperty.get()) || isTextTooLong(fromProperty.get(), 100)) {
             fromBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
-        if (isNullOrWhitespace(toProperty.get())) {
+        if (isNullOrWhitespace(toProperty.get()) || isTextTooLong(toProperty.get(), 100)) {
             toBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
         if (transportationProperty.get() == null) {
@@ -369,6 +372,17 @@ public class TourDataEditViewModel implements ViewModel {
     }
 
     private void updateTour() {
+        long id = tourService.getActiveTourIndex();
+        Tour tour = new Tour(
+                nameProperty.get(),
+                descriptionProperty.get(),
+                fromProperty.get(),
+                toProperty.get()
+        );
+        tour.setTransportation(transportationProperty.get());
+        tour.setHilliness(hillinessProperty.get());
+
+        tourService.updateTourByIndex(id, tour);
 
     }
 }
