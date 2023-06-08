@@ -64,11 +64,27 @@ public class TourServiceImpl implements TourService {
     }
 
     public void addTour(Tour tour) {
-        long id = tourRepository.create(TourConverter.toTourDaoModel(tour));
+        TourDtoModel routeFromUrl = null;
+        try {
+            routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(tour.getFrom(), tour.getTo()));
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        } catch (URISyntaxException e) {
+            logger.error(e.getMessage(), e);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+        }
 
-        if(id > 0) {
-            fetchImageForRouteAndSave(id, tour.getFrom(), tour.getTo());
-            logger.info("NEW TOUR ID:" + id);
+        if(routeFromUrl != null) {
+            tour.setDistance(routeFromUrl.getDistance());
+            tour.setEstimatedTime(routeFromUrl.getTime());
+
+            long id = tourRepository.create(TourConverter.toTourDaoModel(tour));
+
+            if (id > 0) {
+                fetchImageForRouteAndSave(id, routeFromUrl.getSessionId());
+                logger.info("NEW TOUR ID:" + id);
+            }
         }
     }
 
@@ -107,10 +123,9 @@ public class TourServiceImpl implements TourService {
         }
     }
 
-    private void fetchImageForRouteAndSave(long id, String from, String to) {
+    private void fetchImageForRouteAndSave(long id, String sessionId) {
         try {
-            TourDtoModel routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(from, to));
-            InputStream imageInputStream = mapquestService.fetchMapquestImage(mapquestUrlBuilderService.buildMapImageUrl(routeFromUrl.getSessionId()));
+            InputStream imageInputStream = mapquestService.fetchMapquestImage(mapquestUrlBuilderService.buildMapImageUrl(sessionId));
 
             boolean success = imageStorageService.saveImage(imageInputStream, id);
             if(!success) {
