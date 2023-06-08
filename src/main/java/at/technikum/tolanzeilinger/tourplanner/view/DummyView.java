@@ -12,5 +12,7 @@ public class DummyView  implements View {
 
     @Override
     @FXML
-    public void initialize() {}
+    public void initialize() {
+        //Add bindings here
+    }
 }

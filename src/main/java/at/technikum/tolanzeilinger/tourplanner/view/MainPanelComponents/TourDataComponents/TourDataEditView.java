@@ -55,6 +55,13 @@ public class TourDataEditView implements View {
         transportationComboBox.setItems(viewModel.transportationOptionsPropertyProperty().get());
         hillinessComboBox.setItems(viewModel.hillinessOptionsPropertyProperty().get());
 
+        nameTextField.borderProperty().bindBidirectional(viewModel.nameBorderPropertyProperty());
+        descriptionTextField.borderProperty().bindBidirectional(viewModel.descriptionBorderPropertyProperty());
+        fromTextField.borderProperty().bindBidirectional(viewModel.fromBorderPropertyProperty());
+        toTextField.borderProperty().bindBidirectional(viewModel.toBorderPropertyProperty());
+        transportationComboBox.borderProperty().bindBidirectional(viewModel.transportationBorderPropertyProperty());
+        hillinessComboBox.borderProperty().bindBidirectional(viewModel.hillinessBorderPropertyProperty());
+
         submitButton.disableProperty().bindBidirectional(viewModel.submitButtonIsActiveProperty());
     }
 

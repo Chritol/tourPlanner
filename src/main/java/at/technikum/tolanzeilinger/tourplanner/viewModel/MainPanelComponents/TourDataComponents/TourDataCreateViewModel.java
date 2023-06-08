@@ -9,15 +9,16 @@ import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.paint.Color;
+
+import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.clearTrailingWhitespaces;
+import static at.technikum.tolanzeilinger.tourplanner.util.StringUtilities.isNullOrWhitespace;
 
 public class TourDataCreateViewModel implements ViewModel {
     private final EventAggregator eventAggregator;
@@ -43,6 +44,8 @@ public class TourDataCreateViewModel implements ViewModel {
     ObjectProperty<Border> transportationBorderProperty = new SimpleObjectProperty<>();
     ObjectProperty<Border> hillinessBorderProperty = new SimpleObjectProperty<>();
 
+    private BooleanProperty submitButtonIsActive = new SimpleBooleanProperty(false);
+
     public TourDataCreateViewModel(
             EventAggregator eventAggregator,
             Logger logger,
@@ -61,6 +64,22 @@ public class TourDataCreateViewModel implements ViewModel {
     public void initializeView() {
         transportationOptionsProperty.set(FXCollections.observableArrayList(Transportation.values()));
         hillinessOptionsProperty.set(FXCollections.observableArrayList(Hilltype.values()));
+
+        setDefaultText();
+    }
+
+    public void setDefaultText() {
+        nameProperty.set(null);
+        descriptionProperty.set(null);
+        fromProperty.set(null);
+        toProperty.set(null);
+
+        transportationProperty.set(null);
+        hillinessProperty.set(null);
+
+        submitButtonIsActive.set(false);
+
+        resetBorderStyles();
     }
 
     @Override
@@ -239,41 +258,68 @@ public class TourDataCreateViewModel implements ViewModel {
         this.hillinessBorderProperty.set(hillinessBorderProperty);
     }
 
+    public boolean isSubmitButtonIsActive() {
+        return submitButtonIsActive.get();
+    }
+
+    public BooleanProperty submitButtonIsActiveProperty() {
+        return submitButtonIsActive;
+    }
+
+    public void setSubmitButtonIsActive(boolean submitButtonIsActive) {
+        this.submitButtonIsActive.set(submitButtonIsActive);
+    }
+
     public void submit() {
-        if (nameProperty.get() != null &&
-                descriptionProperty.get() != null &&
-                fromProperty.get() != null &&
-                toProperty.get() != null &&
-                transportationProperty.get() != null &&
-                hillinessProperty.get() != null) {
+        resetBorderStyles();
+
+        cleanInputs();
+
+        if (!isAnyPropertyNull()) {
             // All properties are not null
             logger.info("If you see this pray to god!");
 
             addTour();
 
+            setDefaultText();
+
+            eventAggregator.publish(Event.EXIT_FORM_TOUR_ACTION);
         } else {
             // At least one property is null
             logger.warn("At least one property is null");
 
-            resetBorderStyles();
-
             markNullFields();
-
         }
+    }
 
+
+    private void cleanInputs() {
+        nameProperty.set(clearTrailingWhitespaces(nameProperty.get()));
+        descriptionProperty.set(clearTrailingWhitespaces(descriptionProperty.get()));
+        fromProperty.set(clearTrailingWhitespaces(fromProperty.get()));
+        toProperty.set(clearTrailingWhitespaces(toProperty.get()));
+    }
+
+    private boolean isAnyPropertyNull() {
+        return isNullOrWhitespace(nameProperty.get()) ||
+                isNullOrWhitespace(descriptionProperty.get()) ||
+                isNullOrWhitespace(fromProperty.get()) ||
+                isNullOrWhitespace(toProperty.get()) ||
+                transportationProperty.get() == null ||
+                hillinessProperty.get() == null;
     }
 
     private void markNullFields() {
-        if (nameProperty.get() == null) {
+        if (isNullOrWhitespace(nameProperty.get())) {
             nameBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
-        if (descriptionProperty.get() == null) {
+        if (isNullOrWhitespace(descriptionProperty.get())) {
             descriptionBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
-        if (fromProperty.get() == null) {
+        if (isNullOrWhitespace(fromProperty.get())) {
             fromBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
-        if (toProperty.get() == null) {
+        if (isNullOrWhitespace(toProperty.get())) {
             toBorderProperty.set(StylingConstants.ERROR_BORDER);
         }
         if (transportationProperty.get() == null) {
@@ -296,6 +342,8 @@ public class TourDataCreateViewModel implements ViewModel {
 
     public void handleClose() {
         logger.info("handling Close Button click, sending out event EXIT_FORM_TOUR_ACTION");
+
+        setDefaultText();
 
         eventAggregator.publish(Event.EXIT_FORM_TOUR_ACTION);
     }

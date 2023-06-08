@@ -6,6 +6,7 @@ import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.RouteItem;
 import at.technikum.tolanzeilinger.tourplanner.model.tours.Tour;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.MapquestUrlBuilderService;
@@ -14,6 +15,8 @@ import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 // just for talking to the Repository
 public class TourServiceImpl implements TourService {
@@ -83,4 +86,20 @@ public class TourServiceImpl implements TourService {
         // TODO: implement To get image of active tour
         return null;
     }
+
+    @Override
+    public List<Tour> getTours() {
+        // Get all tours
+        List<Tour> tours = new ArrayList<Tour>();
+
+        List<TourDaoModel> tourDaoModels = tourRepository.findAll();
+
+         for (TourDaoModel tourDaoModel : tourDaoModels) {
+            tours.add(TourConverter.toTour(tourDaoModel));
+         }
+
+         return tours;
+    }
+
+
 }

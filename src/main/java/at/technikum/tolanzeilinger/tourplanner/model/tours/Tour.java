@@ -11,6 +11,7 @@ public class Tour {
     int estimatedTime;
 
     String tourImageName;
+    private Long id;
 
     public Tour(String name, String description, String from, String to){
         this.name = name;
@@ -82,5 +83,13 @@ public class Tour {
 
     public void setEstimatedTime(int estimatedTime) {
         this.estimatedTime = estimatedTime;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

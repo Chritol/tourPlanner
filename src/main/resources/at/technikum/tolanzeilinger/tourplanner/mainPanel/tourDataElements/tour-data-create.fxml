@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataEditView"
-      maxHeight="Infinity">
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataCreateView">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20" />
@@ -22,7 +21,7 @@
 
     <StackPane>
         <VBox alignment="CENTER">
-            <Label text="Edit this Tour" style="-fx-font-size: 20px;" alignment="CENTER" />
+            <Label text="Create new Tour" style="-fx-font-size: 20px;" alignment="CENTER" />
         </VBox>
 
         <VBox alignment="CENTER_RIGHT">
