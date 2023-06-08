@@ -1,11 +1,11 @@
 package at.technikum.tolanzeilinger.tourplanner.dialogs;
 
 import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers.DeleteConfirmationDialogWrapper;
+import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers.InfoDialogWrapper;
 import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers.LogCUDialogWrapper;
 import at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets.LogCUDialogResult;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
-import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
@@ -68,10 +68,23 @@ public class DialogService {
     }
 
     private void newLogForm() {
+        if (tourService.getActiveTourIndex() < 0) {
+            logger.warn("No active tour");
+
+            InfoDialogWrapper dialogWrapper = (InfoDialogWrapper) dialogFactory.createDialog(
+                    DialogType.INFO,
+                    "No active tour",
+                    "Pick a tour first you fucking imbecile!"
+            );
+
+            dialogWrapper.show();
+            return;
+        }
+
         LogCUDialogWrapper dialogWrapper = (LogCUDialogWrapper) dialogFactory.createDialog(
                 DialogType.LOG_CREATE_UPDATE,
-                "New Log",
-                "Create a new Log for the selected tour"
+                "New Log for "+ tourService.getActiveTour().getName(),
+                "Create a new Log for the tour \"" + tourService.getActiveTour().getName() + "\""
         );
 
         LogCUDialogResult results = dialogWrapper.showAndReturn();
