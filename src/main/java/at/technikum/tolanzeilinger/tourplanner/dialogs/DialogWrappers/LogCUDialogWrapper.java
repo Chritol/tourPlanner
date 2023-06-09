@@ -47,6 +47,11 @@ public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
         this.totalTimeTextField = new TextField();
         this.ratingTextField = new TextField();
 
+        // Set the initial date to today
+        LocalDateTime today = LocalDateTime.now();
+        this.datePicker.setValue(today.toLocalDate());
+        this.timePicker.setText(today.format(DateTimeFormatter.ofPattern("HH:mm")));
+
         // Populate the difficulty choice box with enum values
         difficultyChoiceBox.getItems().addAll(Difficulty.values());
 
