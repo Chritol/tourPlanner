@@ -17,7 +17,7 @@ public interface TourLogService {
 
     List<TourLog> getAllTourLogs();
 
-    List<TourLog> getAllTourLogsForTour();
+    List<TourLog> getAllTourLogsForActiveTour();
 
     TourLog getActiveTourLog();
 }

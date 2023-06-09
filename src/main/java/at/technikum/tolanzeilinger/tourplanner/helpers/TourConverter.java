@@ -1,9 +1,13 @@
 package at.technikum.tolanzeilinger.tourplanner.helpers;
 
+import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.ChildFriendlinessDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.PopularityDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 
@@ -19,7 +23,9 @@ public class TourConverter {
                 TransportationTypeDaoEnum.valueOf(tour.getTransportation().name()),
                 tour.getDistance(),
                 tour.getEstimatedTime(),
-                HillTypeDaoEnum.valueOf(tour.getHilliness().name())
+                HillTypeDaoEnum.valueOf(tour.getHilliness().name()),
+                PopularityDaoEnum.valueOf(tour.getPopularity().name()),
+                ChildFriendlinessDaoEnum.valueOf(tour.getChildFriendliness().name())
         );
 
         if(tour.getId() != null)
@@ -42,6 +48,8 @@ public class TourConverter {
         tour.setEstimatedTime(tourDaoModel.getEstimatedTime());
         tour.setHilliness(Hilltype.valueOf(tourDaoModel.getHillType().name()));
         tour.setId(tourDaoModel.getId());
+        tour.setPopularity(Popularity.valueOf(tourDaoModel.getPopularityDaoEnum().name()));
+        tour.setChildFriendliness(ChildFriendliness.valueOf(tourDaoModel.getChildFriendlinessDaoEnum().name()));
         return tour;
     }
 }
