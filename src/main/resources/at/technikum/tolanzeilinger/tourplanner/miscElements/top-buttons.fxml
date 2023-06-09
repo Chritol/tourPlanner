@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.*?>
 
 <HBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.miscElements.TopButtons">
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.TopButtonsView">
 
-    <Button maxWidth="Infinity" text="File" HBox.hgrow="ALWAYS" />
-    <Button maxWidth="Infinity" text="Edit" HBox.hgrow="ALWAYS" />
-    <Button maxWidth="Infinity" text="Options" HBox.hgrow="ALWAYS" />
-    <Button maxWidth="Infinity" text="Map" HBox.hgrow="ALWAYS" />
-    <Button maxWidth="Infinity" text="Pictures" HBox.hgrow="ALWAYS" />
-    <Button maxWidth="Infinity" text="Help" HBox.hgrow="ALWAYS" />
+    <Button maxWidth="Infinity" text="File" HBox.hgrow="ALWAYS" onAction="#handleFileButtonClick" />
+    <Button maxWidth="Infinity" text="Edit" HBox.hgrow="ALWAYS" onAction="#handleEditButtonClick" />
+    <Button maxWidth="Infinity" text="Options" HBox.hgrow="ALWAYS" onAction="#handleOptionsButtonClick" />
+    <Button maxWidth="Infinity" text="Map" HBox.hgrow="ALWAYS" onAction="#handleMapButtonClick" />
+    <Button maxWidth="Infinity" text="Pictures" HBox.hgrow="ALWAYS" onAction="#handlePicturesButtonClick" />
+    <Button maxWidth="Infinity" text="Help" HBox.hgrow="ALWAYS" onAction="#handleHelpButtonClick" />
 </HBox>

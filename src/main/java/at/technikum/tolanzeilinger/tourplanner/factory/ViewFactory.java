@@ -31,6 +31,7 @@ import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourData
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
+import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.TopButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogsActionButtonsView;
@@ -43,6 +44,7 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.Tou
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMiscViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.TopButtonsViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
@@ -85,6 +87,7 @@ public class ViewFactory {
     // View Models
     private MainViewModel mainViewModel;
     private PDFcViewModel pdFcViewModel;
+    private TopButtonsViewModel topButtonsViewModel;
 
     private MainTabPaneSwitcherViewModel mainTabPaneSwitcherViewModel;
 
@@ -137,6 +140,7 @@ public class ViewFactory {
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
 
         this.pdFcViewModel = new PDFcViewModel();
+        this.topButtonsViewModel = new TopButtonsViewModel(eventAggregator, logger);
 
         this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);
         this.tourListViewModel = new TourListViewModel(eventAggregator, logger, tourService);
@@ -201,6 +205,7 @@ public class ViewFactory {
         viewMap.put(TourMiscView.class, () -> new TourMiscView(tourMiscViewModel));
     
         viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
+        viewMap.put(TopButtonsView.class, () -> new TopButtonsView(topButtonsViewModel));
     
         viewMap.put(MainController.class, () -> new MainController(mainViewModel));
     }

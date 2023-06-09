@@ -43,7 +43,11 @@ public class DialogService {
         eventAggregator.addSubscriber(Event.NEW_LOG_ACTION, this::newLogForm);
         eventAggregator.addSubscriber(Event.EDIT_LOG_ACTION, this::updateLogForm);
         eventAggregator.addSubscriber(Event.REMOVE_LOG_ACTION, this::removeLogForm);
+
+        eventAggregator.addSubscriber(Event.OPEN_HELP_ACTION, this::helpForm);
     }
+
+
 
     private void updateLogForm() {
         if (tourLogService.getActiveTourLogIndex() < 0) {
@@ -205,4 +209,18 @@ public class DialogService {
             logger.info("Log creation cancelled");
         }
     }
+
+    private void helpForm() {
+        InfoDialogWrapper dialogWrapper = (InfoDialogWrapper) dialogFactory.createDialog(
+                DialogType.INFO,
+                "Help",
+                "Welcome to the Tolanzeilinger Tour Planner!\n" +
+                        "Find tours in the List on the left. Add a new tour to the list by clicking the plus sign.\n" +
+                        "Find reviews to the tours on the bottom. Add a new review to the list by clicking the plus sign.\n" +
+                        "Export as PDF or Excel in the \"misc\" tab."
+        );
+
+        dialogWrapper.show();
+    }
+
 }
