@@ -41,11 +41,17 @@ public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         this.datePicker = new DatePicker();
-        this.timePicker = new TextField("HH:mm");
+        this.timePicker = new TextField();
         this.commentTextField = new TextField();
         this.difficultyChoiceBox = new ChoiceBox<>();
         this.totalTimeTextField = new TextField();
         this.ratingTextField = new TextField();
+
+        //Set Helpers
+        timePicker.setPromptText("HH:mm");
+        commentTextField.setPromptText("Comment");
+        totalTimeTextField.setPromptText("Total Time in Minutes");
+        ratingTextField.setPromptText("Rating as Number");
 
         // Set the initial date to today
         LocalDateTime today = LocalDateTime.now();

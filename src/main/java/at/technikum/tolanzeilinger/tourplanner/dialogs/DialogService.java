@@ -45,8 +45,20 @@ public class DialogService {
         eventAggregator.addSubscriber(Event.REMOVE_LOG_ACTION, this::removeLogForm);
 
         eventAggregator.addSubscriber(Event.OPEN_HELP_ACTION, this::helpForm);
+
+        eventAggregator.addSubscriber(Event.COULD_NOT_CREATE_PDF, this::couldNotCreatePDFForm);
     }
 
+    private void couldNotCreatePDFForm() {
+        InfoDialogWrapper dialogWrapper = (InfoDialogWrapper) dialogFactory.createDialog(
+                DialogType.INFO,
+                "PDF could not be created",
+                "You must pick a tour to create a PDF!"
+        );
+
+        dialogWrapper.show();
+        return;
+    }
 
 
     private void updateLogForm() {

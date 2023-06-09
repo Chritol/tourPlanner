@@ -41,6 +41,8 @@ public class TourServiceImpl implements TourService {
 
     private Image activeTourImage;
 
+    private String fullTextSearchString = "";
+
     public TourServiceImpl(Logger logger,
                            EventAggregator eventAggregator,
                            TourRepository tourRepository,
@@ -57,9 +59,12 @@ public class TourServiceImpl implements TourService {
         this.mapquestService = mapquestService;
         this.mapquestUrlBuilderService = mapquestUrlBuilderService;
         this.imageStorageService = imageStorageService;
+    }
 
-        // Miscellaneous
+    public void setNewFullTextSearchString(String newFullTextSearchString) {
+        this.fullTextSearchString = fullTextSearchString;
 
+        eventAggregator.publish(Event.TOUR_CHANGED);
     }
 
     public void addTour(Tour tour) {
@@ -230,6 +235,8 @@ public class TourServiceImpl implements TourService {
         List<Tour> tours = new ArrayList<>();
 
         List<TourDaoModel> tourDaoModels = tourRepository.findAll();
+        //TODO: Replace this with a query that incorperates fulltext search
+        //TODO: List<TourDaoModel> tourDaoModels = tourRepository.findAllThatMatch( this.fullTextSearchString  );
 
          for (TourDaoModel tourDaoModel : tourDaoModels) {
             tours.add(TourConverter.toTour(tourDaoModel));

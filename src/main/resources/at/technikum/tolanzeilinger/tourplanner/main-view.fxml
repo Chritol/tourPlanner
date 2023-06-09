@@ -21,8 +21,9 @@
 
     <fx:include source="miscElements/top-buttons.fxml" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"></fx:include>
 
-
-    <TextField promptText="Search" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+    <!--
+        <fx:include source="miscElements/search-view.fxml" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1"></fx:include>
+    -->
 
     <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.rowSpan="2">
         <children>
