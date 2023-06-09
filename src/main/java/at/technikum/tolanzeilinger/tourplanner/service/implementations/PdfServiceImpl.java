@@ -1,10 +1,14 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PdfService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -26,11 +30,48 @@ public class PdfServiceImpl implements PdfService {
     private final float fontSize;
     private final PDFont font;
 
-    public PdfServiceImpl(Logger logger, EventAggregator eventAggregator) {
+    private final PropertyLoaderService propertyLoaderService;
+    private final TourService tourService;
+    private final TourLogService tourLogService;
+
+    public PdfServiceImpl(PropertyLoaderService propertyLoaderService, Logger logger, EventAggregator eventAggregator, TourService tourService, TourLogService tourLogService) {
         this.logger = logger;
         this.eventAggregator = eventAggregator;
         fontSize = 14;
         font = PDType1Font.HELVETICA;
+
+        this.propertyLoaderService = propertyLoaderService;
+
+        this.tourService = tourService;
+        this.tourLogService = tourLogService;
+
+        eventAggregator.addSubscriber(Event.PDF_CREATE_ACTION, this::onPdfCreateAction);
+    }
+
+    private void onPdfCreateAction() {
+        String rootPath = propertyLoaderService.getProperty("pdf.save.path");
+        createDirectoryIfNotExists(rootPath);
+
+        if (tourService.getActiveTourIndex() < 0){
+            logger.warn("There is no active tour log");
+
+            eventAggregator.publish(Event.COULD_NOT_CREATE_PDF);
+
+            return;
+        }
+
+        Tour tour = tourService.getActiveTour();
+        List<TourLog> tourLogs = tourLogService.getAllTourLogsForTour();
+        String imagePath = propertyLoaderService.getProperty("image.save.path") + "/" + tour.getId() + ".png";
+
+        generatePDFWithImageAndData(
+                imagePath,
+                tour,
+                tourLogs,
+                rootPath
+        );
+
+        eventAggregator.publish(Event.PDF_CREATED);
     }
 
     public void generatePDFWithImageAndData(String imagePath, Tour tour, List<TourLog> tourLogs, String outputFilePath) {

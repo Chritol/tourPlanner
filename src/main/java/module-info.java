@@ -14,6 +14,7 @@ module at.technikum.tolanzeilinger.tourplanner {
     requires java.sql;
     requires jakarta.persistence;
     requires org.apache.pdfbox;
+    requires java.desktop;
 
     opens at.technikum.tolanzeilinger.tourplanner to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner;
