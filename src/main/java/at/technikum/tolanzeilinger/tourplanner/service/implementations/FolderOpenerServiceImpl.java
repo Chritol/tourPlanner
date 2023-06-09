@@ -4,21 +4,20 @@ import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.FolderOpenerService;
+
 import java.awt.Desktop;
 
 import java.io.File;
 import java.io.IOException;
 
-public class FolderOpenerService {
+public class FolderOpenerServiceImpl implements FolderOpenerService {
 
     private final EventAggregator eventAggregator;
     private final Logger logger;
     private final PropertyLoaderService propertyLoaderService;
 
-    public FolderOpenerService(PropertyLoaderService propertyLoaderService, Logger logger, EventAggregator eventAggregator) {
+    public FolderOpenerServiceImpl(PropertyLoaderService propertyLoaderService, Logger logger, EventAggregator eventAggregator) {
         this.logger = logger;
         this.eventAggregator = eventAggregator;
 
@@ -29,7 +28,8 @@ public class FolderOpenerService {
         eventAggregator.addSubscriber(Event.OPEN_PICTURES_DIRECTORY_ACTION, this::openPicturesDirectory);
     }
 
-    private void openFileDirectory() {
+    @Override
+    public void openFileDirectory() {
         String directoryPath = propertyLoaderService.getProperty("pdf.save.path");
         createDirectoryIfNotExists(directoryPath);
 
@@ -41,7 +41,8 @@ public class FolderOpenerService {
             logger.error("Failed to open file directory: " + directoryPath, e);
         }
     }
-    private void openPicturesDirectory() {
+    @Override
+    public void openPicturesDirectory() {
         String directoryPath = propertyLoaderService.getProperty("image.save.path");
         createDirectoryIfNotExists(directoryPath);
 
@@ -54,8 +55,8 @@ public class FolderOpenerService {
         }
     }
 
-
-    private void createDirectoryIfNotExists(String directoryPath) {
+    @Override
+    public void createDirectoryIfNotExists(String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             if (directory.mkdirs()) {

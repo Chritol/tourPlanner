@@ -136,7 +136,7 @@ public class ViewFactory {
 
         this.pdfService = new PdfServiceImpl(propertyLoaderService, logger, eventAggregator, tourService, tourLogService);
 
-        this.folderOpenerService = new FolderOpenerService(propertyLoaderService, logger, eventAggregator);
+        this.folderOpenerService = new FolderOpenerServiceImpl(propertyLoaderService, logger, eventAggregator);
 
         this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
