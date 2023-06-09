@@ -13,6 +13,7 @@ module at.technikum.tolanzeilinger.tourplanner {
     requires java.naming;
     requires java.sql;
     requires jakarta.persistence;
+    requires org.apache.pdfbox;
 
     opens at.technikum.tolanzeilinger.tourplanner to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner;
