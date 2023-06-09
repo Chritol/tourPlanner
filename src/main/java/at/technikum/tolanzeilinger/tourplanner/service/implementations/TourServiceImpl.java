@@ -59,12 +59,7 @@ public class TourServiceImpl implements TourService {
         this.imageStorageService = imageStorageService;
 
         // Miscellaneous
-        var allTours = this.tourRepository.findAll();
-        if (allTours.size() > 0) {
-            setActiveTourIndex(allTours.get(0).getId());
-        }
 
-        eventAggregator.publish(Event.TOUR_LOADED);
     }
 
     public void addTour(Tour tour) {

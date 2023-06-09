@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourLogConverter;
@@ -35,26 +36,33 @@ public class TourLogServiceImpl implements TourLogService {
     @Override
     public void addLog(TourLog tourLog) {
         tourLogRepository.create(TourLogConverter.toTourLogDaoModel(tourLog));
+        eventAggregator.publish(Event.TOUR_CHANGED);
     }
 
     @Override
     public void editLog(TourLog tourLog) {
         tourLogRepository.update(TourLogConverter.toTourLogDaoModel(tourLog));
+        eventAggregator.publish(Event.TOUR_CHANGED);
     }
 
     @Override
     public void deleteLog(TourLog tourLog) {
         tourLogRepository.delete(TourLogConverter.toTourLogDaoModel(tourLog));
+        eventAggregator.publish(Event.TOUR_CHANGED);
     }
 
     @Override
     public void setActiveTourLogIndex(long index) {
+        activeTourLogIndex = index;
+
         if(index >= 0) {
-            activeTourLogIndex = index;
             activeTourLog = TourLogConverter.toTourLog(tourLogRepository.find(index));
         } else {
-            logger.error("No negative index allowed: " + activeTourLogIndex);
+            logger.warn("Deselected active Tour");
+            activeTourLog = null;
         }
+
+        eventAggregator.publish(Event.ACTIVE_TOUR_CHANGED);
     }
 
     @Override

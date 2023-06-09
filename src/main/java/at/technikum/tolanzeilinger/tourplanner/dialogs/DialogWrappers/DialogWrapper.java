@@ -9,5 +9,5 @@ public interface DialogWrapper<R> {
 
     R showAndReturn();
 
-    void setOptions(Object options);
+    void setOptions(R options);
 }

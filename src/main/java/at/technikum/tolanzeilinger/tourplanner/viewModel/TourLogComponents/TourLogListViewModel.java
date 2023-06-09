@@ -6,6 +6,7 @@ import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -38,15 +39,18 @@ public class TourLogListViewModel implements ViewModel {
 
     @Override
     public void initializeEventListeners() {
-        eventAggregator.addSubscriber(Event.TOUR_CHANGED, this::populateDataFromService);
+        eventAggregator.addSubscriber(Event.TOUR_CHANGED, this::update);
         // Add event listeners here
     }
 
-    private void populateDataFromService() {
+    private void update() {
+        tourLogs.clear();
+        tourLogService.setActiveTourLogIndex(-1);
 
         List<TourLog> allTourLogs = tourLogService.getAllTourLogsForTour();
         for (TourLog tourLog : allTourLogs) {
             tourLogs.add(new TourLogItem(
+                    tourLog.getId(),
                     tourLog.getLogDateTime(),
                     tourLog.getComment(),
                     tourLog.getDifficulty().name(),
@@ -60,19 +64,34 @@ public class TourLogListViewModel implements ViewModel {
         return tourLogs;
     }
 
+    public void handleTableItemClick(TourLogItem selectedItem) {
+        try {
+            tourLogService.setActiveTourLogIndex(selectedItem.getId());
+        } catch (NullPointerException e) {
+            logger.warn("Received a click that wasn't meant to be processed.");
+        }
+
+    }
+
     public static class TourLogItem {
+        private final SimpleLongProperty id;
         private final SimpleObjectProperty<LocalDateTime> dateTime;
         private final SimpleStringProperty comment;
         private final SimpleStringProperty difficulty;
         private final SimpleStringProperty totalTime;
         private final SimpleStringProperty rating;
 
-        public TourLogItem(LocalDateTime dateTime, String comment, String difficulty, String totalTime, String rating) {
+        public TourLogItem(Long id, LocalDateTime dateTime, String comment, String difficulty, String totalTime, String rating) {
+            this.id = new SimpleLongProperty(id);
             this.dateTime = new SimpleObjectProperty<>(dateTime);
             this.comment = new SimpleStringProperty(comment);
             this.difficulty = new SimpleStringProperty(difficulty);
             this.totalTime = new SimpleStringProperty(totalTime);
             this.rating = new SimpleStringProperty(rating);
+        }
+
+        public Long getId() {
+            return id.get();
         }
 
         public LocalDateTime getDateTime() {
@@ -93,6 +112,10 @@ public class TourLogListViewModel implements ViewModel {
 
         public String getRating() {
             return rating.get();
+        }
+
+        public SimpleLongProperty idProperty() {
+            return id;
         }
 
         public SimpleObjectProperty<LocalDateTime> dateTimeProperty() {

@@ -5,11 +5,11 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-public class GenericDialogWrapper implements DialogWrapper<Boolean>{
+public class InfoDialogWrapper implements DialogWrapper<Boolean> {
 
     Alert dialog;
 
-    public GenericDialogWrapper(){
+    public InfoDialogWrapper(){
         this.dialog = new Alert(Alert.AlertType.INFORMATION);
     }
 
