@@ -53,14 +53,16 @@ public class TourLogServiceImpl implements TourLogService {
 
     @Override
     public void setActiveTourLogIndex(long index) {
+        activeTourLogIndex = index;
+
         if(index >= 0) {
-            activeTourLogIndex = index;
             activeTourLog = TourLogConverter.toTourLog(tourLogRepository.find(index));
         } else {
-            logger.error("No negative index allowed: " + activeTourLogIndex);
+            logger.warn("Deselected active Tour");
+            activeTourLog = null;
         }
 
-        eventAggregator.publish(Event.TOUR_CHANGED);
+        eventAggregator.publish(Event.ACTIVE_TOUR_CHANGED);
     }
 
     @Override

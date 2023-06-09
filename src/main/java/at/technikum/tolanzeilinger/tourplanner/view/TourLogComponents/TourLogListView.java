@@ -43,5 +43,12 @@ public class TourLogListView implements View {
         difficultyColumn.setCellValueFactory(cellData -> cellData.getValue().difficultyProperty());
         totalTimeColumn.setCellValueFactory(cellData -> cellData.getValue().totalTimeProperty());
         ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
+
+        // Add event listener for table item click
+        logTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                viewModel.handleTableItemClick(logTable.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 }

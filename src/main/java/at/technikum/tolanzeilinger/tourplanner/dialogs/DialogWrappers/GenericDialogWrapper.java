@@ -24,7 +24,7 @@ public class GenericDialogWrapper implements DialogWrapper<Boolean>{
     }
 
     @Override
-    public void setOptions(Object options) {
+    public void setOptions(Boolean options) {
         //This Dialog does not have options
     }
 

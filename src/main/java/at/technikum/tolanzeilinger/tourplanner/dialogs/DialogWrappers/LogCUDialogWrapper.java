@@ -158,8 +158,26 @@ public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
     }
 
     @Override
-    public void setOptions(Object options) {
-        // This Dialog does not have options
+    public void setOptions(LogCUDialogResult options) {
+        LocalDateTime dateTime = options.getDateTime();
+        this.datePicker.setValue(
+                dateTime.toLocalDate()
+        );
+        this.timePicker.setText(
+                dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+        );
+        this.commentTextField.setText(
+                options.getComment()
+        );
+        this.difficultyChoiceBox.setValue(
+                options.getDifficulty()
+        );
+        this.totalTimeTextField.setText(
+                options.getTotalTime()
+        );
+        this.ratingTextField.setText(
+                options.getRating()
+        );
     }
 
     @Override
