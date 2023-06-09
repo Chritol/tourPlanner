@@ -1,6 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.DifficultyDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 
 import java.time.LocalDateTime;
@@ -29,8 +29,8 @@ public class TourLogDaoModelValidator {
         return comment != null; // No length validation for TEXT column
     }
 
-    private static boolean isValidDifficulty(Difficulty difficulty) {
-        return difficulty != null;
+    private static boolean isValidDifficulty(DifficultyDaoEnum difficultyDaoEnum) {
+        return difficultyDaoEnum != null;
     }
 
     private static boolean isValidTotalTime(Integer totalTime) {

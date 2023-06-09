@@ -48,4 +48,5 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.service.api.interfaces to com.fasterxml.jackson.databind, java.net.http;
     opens at.technikum.tolanzeilinger.tourplanner.service.api.implementations to com.fasterxml.jackson.databind, java.net.http;
     opens at.technikum.tolanzeilinger.tourplanner.service.api.models to com.fasterxml.jackson.databind, java.net.http;
+    opens at.technikum.tolanzeilinger.tourplanner.model.enums to com.fasterxml.jackson.databind;
 }

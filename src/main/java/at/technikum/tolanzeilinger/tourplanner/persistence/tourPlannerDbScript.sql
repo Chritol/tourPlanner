@@ -23,7 +23,7 @@ CREATE TABLE tp_tour_Log (
   tour_id INTEGER NOT NULL,
   log_datetime TIMESTAMP,
   comment TEXT,
-  difficulty VARCHAR(50),
+  difficultyDaoEnum VARCHAR(50),
   total_time INT,
   rating INT,
   FOREIGN KEY (tour_id) REFERENCES tp_tour(id)

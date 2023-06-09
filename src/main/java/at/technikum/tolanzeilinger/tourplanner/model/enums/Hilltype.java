@@ -1,6 +1,6 @@
-package at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums;
+package at.technikum.tolanzeilinger.tourplanner.model.enums;
 
-public enum HillType {
+public enum Hilltype {
     DEFAULT_STRATEGY,
     AVOID_UP_HILL,
     AVOID_DOWN_HILL,

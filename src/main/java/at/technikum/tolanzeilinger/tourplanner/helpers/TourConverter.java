@@ -1,10 +1,10 @@
 package at.technikum.tolanzeilinger.tourplanner.helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.model.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
-import at.technikum.tolanzeilinger.tourplanner.model.Transportation;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 
 public class TourConverter {
@@ -16,10 +16,10 @@ public class TourConverter {
                 tour.getDescription(),
                 tour.getFrom(),
                 tour.getTo(),
-                TransportationType.valueOf(tour.getTransportation().name()),
+                TransportationTypeDaoEnum.valueOf(tour.getTransportation().name()),
                 tour.getDistance(),
                 tour.getEstimatedTime(),
-                HillType.valueOf(tour.getHilliness().name())
+                HillTypeDaoEnum.valueOf(tour.getHilliness().name())
         );
 
         if(tour.getId() != null)

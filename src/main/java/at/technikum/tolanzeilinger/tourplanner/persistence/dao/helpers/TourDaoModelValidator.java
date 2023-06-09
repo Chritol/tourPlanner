@@ -1,7 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 
 public class TourDaoModelValidator {
@@ -31,8 +31,8 @@ public class TourDaoModelValidator {
         return destination != null && destination.length() <= 100;
     }
 
-    private static boolean isValidTransportationType(TransportationType transportationType) {
-        return transportationType != null;
+    private static boolean isValidTransportationType(TransportationTypeDaoEnum transportationTypeDaoEnum) {
+        return transportationTypeDaoEnum != null;
     }
 
     private static boolean isValidDistance(Integer distance) {
@@ -43,7 +43,7 @@ public class TourDaoModelValidator {
         return estimatedTime != null && estimatedTime >= 0;
     }
 
-    private static boolean isValidHillType(HillType hillType) {
-        return hillType != null;
+    private static boolean isValidHillType(HillTypeDaoEnum hillTypeDaoEnum) {
+        return hillTypeDaoEnum != null;
     }
 }

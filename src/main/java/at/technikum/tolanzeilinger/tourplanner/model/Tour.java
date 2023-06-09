@@ -1,5 +1,8 @@
 package at.technikum.tolanzeilinger.tourplanner.model;
 
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
+
 public class Tour {
 
     private Long id;

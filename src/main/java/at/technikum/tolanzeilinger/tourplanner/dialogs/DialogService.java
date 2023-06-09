@@ -106,7 +106,7 @@ public class DialogService {
             newLog.setTotalTime( Integer.parseInt(results.getTotalTime()));
 
             newLog.setTour(
-                    TourConverter.toTourDaoModel(tourService.getActiveTour())
+                    tourService.getActiveTour()
             );
 
             tourLogService.editLog(newLog);
@@ -212,7 +212,7 @@ public class DialogService {
             newLog.setTotalTime( Integer.parseInt(results.getTotalTime()));
 
             newLog.setTour(
-                    TourConverter.toTourDaoModel(tourService.getActiveTour())
+                    tourService.getActiveTour()
             );
 
             tourLogService.addLog(newLog);

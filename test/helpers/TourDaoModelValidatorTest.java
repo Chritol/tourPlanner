@@ -1,7 +1,7 @@
 package helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.helpers.TourDaoModelValidator;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import org.junit.jupiter.api.Test;
@@ -18,10 +18,10 @@ public class TourDaoModelValidatorTest {
                 "Test Description",
                 "Test From",
                 "Test To",
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL
         );
 
         // Act
@@ -39,10 +39,10 @@ public class TourDaoModelValidatorTest {
                 "Test Description",
                 "Test From",
                 "Test To",
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL
         );
 
         // Act
@@ -61,10 +61,10 @@ public class TourDaoModelValidatorTest {
                 "Test Description",
                 stringWith60Characters,
                 stringWith60Characters,
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL
         );
 
         // Act
@@ -82,10 +82,10 @@ public class TourDaoModelValidatorTest {
                 "Test Description",
                 "Test From",
                 "Test To",
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 -10,
                 -10,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL
         );
 
         // Act
@@ -104,10 +104,10 @@ public class TourDaoModelValidatorTest {
                 stringWith60Characters,
                 "Test From",
                 "Test To",
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL
         );
 
         // Act

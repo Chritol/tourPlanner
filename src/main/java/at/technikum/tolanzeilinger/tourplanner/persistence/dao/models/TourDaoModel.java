@@ -1,7 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.models;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import jakarta.persistence.*;
 
 @Entity
@@ -26,7 +26,7 @@ public class TourDaoModel {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transportation_type", length = 50)
-    private TransportationType transportationType;
+    private TransportationTypeDaoEnum transportationTypeDaoEnum;
 
     @Column(name = "distance")
     private Integer distance;
@@ -36,20 +36,20 @@ public class TourDaoModel {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "hill_type", length = 50)
-    private HillType hillType;
+    private HillTypeDaoEnum hillTypeDaoEnum;
 
     public TourDaoModel() {
     }
 
-    public TourDaoModel(String name, String description, String destinationFrom, String destinationTo, TransportationType transportationType, Integer distance, Integer estimatedTime, HillType hillType) {
+    public TourDaoModel(String name, String description, String destinationFrom, String destinationTo, TransportationTypeDaoEnum transportationTypeDaoEnum, Integer distance, Integer estimatedTime, HillTypeDaoEnum hillTypeDaoEnum) {
         this.name = name;
         this.description = description;
         this.destinationFrom = destinationFrom;
         this.destinationTo = destinationTo;
-        this.transportationType = transportationType;
+        this.transportationTypeDaoEnum = transportationTypeDaoEnum;
         this.distance = distance;
         this.estimatedTime = estimatedTime;
-        this.hillType = hillType;
+        this.hillTypeDaoEnum = hillTypeDaoEnum;
     }
 
     public Long getId() {
@@ -72,8 +72,8 @@ public class TourDaoModel {
         return destinationTo;
     }
 
-    public TransportationType getTransportationType() {
-        return transportationType;
+    public TransportationTypeDaoEnum getTransportationType() {
+        return transportationTypeDaoEnum;
     }
 
     public Integer getDistance() {
@@ -84,8 +84,8 @@ public class TourDaoModel {
         return estimatedTime;
     }
 
-    public HillType getHillType() {
-        return hillType;
+    public HillTypeDaoEnum getHillType() {
+        return hillTypeDaoEnum;
     }
 
     public void setId(Long id) {
@@ -100,10 +100,10 @@ public class TourDaoModel {
                 ", description='" + description + '\'' +
                 ", destinationFrom='" + destinationFrom + '\'' +
                 ", destinationTo='" + destinationTo + '\'' +
-                ", transportationType=" + transportationType +
+                ", transportationType=" + transportationTypeDaoEnum +
                 ", distance=" + distance +
                 ", estimatedTime=" + estimatedTime +
-                ", hillType=" + hillType +
+                ", hillType=" + hillTypeDaoEnum +
                 '}';
     }
 }

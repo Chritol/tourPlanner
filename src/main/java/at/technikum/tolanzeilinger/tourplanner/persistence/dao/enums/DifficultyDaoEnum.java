@@ -1,6 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums;
 
-public enum Difficulty {
+public enum DifficultyDaoEnum {
     EASY,
     INTERMEDIATE,
     HARD,
