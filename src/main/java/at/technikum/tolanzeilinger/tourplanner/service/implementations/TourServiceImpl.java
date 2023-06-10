@@ -145,6 +145,8 @@ public class TourServiceImpl implements TourService {
             }
         } catch (NullPointerException e) {
             logger.error(e.getMessage(), e);
+
+            activeTourImage = null;
         }
     }
 
@@ -256,4 +258,13 @@ public class TourServiceImpl implements TourService {
 
          return tours;
     }
+
+    public Image getActiveTourImage() {
+        return activeTourImage;
+    }
+
+    public void setActiveTourImage(Image activeTourImage) {
+        this.activeTourImage = activeTourImage;
+    }
+
 }

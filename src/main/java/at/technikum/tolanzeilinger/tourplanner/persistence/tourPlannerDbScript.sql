@@ -2,10 +2,13 @@
 
 -- docker exec -it postgres psql -U postgres simpledatastore
 
+-- DROP DATABASE IF EXISTS tourplanner_db;
 -- CREATE DATABASE tourplanner_db;
 
 -- \connect tourplanner_db;
 
+
+DROP TABLE IF EXISTS tp_tour CASCADE;
 CREATE TABLE tp_tour (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50),
@@ -20,6 +23,7 @@ CREATE TABLE tp_tour (
   child_friendliness varchar(50)
 );
 
+DROP TABLE IF EXISTS tp_tour_Log CASCADE;
 CREATE TABLE tp_tour_Log (
   id SERIAL PRIMARY KEY,
   tour_id INTEGER NOT NULL,
