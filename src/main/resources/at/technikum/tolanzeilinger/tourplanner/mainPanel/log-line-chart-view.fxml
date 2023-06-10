@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<BorderPane fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.LogLineChartView" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <LineChart title="Log Statistics" fx:id="lineChart" animated="false">
+            <xAxis>
+                <NumberAxis fx:id="xAxis" label="Attempts" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" label="Time in seconds" />
+            </yAxis>
+        </LineChart>
+    </center>
+</BorderPane>
