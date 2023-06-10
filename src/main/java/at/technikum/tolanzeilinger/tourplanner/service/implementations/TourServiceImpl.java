@@ -3,7 +3,11 @@ package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
+import at.technikum.tolanzeilinger.tourplanner.helpers.TourLogConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
+import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.api.models.TourDtoModel;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
@@ -28,6 +32,8 @@ public class TourServiceImpl implements TourService {
     // Repositories
     private final TourRepository tourRepository;
 
+    private final TourLogRepository tourLogRepository;
+
     // Services
     private final MapquestUrlBuilderService mapquestUrlBuilderService;
     private final MapquestService mapquestService;
@@ -48,12 +54,14 @@ public class TourServiceImpl implements TourService {
                            TourRepository tourRepository,
                            MapquestService mapquestService,
                            MapquestUrlBuilderService mapquestUrlBuilderService,
-                           ImageStorageService imageStorageService) {
+                           ImageStorageService imageStorageService,
+                           TourLogRepository tourLogRepository) {
         this.logger = logger;
         this.eventAggregator = eventAggregator;
 
         // Repositories
         this.tourRepository = tourRepository;
+        this.tourLogRepository = tourLogRepository;
 
         // Services
         this.mapquestService = mapquestService;
@@ -68,6 +76,34 @@ public class TourServiceImpl implements TourService {
     }
 
     public void addTour(Tour tour) {
+        TourDtoModel routeFromUrl = fetchFromApi(tour);
+
+        long id;
+
+        if (routeFromUrl != null) {
+            tour.setDistance(routeFromUrl.getDistance());
+            tour.setEstimatedTime(routeFromUrl.getTime());
+        } else {
+            logger.warn("Could not fetch route from MapQuest");
+            tour.setDistance(0);
+            tour.setEstimatedTime(0);
+            tour.setChildFriendliness(ChildFriendliness.NOT_FOR_CHILDREN);
+        }
+
+        tour.setPopularity(Popularity.NEVER_DONE);
+        tour.setChildFriendliness(ChildFriendliness.getStatus(tour, new ArrayList<>()));
+
+        id = tourRepository.create(TourConverter.toTourDaoModel(tour));
+
+        if (id > 0 && routeFromUrl != null) {
+            fetchImageForRouteAndSave(id, routeFromUrl.getSessionId());
+            logger.info("NEW TOUR ID: " + id);
+        }
+
+        setActiveTourIndex(id);
+    }
+
+    private TourDtoModel fetchFromApi(Tour tour) {
         TourDtoModel routeFromUrl = null;
         try {
             routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(tour.getFrom(), tour.getTo()));
@@ -78,29 +114,7 @@ public class TourServiceImpl implements TourService {
         } catch (InterruptedException e) {
             logger.error(e.getMessage(), e);
         }
-
-        long id = activeTourIndex;
-
-        if(routeFromUrl != null) {
-            tour.setDistance(routeFromUrl.getDistance());
-            tour.setEstimatedTime(routeFromUrl.getTime());
-
-            id = tourRepository.create(TourConverter.toTourDaoModel(tour));
-
-            if (id > 0) {
-                fetchImageForRouteAndSave(id, routeFromUrl.getSessionId());
-                logger.info("NEW TOUR ID:" + id);
-            }
-        } else {
-            logger.warn("Could not fetch route from MapQuest");
-
-            tour.setDistance(0);
-            tour.setEstimatedTime(0);
-
-            id = tourRepository.create(TourConverter.toTourDaoModel(tour));
-        }
-
-        setActiveTourIndex(id);
+        return routeFromUrl;
     }
 
     public void setActiveTourIndex(long index) {
@@ -197,17 +211,15 @@ public class TourServiceImpl implements TourService {
             oldTour.setHilliness(newTour.getHilliness());
         }
 
-        TourDtoModel routeFromUrl = null;
-        try {
-            routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(oldTour.getFrom(), oldTour.getTo()));
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        } catch (URISyntaxException e) {
-            logger.error(e.getMessage(), e);
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage(), e);
-        }
+        oldTour.setChildFriendliness(
+                ChildFriendliness.getStatus(oldTour,
+                        tourLogRepository
+                                .findAllOfTour(TourConverter.toTourDaoModel(oldTour))
+                                .stream()
+                                .map(it -> TourLogConverter.toTourLog(it))
+                                .toList()));
 
+        TourDtoModel routeFromUrl = fetchFromApi(oldTour);
 
         if(routeFromUrl != null) {
             oldTour.setDistance(routeFromUrl.getDistance());
@@ -244,6 +256,4 @@ public class TourServiceImpl implements TourService {
 
          return tours;
     }
-
-
 }

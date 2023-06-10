@@ -19,6 +19,8 @@ public class TourDataDisplayViewModel implements ViewModel {
     private StringProperty toText = new SimpleStringProperty();
     private StringProperty transportationText = new SimpleStringProperty();
     private StringProperty hillinessText = new SimpleStringProperty();
+    private StringProperty popularityText = new SimpleStringProperty();
+    private StringProperty childFriendlinessText = new SimpleStringProperty();
 
     private StringProperty distanceText = new SimpleStringProperty();
     private StringProperty estimatedTimeText = new SimpleStringProperty();
@@ -54,6 +56,8 @@ public class TourDataDisplayViewModel implements ViewModel {
         toText.set("-");
         transportationText.set("-");
         hillinessText.set("-");
+        childFriendlinessText.set("-");
+        popularityText.set("-");
 
         distanceText.set("-");
         estimatedTimeText.set("-");
@@ -84,6 +88,8 @@ public class TourDataDisplayViewModel implements ViewModel {
             hillinessText.set(activeTour.getHilliness().toString());
             distanceText.set(activeTour.getDistance()+" km");
             estimatedTimeText.set(activeTour.getEstimatedTime()+" minutes");
+            popularityText.set(activeTour.getPopularity().getTextValue());
+            childFriendlinessText.set(activeTour.getChildFriendliness().getTextValue());
 
             imageProperty.set(tourService.getActiveImage());
         }
@@ -218,6 +224,22 @@ public class TourDataDisplayViewModel implements ViewModel {
 
     public ObjectProperty<Image> imagePropertyProperty() {
         return imageProperty;
+    }
+
+    public String getPopularityText() {
+        return popularityText.get();
+    }
+
+    public StringProperty popularityTextProperty() {
+        return popularityText;
+    }
+
+    public String getChildFriendlinessText() {
+        return childFriendlinessText.get();
+    }
+
+    public StringProperty childFriendlinessTextProperty() {
+        return childFriendlinessText;
     }
 
     public void setSubmitButtonIsActive(boolean submitButtonIsActive) {

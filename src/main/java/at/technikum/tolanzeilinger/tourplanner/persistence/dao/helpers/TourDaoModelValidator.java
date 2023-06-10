@@ -1,6 +1,8 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.helpers;
 
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.ChildFriendlinessDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.PopularityDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 
@@ -16,7 +18,10 @@ public class TourDaoModelValidator {
                 && isValidTransportationType(model.getTransportationType())
                 && isValidDistance(model.getDistance())
                 && isValidEstimatedTime(model.getEstimatedTime())
-                && isValidHillType(model.getHillType());
+                && isValidHillType(model.getHillType())
+                && isValidPopularity(model.getPopularityDaoEnum())
+                && isValidChildFriendliness(model.getChildFriendlinessDaoEnum())
+                ;
     }
 
     private static boolean isValidName(String name) {
@@ -45,5 +50,13 @@ public class TourDaoModelValidator {
 
     private static boolean isValidHillType(HillTypeDaoEnum hillTypeDaoEnum) {
         return hillTypeDaoEnum != null;
+    }
+
+    private static boolean isValidPopularity(PopularityDaoEnum popularityDaoEnum) {
+        return popularityDaoEnum != null;
+    }
+
+    private static boolean isValidChildFriendliness(ChildFriendlinessDaoEnum childFriendlinessDaoEnum) {
+        return childFriendlinessDaoEnum != null;
     }
 }

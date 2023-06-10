@@ -15,7 +15,9 @@ CREATE TABLE tp_tour (
   transportation_type VARCHAR(50),
   distance INT,
   estimated_time INT,
-  hill_type varchar(50)
+  hill_type varchar(50),
+  popularity varchar(50),
+  child_friendliness varchar(50)
 );
 
 CREATE TABLE tp_tour_Log (
@@ -23,7 +25,7 @@ CREATE TABLE tp_tour_Log (
   tour_id INTEGER NOT NULL,
   log_datetime TIMESTAMP,
   comment TEXT,
-  difficultyDaoEnum VARCHAR(50),
+  difficulty VARCHAR(50),
   total_time INT,
   rating INT,
   FOREIGN KEY (tour_id) REFERENCES tp_tour(id)

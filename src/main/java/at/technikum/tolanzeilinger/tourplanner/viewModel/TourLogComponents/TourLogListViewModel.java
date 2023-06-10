@@ -47,16 +47,22 @@ public class TourLogListViewModel implements ViewModel {
         tourLogs.clear();
         tourLogService.setActiveTourLogIndex(-1);
 
-        List<TourLog> allTourLogs = tourLogService.getAllTourLogsForTour();
-        for (TourLog tourLog : allTourLogs) {
-            tourLogs.add(new TourLogItem(
-                    tourLog.getId(),
-                    tourLog.getLogDateTime(),
-                    tourLog.getComment(),
-                    tourLog.getDifficulty().name(),
-                    tourLog.getTotalTime().toString(),
-                    tourLog.getRating().toString()
-            ));
+        List<TourLog> allTourLogs = tourLogService.getAllTourLogsForActiveTour();
+        if(allTourLogs != null) {
+            for (TourLog tourLog : allTourLogs) {
+                tourLogs.add(new TourLogItem(
+                        tourLog.getId(),
+                        tourLog.getLogDateTime(),
+                        tourLog.getComment(),
+                        tourLog.getDifficulty().name(),
+                        tourLog.getTotalTime().toString(),
+                        tourLog.getRating().toString()
+                ));
+            }
+        } else {
+            long activeTourLogIndex = tourLogService.getActiveTourLogIndex();
+            if(activeTourLogIndex >= 0)
+                logger.warn("No logs exist for tour with id: " + activeTourLogIndex);
         }
     }
 

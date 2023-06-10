@@ -36,7 +36,11 @@ public class TourDataDisplayView implements View {
     @FXML
     public ImageView mapImageView;
 
+    @FXML
+    public Label popularityLabel;
 
+    @FXML
+    public Label childFriendlinessLabel;
 
     private final TourDataDisplayViewModel viewModel;
 
@@ -55,6 +59,9 @@ public class TourDataDisplayView implements View {
         toLabel.textProperty().bindBidirectional(viewModel.toTextProperty());
         transportationLabel.textProperty().bindBidirectional(viewModel.transportationTextProperty());
         hillinessLabel.textProperty().bindBidirectional(viewModel.hillinessTextProperty());
+
+        popularityLabel.textProperty().bind(viewModel.popularityTextProperty());
+        childFriendlinessLabel.textProperty().bind(viewModel.childFriendlinessTextProperty());
 
         distanceLabel.textProperty().bindBidirectional(viewModel.distanceTextProperty());
         estimatedTimeLabel.textProperty().bindBidirectional(viewModel.estimatedTimeTextProperty());
