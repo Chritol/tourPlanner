@@ -1,6 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.model.enums;
 
-public enum Hilltype {
+public enum HillType {
     DEFAULT_STRATEGY,
     AVOID_UP_HILL,
     AVOID_DOWN_HILL,
