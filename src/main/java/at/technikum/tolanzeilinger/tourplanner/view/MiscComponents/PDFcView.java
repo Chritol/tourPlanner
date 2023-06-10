@@ -12,7 +12,7 @@ public class PDFcView implements View {
     private Button createPdfButton;
 
     @FXML
-    private Button createExcelReportButton;
+    private Button exportExcelReportButton;
 
     public PDFcView(PDFcViewModel viewModel) {
         this.viewModel = viewModel;
@@ -21,7 +21,7 @@ public class PDFcView implements View {
     @FXML
     public void initialize() {
         createPdfButton.disableProperty().bind(viewModel.pdfExportButtonDisabledProperty());
-        createExcelReportButton.disableProperty().bind(viewModel.excelExportButtonDisabledProperty());
+        exportExcelReportButton.disableProperty().bind(viewModel.excelExportButtonDisabledProperty());
     }
 
     public void createPDF() {
@@ -30,4 +30,5 @@ public class PDFcView implements View {
 
     public void createExcelReport() { viewModel.createExcelReport(); }
 
+    public void importExcelReport() { viewModel.importExcelReport(); }
 }

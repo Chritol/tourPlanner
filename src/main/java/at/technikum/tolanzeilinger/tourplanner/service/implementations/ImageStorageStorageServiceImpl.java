@@ -43,7 +43,7 @@ public class ImageStorageStorageServiceImpl implements ImageStorageService {
 
             // Publish the image saved event
             eventAggregator.publish(Event.IMAGE_SAVED);
-            logger.info("Stored new image. Path: " + imagePath);
+            logger.info("Stored new image successfully. Path: " + imagePath);
 
             return true;
         } catch (IOException e) {

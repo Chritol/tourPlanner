@@ -1,6 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
 
-import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataEditViewModel;
@@ -29,7 +29,7 @@ public class TourDataEditView implements View {
     private ComboBox<Transportation> transportationComboBox;
 
     @FXML
-    private ComboBox<Hilltype> hillinessComboBox;
+    private ComboBox<HillType> hillinessComboBox;
 
     private final TourDataEditViewModel viewModel;
 
@@ -75,7 +75,7 @@ public class TourDataEditView implements View {
         String from = fromTextField.getText();
         String to = toTextField.getText();
         Transportation transportation = transportationComboBox.getValue();
-        Hilltype hilliness = hillinessComboBox.getValue();
+        HillType hilliness = hillinessComboBox.getValue();
 
         System.out.println("Name: " + name);
         System.out.println("Description: " + description);

@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.ExcelHeaderConstants;
 import at.technikum.tolanzeilinger.tourplanner.constants.PropertyConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
@@ -28,21 +29,21 @@ import java.util.Map;
 
 public class ExportDataServiceImpl implements ExportDataService {
     public static final String[] HEADERS = new String[]{
-            "Tour Name",
-            "Description",
-            "Destination From",
-            "Destination To",
-            "Transportation Type",
-            "Distance",
-            "Estimated Time",
-            "Hill Type",
-            "Popularity",
-            "Child Friendliness",
-            "Log Date",
-            "Comment",
-            "Difficulty",
-            "Total Time",
-            "Rating"
+            ExcelHeaderConstants.TOUR_NAME,
+            ExcelHeaderConstants.DESCRIPTION,
+            ExcelHeaderConstants.DESTINATION_FROM,
+            ExcelHeaderConstants.DESTINATION_TO,
+            ExcelHeaderConstants.TRANSPORTATION_TYPE,
+            ExcelHeaderConstants.DISTANCE,
+            ExcelHeaderConstants.ESTIMATED_TIME,
+            ExcelHeaderConstants.HILL_TYPE,
+            ExcelHeaderConstants.POPULARITY,
+            ExcelHeaderConstants.CHILD_FRIENDLINESS,
+            ExcelHeaderConstants.LOG_DATE,
+            ExcelHeaderConstants.COMMENT,
+            ExcelHeaderConstants.DIFFICULTY,
+            ExcelHeaderConstants.TOTAL_TIME,
+            ExcelHeaderConstants.RATING
     };
     private final Logger logger;
     private final TourRepository tourRepository;
@@ -83,6 +84,7 @@ public class ExportDataServiceImpl implements ExportDataService {
             }
 
             eventAggregator.publish(Event.EXCEL_CREATED);
+            logger.info("Exported data successfully");
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
@@ -149,7 +151,7 @@ public class ExportDataServiceImpl implements ExportDataService {
                 allData.put(it, logs != null ? logs : new ArrayList<>());
             }
         }
-        
+
         return allData;
     }
 }

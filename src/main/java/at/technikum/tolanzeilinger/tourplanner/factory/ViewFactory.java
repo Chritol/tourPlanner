@@ -85,6 +85,8 @@ public class ViewFactory {
     private final PdfService pdfService;
     private final FolderOpenerService folderOpenerService;
     private final ExportDataService exportDataService;
+    private final ImportDataService importDataService;
+    private final FilePickerService filePickerService;
 
     // View Models
     private MainViewModel mainViewModel;
@@ -117,7 +119,7 @@ public class ViewFactory {
         this.hibernateSessionFactory = new HibernateSessionFactory();
 
         // TODO - COMMENT IF NOT NEEDED
-        // clearDatabase(hibernateSessionFactory);
+        clearDatabase(hibernateSessionFactory);
 
         this.viewMap = new HashMap<>();
         initializeViewMap();
@@ -132,21 +134,23 @@ public class ViewFactory {
         this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
 
+        this.filePickerService = new FilePickerServiceImpl();
         this.folderOpenerService = new FolderOpenerServiceImpl(propertyLoaderService, logger, eventAggregator);
-        this.exportDataService = new ExportDataServiceImpl(logger, tourRepository, tourLogRepository, propertyLoaderService, folderOpenerService, eventAggregator);
         this.imageStorageService = new ImageStorageStorageServiceImpl(propertyLoaderService, eventAggregator, logger, folderOpenerService);
 
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService, tourLogRepository);
         this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator, tourRepository);
 
         this.pdfService = new PdfServiceImpl(propertyLoaderService, logger, eventAggregator, tourService, tourLogService, folderOpenerService);
+        this.importDataService = new ImportDataServiceImpl(logger, tourService, tourLogService);
+        this.exportDataService = new ExportDataServiceImpl(logger, tourRepository, tourLogRepository, propertyLoaderService, folderOpenerService, eventAggregator);
 
         this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
 
-        this.pdFcViewModel = new PDFcViewModel(eventAggregator, logger, tourService, exportDataService, pdfService);
+        this.pdFcViewModel = new PDFcViewModel(eventAggregator, logger, tourService, exportDataService, pdfService, importDataService, filePickerService);
         this.topButtonsViewModel = new TopButtonsViewModel(eventAggregator, logger);
 
         this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);

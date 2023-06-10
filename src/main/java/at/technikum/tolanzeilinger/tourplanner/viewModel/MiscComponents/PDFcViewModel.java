@@ -2,13 +2,14 @@ package at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents;
 
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.FileType;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ExportDataService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PdfService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.*;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.ViewModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+
+import java.io.File;
 
 public class PDFcViewModel implements ViewModel {
 
@@ -21,19 +22,25 @@ public class PDFcViewModel implements ViewModel {
 
     private final ExportDataService exportDataService;
     private final PdfService pdfService;
+    private final ImportDataService importDataService;
+    private final FilePickerService filePickerService;
 
     public PDFcViewModel(
             EventAggregator eventAggregator,
             Logger logger,
             TourService tourService,
             ExportDataService exportDataService,
-            PdfService pdfService
+            PdfService pdfService,
+            ImportDataService importDataService,
+            FilePickerService filePickerService
     ) {
         this.eventAggregator = eventAggregator;
         this.logger = logger;
         this.tourService = tourService;
         this.exportDataService = exportDataService;
         this.pdfService = pdfService;
+        this.importDataService = importDataService;
+        this.filePickerService = filePickerService;
 
         initializeView();
         initializeEventListeners();
@@ -77,5 +84,15 @@ public class PDFcViewModel implements ViewModel {
     public void createExcelReport() {
         logger.info("Excel-Report-Creator-Button pressed");
         exportDataService.exportToursAndLogs();
+    }
+
+    public void importExcelReport() {
+        File file = filePickerService.pickFile(FileType.EXCEL);
+        if (file != null) {
+            logger.info("Trying to import report");
+            importDataService.importExcel(file.getAbsolutePath());
+        } else {
+            logger.error("Could not import data. Invalid file");
+        }
     }
 }
