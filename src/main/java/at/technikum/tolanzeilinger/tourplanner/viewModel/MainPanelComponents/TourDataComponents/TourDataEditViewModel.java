@@ -4,7 +4,7 @@ import at.technikum.tolanzeilinger.tourplanner.constants.StylingConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
@@ -28,9 +28,9 @@ public class TourDataEditViewModel implements ViewModel {
     private SimpleStringProperty fromProperty = new SimpleStringProperty();
     private SimpleStringProperty toProperty = new SimpleStringProperty();
     private SimpleObjectProperty<Transportation> transportationProperty = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<Hilltype> hillinessProperty = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<HillType> hillinessProperty = new SimpleObjectProperty<>();
     private SimpleObjectProperty<ObservableList<Transportation>> transportationOptionsProperty = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<ObservableList<Hilltype>> hillinessOptionsProperty = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<ObservableList<HillType>> hillinessOptionsProperty = new SimpleObjectProperty<>();
 
     ObjectProperty<Border> nameBorderProperty = new SimpleObjectProperty<>();
     ObjectProperty<Border> descriptionBorderProperty = new SimpleObjectProperty<>();
@@ -59,7 +59,7 @@ public class TourDataEditViewModel implements ViewModel {
     @Override
     public void initializeView() {
         transportationOptionsProperty.set(FXCollections.observableArrayList(Transportation.values()));
-        hillinessOptionsProperty.set(FXCollections.observableArrayList(Hilltype.values()));
+        hillinessOptionsProperty.set(FXCollections.observableArrayList(HillType.values()));
 
         setDefaultText();
     }
@@ -170,15 +170,15 @@ public class TourDataEditViewModel implements ViewModel {
         this.transportationProperty.set(transportationProperty);
     }
 
-    public Hilltype getHillinessProperty() {
+    public HillType getHillinessProperty() {
         return hillinessProperty.get();
     }
 
-    public SimpleObjectProperty<Hilltype> hillinessPropertyProperty() {
+    public SimpleObjectProperty<HillType> hillinessPropertyProperty() {
         return hillinessProperty;
     }
 
-    public void setHillinessProperty(Hilltype hillinessProperty) {
+    public void setHillinessProperty(HillType hillinessProperty) {
         this.hillinessProperty.set(hillinessProperty);
     }
 
@@ -194,15 +194,15 @@ public class TourDataEditViewModel implements ViewModel {
         this.transportationOptionsProperty.set(transportationOptionsProperty);
     }
 
-    public ObservableList<Hilltype> getHillinessOptionsProperty() {
+    public ObservableList<HillType> getHillinessOptionsProperty() {
         return hillinessOptionsProperty.get();
     }
 
-    public SimpleObjectProperty<ObservableList<Hilltype>> hillinessOptionsPropertyProperty() {
+    public SimpleObjectProperty<ObservableList<HillType>> hillinessOptionsPropertyProperty() {
         return hillinessOptionsProperty;
     }
 
-    public void setHillinessOptionsProperty(ObservableList<Hilltype> hillinessOptionsProperty) {
+    public void setHillinessOptionsProperty(ObservableList<HillType> hillinessOptionsProperty) {
         this.hillinessOptionsProperty.set(hillinessOptionsProperty);
     }
 

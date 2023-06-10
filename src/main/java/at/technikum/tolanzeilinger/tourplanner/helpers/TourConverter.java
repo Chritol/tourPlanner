@@ -1,7 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.helpers;
 
 import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
-import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
@@ -46,7 +46,7 @@ public class TourConverter {
         tour.setTransportation(Transportation.valueOf(tourDaoModel.getTransportationType().name()));
         tour.setDistance(tourDaoModel.getDistance());
         tour.setEstimatedTime(tourDaoModel.getEstimatedTime());
-        tour.setHilliness(Hilltype.valueOf(tourDaoModel.getHillType().name()));
+        tour.setHilliness(HillType.valueOf(tourDaoModel.getHillType().name()));
         tour.setId(tourDaoModel.getId());
         tour.setPopularity(Popularity.valueOf(tourDaoModel.getPopularityDaoEnum().name()));
         tour.setChildFriendliness(ChildFriendliness.valueOf(tourDaoModel.getChildFriendlinessDaoEnum().name()));

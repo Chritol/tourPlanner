@@ -1,6 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
 
-import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.HillType;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
@@ -29,7 +29,7 @@ public class TourDataCreateView implements View {
     private ComboBox<Transportation> transportationComboBox;
 
     @FXML
-    private ComboBox<Hilltype> hillinessComboBox;
+    private ComboBox<HillType> hillinessComboBox;
     @FXML
     public Button submitButton;
 
