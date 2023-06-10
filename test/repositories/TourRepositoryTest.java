@@ -4,8 +4,10 @@ import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.ChildFriendlinessDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.PopularityDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourRepositoryImpl;
 import jakarta.persistence.NoResultException;
@@ -44,10 +46,12 @@ public class TourRepositoryTest {
                 "Test",
                 "Wien",
                 "Linz",
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         ));
 
         Session sessionMock = mock(Session.class);
@@ -63,6 +67,8 @@ public class TourRepositoryTest {
         when(tour.getDistance()).thenCallRealMethod();
         when(tour.getEstimatedTime()).thenCallRealMethod();
         when(tour.getHillType()).thenCallRealMethod();
+        when(tour.getPopularityDaoEnum()).thenCallRealMethod();
+        when(tour.getChildFriendlinessDaoEnum()).thenCallRealMethod();
         when(tour.getId()).thenReturn(1L);
 
         String test = tour.getName();
@@ -86,7 +92,9 @@ public class TourRepositoryTest {
                 null,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         );
 
         // Act
@@ -149,10 +157,12 @@ public class TourRepositoryTest {
                 "Test",
                 "Wien",
                 "Linz",
-                TransportationType.BIKE,
+                TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillType.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         ));
 
         Session sessionMock = mock(Session.class);
@@ -168,6 +178,8 @@ public class TourRepositoryTest {
         when(tour.getDistance()).thenCallRealMethod();
         when(tour.getEstimatedTime()).thenCallRealMethod();
         when(tour.getHillType()).thenCallRealMethod();
+        when(tour.getPopularityDaoEnum()).thenCallRealMethod();
+        when(tour.getChildFriendlinessDaoEnum()).thenCallRealMethod();
 
         // Act
         boolean result = tourRepository.update(tour);

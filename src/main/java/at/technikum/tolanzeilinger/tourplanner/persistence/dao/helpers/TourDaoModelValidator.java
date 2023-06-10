@@ -1,7 +1,9 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillType;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationType;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.ChildFriendlinessDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.PopularityDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 
 public class TourDaoModelValidator {
@@ -16,7 +18,10 @@ public class TourDaoModelValidator {
                 && isValidTransportationType(model.getTransportationType())
                 && isValidDistance(model.getDistance())
                 && isValidEstimatedTime(model.getEstimatedTime())
-                && isValidHillType(model.getHillType());
+                && isValidHillType(model.getHillType())
+                && isValidPopularity(model.getPopularityDaoEnum())
+                && isValidChildFriendliness(model.getChildFriendlinessDaoEnum())
+                ;
     }
 
     private static boolean isValidName(String name) {
@@ -31,8 +36,8 @@ public class TourDaoModelValidator {
         return destination != null && destination.length() <= 100;
     }
 
-    private static boolean isValidTransportationType(TransportationType transportationType) {
-        return transportationType != null;
+    private static boolean isValidTransportationType(TransportationTypeDaoEnum transportationTypeDaoEnum) {
+        return transportationTypeDaoEnum != null;
     }
 
     private static boolean isValidDistance(Integer distance) {
@@ -43,7 +48,15 @@ public class TourDaoModelValidator {
         return estimatedTime != null && estimatedTime >= 0;
     }
 
-    private static boolean isValidHillType(HillType hillType) {
-        return hillType != null;
+    private static boolean isValidHillType(HillTypeDaoEnum hillTypeDaoEnum) {
+        return hillTypeDaoEnum != null;
+    }
+
+    private static boolean isValidPopularity(PopularityDaoEnum popularityDaoEnum) {
+        return popularityDaoEnum != null;
+    }
+
+    private static boolean isValidChildFriendliness(ChildFriendlinessDaoEnum childFriendlinessDaoEnum) {
+        return childFriendlinessDaoEnum != null;
     }
 }

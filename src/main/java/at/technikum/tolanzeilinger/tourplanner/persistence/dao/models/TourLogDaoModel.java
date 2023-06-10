@@ -1,7 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.persistence.dao.models;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.DifficultyDaoEnum;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class TourLogDaoModel {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "difficulty", length = 50)
-    private Difficulty difficulty;
+    private DifficultyDaoEnum difficultyDaoEnum;
 
     @Column(name = "total_time")
     private Integer totalTime;
@@ -34,11 +33,11 @@ public class TourLogDaoModel {
     @Column(name = "rating")
     private Integer rating;
 
-    public TourLogDaoModel(TourDaoModel tour, LocalDateTime logDateTime, String comment, Difficulty difficulty, Integer totalTime, Integer rating) {
+    public TourLogDaoModel(TourDaoModel tour, LocalDateTime logDateTime, String comment, DifficultyDaoEnum difficultyDaoEnum, Integer totalTime, Integer rating) {
         this.tour = tour;
         this.logDateTime = logDateTime;
         this.comment = comment;
-        this.difficulty = difficulty;
+        this.difficultyDaoEnum = difficultyDaoEnum;
         this.totalTime = totalTime;
         this.rating = rating;
     }
@@ -63,8 +62,8 @@ public class TourLogDaoModel {
         return comment;
     }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public DifficultyDaoEnum getDifficulty() {
+        return difficultyDaoEnum;
     }
 
     public Integer getTotalTime() {
@@ -86,7 +85,7 @@ public class TourLogDaoModel {
                 ", tour=" + tour +
                 ", logDateTime=" + logDateTime +
                 ", comment='" + comment + '\'' +
-                ", difficulty=" + difficulty +
+                ", difficulty=" + difficultyDaoEnum +
                 ", totalTime='" + totalTime + '\'' +
                 ", rating=" + rating +
                 '}';

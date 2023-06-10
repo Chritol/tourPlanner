@@ -1,20 +1,19 @@
 package at.technikum.tolanzeilinger.tourplanner.model;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Difficulty;
 
 import java.time.LocalDateTime;
 
 public class TourLog {
     private Long id;
-    private TourDaoModel tour;
+    private Tour tour;
     private LocalDateTime logDateTime;
     private String comment;
     private Difficulty difficulty;
     private Integer totalTime;
     private Integer rating;
 
-    public TourLog(Long id, TourDaoModel tour, LocalDateTime logDateTime, String comment, Difficulty difficulty, Integer totalTime, Integer rating) {
+    public TourLog(Long id, Tour tour, LocalDateTime logDateTime, String comment, Difficulty difficulty, Integer totalTime, Integer rating) {
         this.id = id;
         this.tour = tour;
         this.logDateTime = logDateTime;
@@ -35,11 +34,11 @@ public class TourLog {
         this.id = id;
     }
 
-    public TourDaoModel getTour() {
+    public Tour getTour() {
         return tour;
     }
 
-    public void setTour(TourDaoModel tour) {
+    public void setTour(Tour tour) {
         this.tour = tour;
     }
 

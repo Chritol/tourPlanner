@@ -131,8 +131,8 @@ public class ViewFactory {
         this.imageStorageService = new ImageStorageStorageServiceImpl(propertyLoaderService, eventAggregator, logger);
         this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
-        this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService);
-        this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator);
+        this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService, tourLogRepository);
+        this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator, tourRepository);
 
         this.pdfService = new PdfServiceImpl(propertyLoaderService, logger, eventAggregator, tourService, tourLogService);
 

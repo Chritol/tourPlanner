@@ -15,7 +15,9 @@ CREATE TABLE tp_tour (
   transportation_type VARCHAR(50),
   distance INT,
   estimated_time INT,
-  hill_type varchar(50)
+  hill_type varchar(50),
+  popularity varchar(50),
+  child_friendliness varchar(50)
 );
 
 CREATE TABLE tp_tour_Log (

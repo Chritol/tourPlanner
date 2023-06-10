@@ -1,14 +1,13 @@
 package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
 
-import at.technikum.tolanzeilinger.tourplanner.model.Hilltype;
-import at.technikum.tolanzeilinger.tourplanner.model.Transportation;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 

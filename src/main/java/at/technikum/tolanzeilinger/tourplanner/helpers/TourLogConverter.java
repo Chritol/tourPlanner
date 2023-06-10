@@ -1,6 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.helpers;
 
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.DifficultyDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 
 public class TourLogConverter {
@@ -9,10 +10,10 @@ public class TourLogConverter {
 
         TourLog tourLog = new TourLog(
                 daoModel.getId(),
-                daoModel.getTour(),
+                TourConverter.toTour(daoModel.getTour()),
                 daoModel.getLogDateTime(),
                 daoModel.getComment(),
-                daoModel.getDifficulty(),
+                at.technikum.tolanzeilinger.tourplanner.model.enums.Difficulty.valueOf(daoModel.getDifficulty().name()),
                 daoModel.getTotalTime(),
                 daoModel.getRating()
         );
@@ -22,10 +23,10 @@ public class TourLogConverter {
     public static TourLogDaoModel toTourLogDaoModel(TourLog tourLog) {
 
         TourLogDaoModel daoModel = new TourLogDaoModel(
-                tourLog.getTour(),
+                TourConverter.toTourDaoModel(tourLog.getTour()),
                 tourLog.getLogDateTime(),
                 tourLog.getComment(),
-                tourLog.getDifficulty(),
+                DifficultyDaoEnum.valueOf(tourLog.getDifficulty().name()),
                 tourLog.getTotalTime(),
                 tourLog.getRating()
         );

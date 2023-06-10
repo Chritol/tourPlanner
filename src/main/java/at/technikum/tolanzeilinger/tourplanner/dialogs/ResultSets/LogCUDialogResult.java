@@ -1,6 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets;
 
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
+
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Difficulty;
 
 import java.time.LocalDateTime;
 

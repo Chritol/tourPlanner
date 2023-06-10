@@ -2,7 +2,7 @@ package at.technikum.tolanzeilinger.tourplanner.dialogs.DialogWrappers;
 
 import at.technikum.tolanzeilinger.tourplanner.constants.StylingConstants;
 import at.technikum.tolanzeilinger.tourplanner.dialogs.ResultSets.LogCUDialogResult;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.Difficulty;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Difficulty;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;

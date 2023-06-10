@@ -1,7 +1,7 @@
 package at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents;
 
-import at.technikum.tolanzeilinger.tourplanner.model.Hilltype;
-import at.technikum.tolanzeilinger.tourplanner.model.Transportation;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
 import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataEditViewModel;
 import javafx.event.ActionEvent;

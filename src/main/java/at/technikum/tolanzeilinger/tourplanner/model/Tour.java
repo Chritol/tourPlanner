@@ -1,5 +1,10 @@
 package at.technikum.tolanzeilinger.tourplanner.model;
 
+import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Hilltype;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
+import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
+
 public class Tour {
 
     private Long id;
@@ -11,6 +16,10 @@ public class Tour {
     private Hilltype hilliness;
     private int distance;
     private int estimatedTime;
+
+    private Popularity popularity;
+
+    private ChildFriendliness childFriendliness;
 
     public Tour(String name, String description, String from, String to){
         this.name = name;
@@ -89,5 +98,21 @@ public class Tour {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Popularity getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Popularity popularity) {
+        this.popularity = popularity;
+    }
+
+    public ChildFriendliness getChildFriendliness() {
+        return childFriendliness;
+    }
+
+    public void setChildFriendliness(ChildFriendliness childFriendliness) {
+        this.childFriendliness = childFriendliness;
     }
 }
