@@ -89,8 +89,7 @@ public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
 
                 String comment = commentTextField.getText();
                 Difficulty difficulty = difficultyChoiceBox.getValue();
-                String totalTime = totalTimeTextField.getText();
-                String rating = ratingTextField.getText();
+
 
                 // Validate inputs
                 boolean isValid = true;
@@ -123,16 +122,32 @@ public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
                     isValid = false;
                 }
 
+                String totalTimeString = totalTimeTextField.getText();
+                int totalTime = 0;
                 totalTimeTextField.setBorder(StylingConstants.NORMAL_BORDER);
-                if (isNullOrWhitespace(totalTime) || !totalTime.matches("\\d+")) {
+                if (isNullOrWhitespace(totalTimeString) || !totalTimeString.matches("\\d+")) {
                     totalTimeTextField.setBorder(StylingConstants.ERROR_BORDER);
                     isValid = false;
+                } else {
+                    totalTime = Integer.parseInt(totalTimeString);
+                    if (totalTime < 0) {
+                        totalTimeTextField.setBorder(StylingConstants.ERROR_BORDER);
+                        isValid = false;
+                    }
                 }
 
+                String ratingString = ratingTextField.getText();
+                int rating = 0;
                 ratingTextField.setBorder(StylingConstants.NORMAL_BORDER);
-                if (isNullOrWhitespace(rating) || !rating.matches("\\d+")) {
+                if (isNullOrWhitespace(ratingString) || !ratingString.matches("\\d+")) {
                     ratingTextField.setBorder(StylingConstants.ERROR_BORDER);
                     isValid = false;
+                } else {
+                    rating = Integer.parseInt(ratingString);
+                    if (rating < 0 || rating > 10) {
+                        ratingTextField.setBorder(StylingConstants.ERROR_BORDER);
+                        isValid = false;
+                    }
                 }
 
                 if (isValid) {
@@ -140,8 +155,8 @@ public class LogCUDialogWrapper implements DialogWrapper<LogCUDialogResult> {
                             dateTime,
                             clearTrailingWhitespaces(comment),
                             difficulty,
-                            totalTime,
-                            rating
+                            ""+totalTime,
+                            ""+rating
                     ); // Return null if any input is invalid
                 }
 

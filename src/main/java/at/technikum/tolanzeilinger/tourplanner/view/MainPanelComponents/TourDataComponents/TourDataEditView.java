@@ -69,20 +69,6 @@ public class TourDataEditView implements View {
     @FXML
     public void handleSubmitButtonClicked(ActionEvent actionEvent) {
         viewModel.submit();
-
-        String name = nameTextField.getText();
-        String description = descriptionTextField.getText();
-        String from = fromTextField.getText();
-        String to = toTextField.getText();
-        Transportation transportation = transportationComboBox.getValue();
-        HillType hilliness = hillinessComboBox.getValue();
-
-        System.out.println("Name: " + name);
-        System.out.println("Description: " + description);
-        System.out.println("From: " + from);
-        System.out.println("To: " + to);
-        System.out.println("Transportation: " + transportation);
-        System.out.println("Hilliness: " + hilliness);
     }
 
     public void handleClose(MouseEvent mouseEvent) {

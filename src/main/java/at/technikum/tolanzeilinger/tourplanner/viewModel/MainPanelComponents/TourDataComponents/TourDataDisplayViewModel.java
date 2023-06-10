@@ -69,6 +69,9 @@ public class TourDataDisplayViewModel implements ViewModel {
     public void initializeEventListeners() {
         eventAggregator.addSubscriber(Event.TOUR_CHANGED, this::onLoadedTourAction);
         eventAggregator.addSubscriber(Event.OPEN_TOUR_ACTION, this::onLoadedTourAction);
+        eventAggregator.addSubscriber(Event.TOUR_UPDATED, this::onLoadedTourAction);
+        eventAggregator.addSubscriber(Event.TOUR_CREATED, this::onLoadedTourAction);
+        eventAggregator.addSubscriber(Event.TOUR_DELETED, this::onLoadedTourAction);
     }
 
     public void onLoadedTourAction() {

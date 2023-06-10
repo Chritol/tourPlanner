@@ -88,8 +88,8 @@ public class DialogService {
                         activeTourLog.getLogDateTime(),
                         activeTourLog.getComment(),
                         activeTourLog.getDifficulty(),
-                        ""+activeTourLog.getRating(),
-                        ""+activeTourLog.getTotalTime()
+                        ""+activeTourLog.getTotalTime(),
+                        ""+activeTourLog.getRating()
                 )
         );
 
