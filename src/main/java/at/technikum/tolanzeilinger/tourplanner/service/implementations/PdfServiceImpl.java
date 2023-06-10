@@ -74,30 +74,25 @@ public class PdfServiceImpl implements PdfService {
                 FileType.PNG,
                 false);
 
-        if (tourService.getActiveImage() != null) {
-            createAndSavePdf(
+
+        createAndSavePdf(
                 imagePath,
                 tour,
                 tourLogs,
-                rootPath
-          );
-        } else {
-            createAndSavePDFDataOnly(
-                    tour,
-                    tourLogs,
-                    rootPath
-            );
-        }
+                rootPath,
+                tourService.getActiveImage() != null
+        );
 
         eventAggregator.publish(Event.PDF_CREATED);
     }
 
-    private void createAndSavePdf(String imagePath, Tour tour, List<TourLog> tourLogs, String outputFilePath) {
+    private void createAndSavePdf(String imagePath, Tour tour, List<TourLog> tourLogs, String outputFilePath, boolean hasImage) {
         try {
             PDDocument document = new PDDocument();
 
             addTourInformationPage(document, tour);
-            addImagePage(imagePath, document);
+            if(hasImage)
+                addImagePage(imagePath, document);
 
             if (tourLogs != null && tourLogs.size() > 0) {
                 for (TourLog tourLog : tourLogs)
@@ -116,32 +111,6 @@ public class PdfServiceImpl implements PdfService {
             logger.warn("Could not create pdf, tour is null");
         }
     }
-
-    public void createAndSavePDFDataOnly(Tour tour, List<TourLog> tourLogs, String outputFilePath) {
-        try {
-            PDDocument document = new PDDocument();
-
-            addTourInformationPage(document, tour);
-
-            if (tourLogs != null && tourLogs.size() > 0) {
-                for (TourLog tourLog : tourLogs)
-                    addTourLogPage(document, tourLog);
-            } else {
-                logger.warn("There are no logs or they are null to write to the pdf file");
-            }
-
-            createDirectoryIfNotExists(outputFilePath);
-            document.save(outputFilePath + "/" + tour.getId() + ".pdf");
-            document.close();
-
-            logger.info("PDF generated successfully at: " + outputFilePath);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        } catch (IllegalArgumentException e) {
-            logger.warn("Could not create pdf, tour is null");
-        }
-    }
-
 
     private PDImageXObject createPDImageXObjectFromFile(String imagePath, PDDocument document) {
         try {
