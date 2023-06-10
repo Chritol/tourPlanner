@@ -46,6 +46,7 @@ public class TourListViewModel implements ViewModel {
         eventAggregator.addSubscriber(Event.TOUR_CREATED, this::update);
         eventAggregator.addSubscriber(Event.TOUR_DELETED, this::update);
         eventAggregator.addSubscriber(Event.TOUR_UPDATED, this::update);
+        eventAggregator.addSubscriber(Event.SEARCH_ACTION, this::update);
     }
 
     private void update() {

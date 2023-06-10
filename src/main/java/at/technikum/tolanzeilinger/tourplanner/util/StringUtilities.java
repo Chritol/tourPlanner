@@ -22,4 +22,6 @@ public class StringUtilities {
     public static boolean isTextTooLong(String text, int maxLength) {
         return text != null && text.length() > maxLength;
     }
+
+
 }

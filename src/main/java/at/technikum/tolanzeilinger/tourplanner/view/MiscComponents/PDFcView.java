@@ -4,6 +4,7 @@ import at.technikum.tolanzeilinger.tourplanner.view.View;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 public class PDFcView implements View {
     private final PDFcViewModel viewModel;
@@ -28,7 +29,12 @@ public class PDFcView implements View {
         viewModel.createPDF();
     }
 
+    public void createPDFGlobe(MouseEvent mouseEvent) {
+    }
+
     public void createExcelReport() { viewModel.createExcelReport(); }
 
     public void importExcelReport() { viewModel.importExcelReport(); }
+
+
 }

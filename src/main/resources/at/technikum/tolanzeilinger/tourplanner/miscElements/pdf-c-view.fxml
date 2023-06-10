@@ -6,11 +6,63 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView"
-            prefHeight="400.0" prefWidth="600.0">
-    <Button fx:id="createPdfButton" onMouseClicked="#createPDF">Create PDF</Button>
-    <Button fx:id="exportExcelReportButton" onMouseClicked="#createExcelReport">Export Excel Report</Button>
-    <Button fx:id="importExcelReportButton" onMouseClicked="#importExcelReport">Import Excel Report</Button>
-</VBox>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView"
+          vgap="10">
+
+    <Label text="Create a PDF summary for the selected Tour:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+    <Button fx:id="createPdfButton" onMouseClicked="#createPDF" GridPane.rowIndex="0" GridPane.columnIndex="1">
+        <style>
+            -fx-background-color: #4CAF50; /* Green */
+            -fx-min-width: 200px;
+        </style>
+        Create PDF
+    </Button>
+
+    <Label text="Create a PDF summary for all Tours:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <Button fx:id="createPdfGlobeButton" onMouseClicked="#createPDFGlobe" GridPane.rowIndex="1" GridPane.columnIndex="1">
+        <style>
+            -fx-background-color: #2196F3; /* Blue */
+            -fx-min-width: 200px;
+        </style>
+        Create PDF
+    </Button>
+
+    <Label text="Export a Summary of all Tours as an Excel Report:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+    <Button fx:id="exportExcelReportButton" onMouseClicked="#createExcelReport" GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <style>
+            -fx-background-color: #F44336; /* Red */
+            -fx-min-width: 200px;
+        </style>
+        Export Excel Report
+    </Button>
+
+    <Label text="Import Excel Report:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+    <Button fx:id="importExcelReportButton" onMouseClicked="#importExcelReport" GridPane.rowIndex="3" GridPane.columnIndex="1">
+        <style>
+            -fx-background-color: #F44336; /* Red */
+            -fx-min-width: 200px;
+        </style>
+        Import Excel Report
+    </Button>
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+</GridPane>

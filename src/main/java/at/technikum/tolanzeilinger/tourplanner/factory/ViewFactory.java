@@ -32,6 +32,7 @@ import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapV
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.LogLineChartView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
+import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.SearchView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.TopButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListView;
@@ -46,6 +47,7 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.Tou
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.LogLineChartViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.SearchViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.TopButtonsViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListViewModel;
@@ -91,9 +93,11 @@ public class ViewFactory {
     private final FilePickerService filePickerService;
 
     // View Models
-    private final MainViewModel mainViewModel;
-    private final PDFcViewModel pdFcViewModel;
-    private final TopButtonsViewModel topButtonsViewModel;
+    private MainViewModel mainViewModel;
+    private PDFcViewModel pdFcViewModel;
+    private TopButtonsViewModel topButtonsViewModel;
+    private SearchViewModel searchViewModel;
+
 
     private final MainTabPaneSwitcherViewModel mainTabPaneSwitcherViewModel;
 
@@ -155,6 +159,7 @@ public class ViewFactory {
 
         this.pdFcViewModel = new PDFcViewModel(eventAggregator, logger, tourService, exportDataService, pdfService, importDataService, filePickerService);
         this.topButtonsViewModel = new TopButtonsViewModel(eventAggregator, logger);
+        this.searchViewModel = new SearchViewModel(eventAggregator, logger, tourService);
 
         this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);
         this.tourListViewModel = new TourListViewModel(eventAggregator, logger, tourService);
@@ -221,6 +226,7 @@ public class ViewFactory {
     
         viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
         viewMap.put(TopButtonsView.class, () -> new TopButtonsView(topButtonsViewModel));
+        viewMap.put(SearchView.class, () -> new SearchView(searchViewModel));
     
         viewMap.put(MainController.class, () -> new MainController(mainViewModel));
     }

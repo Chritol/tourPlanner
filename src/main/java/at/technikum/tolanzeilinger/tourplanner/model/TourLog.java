@@ -3,6 +3,7 @@ package at.technikum.tolanzeilinger.tourplanner.model;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Difficulty;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TourLog {
     private Long id;
@@ -80,5 +81,16 @@ public class TourLog {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public String toSearchableString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(logDateTime.format(DateTimeFormatter.ISO_DATE_TIME)).append(" ");
+        sb.append(comment).append(" ");
+        sb.append(difficulty).append(" ");
+        sb.append(totalTime).append("minutes ");
+        sb.append(rating).append("/10 ");
+
+        return sb.toString();
     }
 }
