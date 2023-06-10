@@ -1,6 +1,8 @@
 package helpers;
 
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.ChildFriendlinessDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.HillTypeDaoEnum;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.PopularityDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.enums.TransportationTypeDaoEnum;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.helpers.TourDaoModelValidator;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
@@ -21,7 +23,9 @@ public class TourDaoModelValidatorTest {
                 TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillTypeDaoEnum.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         );
 
         // Act
@@ -42,7 +46,9 @@ public class TourDaoModelValidatorTest {
                 TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillTypeDaoEnum.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         );
 
         // Act
@@ -64,7 +70,9 @@ public class TourDaoModelValidatorTest {
                 TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillTypeDaoEnum.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         );
 
         // Act
@@ -85,7 +93,9 @@ public class TourDaoModelValidatorTest {
                 TransportationTypeDaoEnum.BIKE,
                 -10,
                 -10,
-                HillTypeDaoEnum.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         );
 
         // Act
@@ -107,7 +117,9 @@ public class TourDaoModelValidatorTest {
                 TransportationTypeDaoEnum.BIKE,
                 100,
                 100,
-                HillTypeDaoEnum.AVOID_UP_HILL
+                HillTypeDaoEnum.AVOID_UP_HILL,
+                PopularityDaoEnum.NEVER_DONE,
+                ChildFriendlinessDaoEnum.NOT_FOR_CHILDREN
         );
 
         // Act

@@ -154,6 +154,12 @@ public class PdfServiceImpl implements PdfService {
                 contentStream.newLine();
                 String to = "To: " + tour.getTo();
                 showTextWithWrapping(contentStream, to);
+                contentStream.newLine();
+                String popularity = "Popularity: " + tour.getPopularity().getTextValue();
+                showTextWithWrapping(contentStream, popularity);
+                contentStream.newLine();
+                String childFriendliness = "Child friendliness: " + tour.getChildFriendliness().getTextValue();
+                showTextWithWrapping(contentStream, childFriendliness);
 
                 contentStream.endText();
             }

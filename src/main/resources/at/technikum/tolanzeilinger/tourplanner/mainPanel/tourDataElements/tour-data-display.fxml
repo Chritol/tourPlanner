@@ -57,7 +57,15 @@
             <Label text="Estimated Time:" style="-fx-font-weight: bold;" />
             <Label fx:id="estimatedTimeLabel" />
         </VBox>
-        <ImageView GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="6" fx:id="mapImageView" />
-        <Button GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="5" text="Edit this Tour?" fx:id="submitButton" onAction="#handleEditButtonClicked" />
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="5" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
+            <Label text="Popularity:" style="-fx-font-weight: bold;" />
+            <Label fx:id="popularityLabel" />
+        </VBox>
+        <VBox GridPane.columnIndex="1" GridPane.rowIndex="5" HBox.hgrow="ALWAYS" style="-fx-padding: 10;">
+            <Label text="Child-friendly:" style="-fx-font-weight: bold;" />
+            <Label fx:id="childFriendlinessLabel" />
+        </VBox>
+        <ImageView GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="7" fx:id="mapImageView" />
+        <Button GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="6" text="Edit this Tour?" fx:id="submitButton" onAction="#handleEditButtonClicked" />
     </GridPane>
 </VBox>
