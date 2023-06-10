@@ -95,4 +95,9 @@ public class PDFcViewModel implements ViewModel {
             logger.error("Could not import data. Invalid file");
         }
     }
+
+    public void createPDFGlobe() {
+        logger.info("PDF-Creator-Button pressed");
+        pdfService.createAndSavePDFOverview();
+    }
 }

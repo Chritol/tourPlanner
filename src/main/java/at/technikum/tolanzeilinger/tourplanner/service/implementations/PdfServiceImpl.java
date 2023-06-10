@@ -17,7 +17,6 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -136,6 +135,39 @@ public class PdfServiceImpl implements PdfService {
         }
     }
 
+    @Override
+    public void createAndSavePDFOverview() {
+        String outputFilePath = propertyLoaderService.getProperty(PropertyConstants.PDF_SAVE_PATH);
+        folderOpenerService.createDirectoryIfNotExists(outputFilePath);
+
+        List<Tour> tours = tourService.getTours();
+
+        if (tours.size() <= 0){
+            logger.warn("No tours to Save");
+
+            eventAggregator.publish(Event.COULD_NOT_CREATE_PDF);
+
+            return;
+        }
+
+        try {
+            PDDocument document = new PDDocument();
+
+            for (Tour tour : tours) {
+                addTourInformationPage(document, tour);
+            }
+
+            document.save(FileNameGenerator.generateFileName(outputFilePath, "Summary", FileType.PDF));
+            document.close();
+
+            logger.info("PDF generated successfully at: " + outputFilePath);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        eventAggregator.publish(Event.PDF_CREATED);
+    }
+
 
     private PDImageXObject createPDImageXObjectFromFile(String imagePath, PDDocument document) {
         try {
@@ -154,7 +186,7 @@ public class PdfServiceImpl implements PdfService {
 
         float imageWidth = image.getWidth();
         float imageHeight = image.getHeight();
-        float desiredWidth = 200;
+        float desiredWidth = 425;
         float scaleFactor = desiredWidth / imageWidth;
         float scaledHeight = imageHeight * scaleFactor;
         float x = (page.getMediaBox().getWidth() - desiredWidth) / 2;

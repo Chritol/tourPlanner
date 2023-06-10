@@ -29,7 +29,8 @@ public class PDFcView implements View {
         viewModel.createPDF();
     }
 
-    public void createPDFGlobe(MouseEvent mouseEvent) {
+    public void createPDFGlobe() {
+        viewModel.createPDFGlobe();
     }
 
     public void createExcelReport() { viewModel.createExcelReport(); }

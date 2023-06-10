@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PdfService {
     void generatePDFWithImageAndData();
+
+    void createAndSavePDFOverview();
 }
