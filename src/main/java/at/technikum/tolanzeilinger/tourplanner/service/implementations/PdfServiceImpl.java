@@ -64,12 +64,21 @@ public class PdfServiceImpl implements PdfService {
         List<TourLog> tourLogs = tourLogService.getAllTourLogsForActiveTour();
         String imagePath = propertyLoaderService.getProperty("image.save.path") + "/" + tour.getId() + ".png";
 
-        generatePDFWithImageAndData(
-                imagePath,
-                tour,
-                tourLogs,
-                rootPath
-        );
+        if (tourService.getActiveImage() != null) {
+            generatePDFWithImageAndData(
+                    imagePath,
+                    tour,
+                    tourLogs,
+                    rootPath
+            );
+        } else {
+            generatePDFDataOnly(
+                    tour,
+                    tourLogs,
+                    rootPath
+            );
+        }
+
 
         eventAggregator.publish(Event.PDF_CREATED);
     }
@@ -99,6 +108,32 @@ public class PdfServiceImpl implements PdfService {
             logger.warn("Could not create pdf, tour is null");
         }
     }
+
+    public void generatePDFDataOnly(Tour tour, List<TourLog> tourLogs, String outputFilePath) {
+        try {
+            PDDocument document = new PDDocument();
+
+            addTourInformationPage(document, tour);
+
+            if (tourLogs != null && tourLogs.size() > 0) {
+                for (TourLog tourLog : tourLogs)
+                    addTourLogPage(document, tourLog);
+            } else {
+                logger.warn("There are no logs or they are null to write to the pdf file");
+            }
+
+            createDirectoryIfNotExists(outputFilePath);
+            document.save(outputFilePath + "/" + tour.getId() + ".pdf");
+            document.close();
+
+            logger.info("PDF generated successfully at: " + outputFilePath);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        } catch (IllegalArgumentException e) {
+            logger.warn("Could not create pdf, tour is null");
+        }
+    }
+
 
     private PDImageXObject createPDImageXObjectFromFile(String imagePath, PDDocument document) {
         try {

@@ -14,6 +14,7 @@ import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Single dispatcher for all dialogs
@@ -163,16 +164,24 @@ public class DialogService {
         }
 
         Tour activeTour = tourService.getActiveTour();
+        List<TourLog> logs = tourLogService.getAllTourLogsForActiveTour();
+
         DeleteConfirmationDialogWrapper dialogWrapper = (DeleteConfirmationDialogWrapper) dialogFactory.createDialog(
                 DialogType.DELETE_CONFIRMATION,
                 "Delete tour \""+ activeTour.getName() + "\"",
-                "Do you want to delete the tour \"" + activeTour.getName() + "\" forever?"
+                "Do you want to delete the tour \"" + activeTour.getName() + "\" forever?\n"+
+                        "( This action will also delete all logs for this tour! )"
         );
 
         Boolean result = dialogWrapper.showAndReturn();
 
         if (result) {
             logger.info("Confirmation given for removing tour \"" + activeTour.getName() + "\"");
+
+            for (TourLog log : logs) {
+                tourLogService.deleteLog(log);
+            }
+
             tourService.deleteTourByIndex(activeTour.getId());
         } else {
             logger.info("Deletion cancelled");
