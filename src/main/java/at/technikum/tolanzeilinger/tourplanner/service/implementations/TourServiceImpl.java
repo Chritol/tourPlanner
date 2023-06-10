@@ -5,8 +5,10 @@ import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourLogConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
+import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import at.technikum.tolanzeilinger.tourplanner.service.api.models.TourDtoModel;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
@@ -16,13 +18,23 @@ import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestSe
 import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
+import at.technikum.tolanzeilinger.tourplanner.util.StringUtilities;
 import javafx.scene.image.Image;
+
+
+
+import org.apache.commons.lang3.StringUtils;
+
+
+
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // just for talking to the Repository
 public class TourServiceImpl implements TourService {
@@ -48,7 +60,6 @@ public class TourServiceImpl implements TourService {
     private Image activeTourImage;
 
     private String fullTextSearchString = "";
-
     public TourServiceImpl(Logger logger,
                            EventAggregator eventAggregator,
                            TourRepository tourRepository,
@@ -68,13 +79,11 @@ public class TourServiceImpl implements TourService {
         this.mapquestUrlBuilderService = mapquestUrlBuilderService;
         this.imageStorageService = imageStorageService;
     }
-
-    public void setNewFullTextSearchString(String newFullTextSearchString) {
+    @Override
+    public void setFullTextSearchString(String fullTextSearchString) {
         this.fullTextSearchString = fullTextSearchString;
-
-        eventAggregator.publish(Event.TOUR_CHANGED);
     }
-
+    @Override
     public void addTour(Tour tour) {
         TourDtoModel routeFromUrl = fetchFromApi(tour);
 
@@ -102,7 +111,6 @@ public class TourServiceImpl implements TourService {
 
         setActiveTourIndex(id);
     }
-
     private TourDtoModel fetchFromApi(Tour tour) {
         TourDtoModel routeFromUrl = null;
         try {
@@ -116,7 +124,7 @@ public class TourServiceImpl implements TourService {
         }
         return routeFromUrl;
     }
-
+    @Override
     public void setActiveTourIndex(long index) {
         this.activeTourIndex = index;
 
@@ -125,20 +133,20 @@ public class TourServiceImpl implements TourService {
 
         eventAggregator.publish(Event.TOUR_CHANGED);
     }
-
+    @Override
     public long getActiveTourIndex() {
         return activeTourIndex;
     }
-
+    @Override
     public Tour getActiveTour() {
         return activeTour;
     }
-
+    @Override
     public Image getActiveImage() {
         return activeTourImage;
     }
-
-    private void setActiveTourImage() {
+    @Override
+    public void setActiveTourImage() {
         try {
             if(activeTourIndex >= 0) {
                 activeTourImage = imageStorageService.loadImage(activeTour.getId());
@@ -149,8 +157,8 @@ public class TourServiceImpl implements TourService {
             activeTourImage = null;
         }
     }
-
-    private void setActiveTour() {
+    @Override
+    public void setActiveTour() {
         if(activeTour == null || activeTourIndex != activeTour.getId()) {
             activeTour = TourConverter.toTour(
                     this.tourRepository.find(this.activeTourIndex)
@@ -252,17 +260,52 @@ public class TourServiceImpl implements TourService {
         //TODO: Replace this with a query that incorperates fulltext search
         //TODO: List<TourDaoModel> tourDaoModels = tourRepository.findAllThatMatch( this.fullTextSearchString  );
 
-         for (TourDaoModel tourDaoModel : tourDaoModels) {
-            tours.add(TourConverter.toTour(tourDaoModel));
-         }
+        for (TourDaoModel tourDaoModel : tourDaoModels) {
+            // jerald winkler fuzzy search.
 
-         return tours;
+            if(!StringUtilities.isNullOrWhitespace(fullTextSearchString)){
+                logger.info("Searching for: " + fullTextSearchString + " in: " + tourDaoModel.toString());
+                Tour tour = TourConverter.toTour(tourDaoModel);
+                StringBuilder tourString = new StringBuilder(tour.toSearchableString());
+
+                List<TourLogDaoModel> tourLogs = tourLogRepository.findAllOfTour(tourDaoModel);
+
+                for (TourLogDaoModel tourLogDaoModel : tourLogs) {
+                    TourLog tourLog = TourLogConverter.toTourLog(tourLogDaoModel);
+
+                    tourString.append(tourLog.toSearchableString());
+                }
+
+                // Compile the search query as a regex pattern
+                Pattern pattern = Pattern.compile(fullTextSearchString, Pattern.CASE_INSENSITIVE);
+
+                // Create a matcher for the object string
+                Matcher matcher = pattern.matcher(tourString);
+
+                // If at least one regex match is found, consider it a match
+                if (matcher.find()) {
+                    tours.add(tour);
+                }
+
+            } else {
+                tours.add(TourConverter.toTour(tourDaoModel));
+            }
+
+        }
+
+        return tours;
     }
 
+    @Override
+    public String getFullTextSearchString() {
+        return fullTextSearchString;
+    }
+
+    @Override
     public Image getActiveTourImage() {
         return activeTourImage;
     }
-
+    @Override
     public void setActiveTourImage(Image activeTourImage) {
         this.activeTourImage = activeTourImage;
     }

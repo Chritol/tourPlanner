@@ -119,5 +119,19 @@ public class Tour {
         this.childFriendliness = childFriendliness;
     }
 
+    public String toSearchableString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(" ");
+        sb.append(description).append(" ");
+        sb.append(from).append(" ");
+        sb.append(to).append(" ");
+        sb.append(transportation).append(" ");
+        sb.append(hilliness).append(" ");
+        sb.append(distance).append("km ");
+        sb.append(estimatedTime).append("minutes ");
+        sb.append(popularity).append(" ");
+        sb.append(childFriendliness).append(" ");
 
+        return sb.toString();
+    }
 }

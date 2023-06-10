@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.util.List;
 
 public interface TourService {
+
     void addTour(Tour tour);
 
     void setActiveTourIndex(long index);
@@ -16,9 +17,21 @@ public interface TourService {
 
     Image getActiveImage();
 
+    void setActiveTourImage();
+
+    void setActiveTour();
+
     void deleteTourByIndex(long id);
 
     void updateTourByIndex(long id, Tour tour);
 
     List<Tour> getTours();
+
+    String getFullTextSearchString();
+
+    void setFullTextSearchString(String fullTextSearchString);
+
+    Image getActiveTourImage();
+
+    void setActiveTourImage(Image activeTourImage);
 }
