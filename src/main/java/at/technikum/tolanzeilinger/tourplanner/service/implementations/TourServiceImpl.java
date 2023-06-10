@@ -266,4 +266,5 @@ public class TourServiceImpl implements TourService {
     public void setActiveTourImage(Image activeTourImage) {
         this.activeTourImage = activeTourImage;
     }
+
 }
