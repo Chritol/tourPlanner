@@ -34,5 +34,13 @@
                 </VBox>
             </content>
         </Tab>
+        <Tab text="Statistics">
+            <content>
+                <VBox maxHeight="Infinity">
+                    <fx:include source="log-line-chart-view.fxml"></fx:include>
+                    <!-- Here is where misc goes -->
+                </VBox>
+            </content>
+        </Tab>
     </tabs>
 </TabPane>

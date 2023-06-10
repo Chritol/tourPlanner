@@ -30,6 +30,7 @@ import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourData
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView;
 import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
+import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.LogLineChartView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
 import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.TopButtonsView;
 import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
@@ -43,6 +44,7 @@ import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.Tou
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMapViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMiscViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
+import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.LogLineChartViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.TopButtonsViewModel;
 import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
@@ -89,19 +91,20 @@ public class ViewFactory {
     private final FilePickerService filePickerService;
 
     // View Models
-    private MainViewModel mainViewModel;
-    private PDFcViewModel pdFcViewModel;
-    private TopButtonsViewModel topButtonsViewModel;
+    private final MainViewModel mainViewModel;
+    private final PDFcViewModel pdFcViewModel;
+    private final TopButtonsViewModel topButtonsViewModel;
 
-    private MainTabPaneSwitcherViewModel mainTabPaneSwitcherViewModel;
+    private final MainTabPaneSwitcherViewModel mainTabPaneSwitcherViewModel;
 
-    private TourDataPaneSwitcherViewModel tourDataPaneSwitcherViewModel;
-    private TourDataDisplayViewModel tourDataDisplayViewModel;
-    private TourDataEditViewModel tourDataEditViewModel;
-    private TourDataCreateViewModel tourDataCreateViewModel;
+    private final TourDataPaneSwitcherViewModel tourDataPaneSwitcherViewModel;
+    private final TourDataDisplayViewModel tourDataDisplayViewModel;
+    private final TourDataEditViewModel tourDataEditViewModel;
+    private final TourDataCreateViewModel tourDataCreateViewModel;
 
-    private  TourMapViewModel tourMapViewModel;
-    private  TourMiscViewModel tourMiscViewModel;
+    private final TourMapViewModel tourMapViewModel;
+    private final TourMiscViewModel tourMiscViewModel;
+    private final LogLineChartViewModel logLineChartViewModel;
 
     private final TourListActionButtonsViewModel tourListActionButtonsViewModel;
     private final TourListViewModel tourListViewModel;
@@ -166,9 +169,9 @@ public class ViewFactory {
         this.tourDataEditViewModel = new TourDataEditViewModel(eventAggregator, logger, tourService);
         this.tourDataCreateViewModel = new TourDataCreateViewModel(eventAggregator, logger, tourService);
 
-
         this.tourMapViewModel = new TourMapViewModel(eventAggregator, tourService, logger);
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
+        this.logLineChartViewModel = new LogLineChartViewModel(tourLogService, eventAggregator, tourService);
 
         // checkDatabase(hibernateSessionFactory);
     }
@@ -214,6 +217,7 @@ public class ViewFactory {
     
         viewMap.put(TourMapView.class, () -> new TourMapView(tourMapViewModel));
         viewMap.put(TourMiscView.class, () -> new TourMiscView(tourMiscViewModel));
+        viewMap.put(LogLineChartView.class, () -> new LogLineChartView(logLineChartViewModel));
     
         viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
         viewMap.put(TopButtonsView.class, () -> new TopButtonsView(topButtonsViewModel));
