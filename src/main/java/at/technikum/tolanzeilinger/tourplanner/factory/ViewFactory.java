@@ -119,7 +119,7 @@ public class ViewFactory {
         this.hibernateSessionFactory = new HibernateSessionFactory();
 
         // TODO - COMMENT IF NOT NEEDED
-        clearDatabase(hibernateSessionFactory);
+        // clearDatabase(hibernateSessionFactory);
 
         this.viewMap = new HashMap<>();
         initializeViewMap();
