@@ -25,34 +25,25 @@ public class FolderOpenerServiceImpl implements FolderOpenerService {
 
         eventAggregator.addSubscriber(Event.OPEN_FILE_DIRECTORY_ACTION, this::openFileDirectory);
         eventAggregator.addSubscriber(Event.PDF_CREATED, this::openFileDirectory);
+        eventAggregator.addSubscriber(Event.EXCEL_CREATED, this::openFileDirectory);
         eventAggregator.addSubscriber(Event.OPEN_PICTURES_DIRECTORY_ACTION, this::openPicturesDirectory);
+    }
+
+    @Override
+    public void openExcelDirectory() {
+        String directoryPath = propertyLoaderService.getProperty("report.save.path");
+        tryOpenDirectory(directoryPath);
     }
 
     @Override
     public void openFileDirectory() {
         String directoryPath = propertyLoaderService.getProperty("pdf.save.path");
-        createDirectoryIfNotExists(directoryPath);
-
-        logger.info("Opening file directory: " + directoryPath);
-
-        try {
-            Desktop.getDesktop().open(new File(directoryPath));
-        } catch (IOException e) {
-            logger.error("Failed to open file directory: " + directoryPath, e);
-        }
+        tryOpenDirectory(directoryPath);
     }
     @Override
     public void openPicturesDirectory() {
         String directoryPath = propertyLoaderService.getProperty("image.save.path");
-        createDirectoryIfNotExists(directoryPath);
-
-        logger.info("Opening file directory: " + directoryPath);
-
-        try {
-            Desktop.getDesktop().open(new File(directoryPath));
-        } catch (IOException e) {
-            logger.error("Failed to open file directory: " + directoryPath, e);
-        }
+        tryOpenDirectory(directoryPath);
     }
 
     @Override
@@ -64,6 +55,18 @@ public class FolderOpenerServiceImpl implements FolderOpenerService {
             } else {
                 logger.error("Failed to create directory: " + directory.getAbsolutePath());
             }
+        }
+    }
+
+    private void tryOpenDirectory(String directoryPath) {
+        createDirectoryIfNotExists(directoryPath);
+
+        logger.info("Opening file directory: " + directoryPath);
+
+        try {
+            Desktop.getDesktop().open(new File(directoryPath));
+        } catch (IOException e) {
+            logger.error("Failed to open file directory: " + directoryPath, e);
         }
     }
 }

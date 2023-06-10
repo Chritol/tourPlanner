@@ -5,10 +5,7 @@ import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PdfService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourLogService;
-import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -34,7 +31,14 @@ public class PdfServiceImpl implements PdfService {
     private final TourService tourService;
     private final TourLogService tourLogService;
 
-    public PdfServiceImpl(PropertyLoaderService propertyLoaderService, Logger logger, EventAggregator eventAggregator, TourService tourService, TourLogService tourLogService) {
+    private final FolderOpenerService folderOpenerService;
+
+    public PdfServiceImpl(PropertyLoaderService propertyLoaderService,
+                          Logger logger,
+                          EventAggregator eventAggregator,
+                          TourService tourService,
+                          TourLogService tourLogService,
+                          FolderOpenerService folderOpenerService) {
         this.logger = logger;
         this.eventAggregator = eventAggregator;
         fontSize = 14;
@@ -44,13 +48,12 @@ public class PdfServiceImpl implements PdfService {
 
         this.tourService = tourService;
         this.tourLogService = tourLogService;
-
-        eventAggregator.addSubscriber(Event.PDF_CREATE_ACTION, this::onPdfCreateAction);
+        this.folderOpenerService = folderOpenerService;
     }
 
-    private void onPdfCreateAction() {
+    public void generatePDFWithImageAndData() {
         String rootPath = propertyLoaderService.getProperty("pdf.save.path");
-        createDirectoryIfNotExists(rootPath);
+        folderOpenerService.createDirectoryIfNotExists(rootPath);
 
         if (tourService.getActiveTourIndex() < 0){
             logger.warn("There is no active tour log");
@@ -64,7 +67,7 @@ public class PdfServiceImpl implements PdfService {
         List<TourLog> tourLogs = tourLogService.getAllTourLogsForActiveTour();
         String imagePath = propertyLoaderService.getProperty("image.save.path") + "/" + tour.getId() + ".png";
 
-        generatePDFWithImageAndData(
+        createAndSavePdf(
                 imagePath,
                 tour,
                 tourLogs,
@@ -74,7 +77,7 @@ public class PdfServiceImpl implements PdfService {
         eventAggregator.publish(Event.PDF_CREATED);
     }
 
-    public void generatePDFWithImageAndData(String imagePath, Tour tour, List<TourLog> tourLogs, String outputFilePath) {
+    private void createAndSavePdf(String imagePath, Tour tour, List<TourLog> tourLogs, String outputFilePath) {
         try {
             PDDocument document = new PDDocument();
 
@@ -88,7 +91,6 @@ public class PdfServiceImpl implements PdfService {
                 logger.warn("There are no logs or they are null to write to the pdf file");
             }
 
-            createDirectoryIfNotExists(outputFilePath);
             document.save(outputFilePath + "/" + tour.getId() + ".pdf");
             document.close();
 
@@ -188,17 +190,6 @@ public class PdfServiceImpl implements PdfService {
             showTextWithWrapping(contentStream,"Rating: " + tourLog.getRating());
 
             contentStream.endText();
-        }
-    }
-
-    private void createDirectoryIfNotExists(String directoryPath) {
-        File directory = new File(directoryPath);
-        if (!directory.exists()) {
-            if (directory.mkdirs()) {
-                logger.info("Directory created: " + directory.getAbsolutePath());
-            } else {
-                logger.error("Failed to create directory: " + directory.getAbsolutePath());
-            }
         }
     }
 

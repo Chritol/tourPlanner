@@ -11,17 +11,23 @@ public class PDFcView implements View {
     @FXML
     private Button createPdfButton;
 
+    @FXML
+    private Button createExcelReportButton;
+
     public PDFcView(PDFcViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @FXML
     public void initialize() {
-        createPdfButton.disableProperty().bind(viewModel.buttonDisabledProperty());
+        createPdfButton.disableProperty().bind(viewModel.pdfExportButtonDisabledProperty());
+        createExcelReportButton.disableProperty().bind(viewModel.excelExportButtonDisabledProperty());
     }
 
     public void createPDF() {
         viewModel.createPDF();
     }
+
+    public void createExcelReport() { viewModel.createExcelReport(); }
 
 }

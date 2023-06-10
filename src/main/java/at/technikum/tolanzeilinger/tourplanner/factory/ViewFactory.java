@@ -84,6 +84,7 @@ public class ViewFactory {
     private final DialogService dialogService;
     private final PdfService pdfService;
     private final FolderOpenerService folderOpenerService;
+    private final ExportDataService exportDataService;
 
     // View Models
     private MainViewModel mainViewModel;
@@ -134,16 +135,16 @@ public class ViewFactory {
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService, tourLogRepository);
         this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator, tourRepository);
 
-        this.pdfService = new PdfServiceImpl(propertyLoaderService, logger, eventAggregator, tourService, tourLogService);
-
         this.folderOpenerService = new FolderOpenerServiceImpl(propertyLoaderService, logger, eventAggregator);
+        this.pdfService = new PdfServiceImpl(propertyLoaderService, logger, eventAggregator, tourService, tourLogService, folderOpenerService);
+        this.exportDataService = new ExportDataServiceImpl(logger, tourRepository, tourLogRepository, propertyLoaderService, folderOpenerService);
 
         this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
         // initialize ViewModels
         this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
 
-        this.pdFcViewModel = new PDFcViewModel(eventAggregator, logger, tourService);
+        this.pdFcViewModel = new PDFcViewModel(eventAggregator, logger, tourService, exportDataService, pdfService);
         this.topButtonsViewModel = new TopButtonsViewModel(eventAggregator, logger);
 
         this.tourListActionButtonsViewModel = new TourListActionButtonsViewModel(eventAggregator, logger);

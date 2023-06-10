@@ -15,6 +15,8 @@ module at.technikum.tolanzeilinger.tourplanner {
     requires jakarta.persistence;
     requires org.apache.pdfbox;
     requires java.desktop;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
     opens at.technikum.tolanzeilinger.tourplanner to javafx.fxml;
     exports at.technikum.tolanzeilinger.tourplanner;

@@ -12,6 +12,7 @@ public interface FolderOpenerService {
 
     void openFileDirectory();
     void openPicturesDirectory();
+    void openExcelDirectory();
 
     void createDirectoryIfNotExists(String directoryPath) ;
 }
