@@ -129,15 +129,17 @@ public class ViewFactory {
 
         // initialize Services
         this.propertyLoaderService = new PropertyLoaderServiceImpl(DefaultConstants.CONFIG_PATH, logger, eventAggregator);
-        this.imageStorageService = new ImageStorageStorageServiceImpl(propertyLoaderService, eventAggregator, logger);
         this.mapquestUrlBuilderService = new MapquestUrlBuilderServiceImpl(propertyLoaderService);
         this.mapquestService = new MapquestServiceImpl(mapquestUrlBuilderService);
+
+        this.folderOpenerService = new FolderOpenerServiceImpl(propertyLoaderService, logger, eventAggregator);
+        this.exportDataService = new ExportDataServiceImpl(logger, tourRepository, tourLogRepository, propertyLoaderService, folderOpenerService, eventAggregator);
+        this.imageStorageService = new ImageStorageStorageServiceImpl(propertyLoaderService, eventAggregator, logger, folderOpenerService);
+
         this.tourService = new TourServiceImpl(logger, eventAggregator, tourRepository, mapquestService, mapquestUrlBuilderService, imageStorageService, tourLogRepository);
         this.tourLogService = new TourLogServiceImpl(tourLogRepository, tourService, logger, eventAggregator, tourRepository);
 
-        this.folderOpenerService = new FolderOpenerServiceImpl(propertyLoaderService, logger, eventAggregator);
         this.pdfService = new PdfServiceImpl(propertyLoaderService, logger, eventAggregator, tourService, tourLogService, folderOpenerService);
-        this.exportDataService = new ExportDataServiceImpl(logger, tourRepository, tourLogRepository, propertyLoaderService, folderOpenerService);
 
         this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
@@ -213,22 +215,6 @@ public class ViewFactory {
         viewMap.put(TopButtonsView.class, () -> new TopButtonsView(topButtonsViewModel));
     
         viewMap.put(MainController.class, () -> new MainController(mainViewModel));
-    }
-
-    private void checkDatabase(HibernateSessionFactory sessionFactory) {
-        // TODO remove later - only for debugging
-
-        try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<TourLogDaoModel> criteria = builder.createQuery(TourLogDaoModel.class);
-            criteria.from(TourLogDaoModel.class);
-
-            List<TourLogDaoModel> tourLogs = session.createQuery(criteria).getResultList();
-            logger.info("Total logs" + tourLogs.stream().count());
-            for (TourLogDaoModel tourLog : tourLogs) {
-                logger.info(tourLog.toString());
-            }
-        }
     }
 
     private void clearDatabase(HibernateSessionFactory sessionFactory) {

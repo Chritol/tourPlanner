@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.PropertyConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
@@ -25,24 +26,24 @@ public class FolderOpenerServiceImpl implements FolderOpenerService {
 
         eventAggregator.addSubscriber(Event.OPEN_FILE_DIRECTORY_ACTION, this::openFileDirectory);
         eventAggregator.addSubscriber(Event.PDF_CREATED, this::openFileDirectory);
-        eventAggregator.addSubscriber(Event.EXCEL_CREATED, this::openFileDirectory);
+        eventAggregator.addSubscriber(Event.EXCEL_CREATED, this::openExcelDirectory);
         eventAggregator.addSubscriber(Event.OPEN_PICTURES_DIRECTORY_ACTION, this::openPicturesDirectory);
     }
 
     @Override
     public void openExcelDirectory() {
-        String directoryPath = propertyLoaderService.getProperty("report.save.path");
+        String directoryPath = propertyLoaderService.getProperty(PropertyConstants.REPORT_SAVE_PATH);
         tryOpenDirectory(directoryPath);
     }
 
     @Override
     public void openFileDirectory() {
-        String directoryPath = propertyLoaderService.getProperty("pdf.save.path");
+        String directoryPath = propertyLoaderService.getProperty(PropertyConstants.PDF_SAVE_PATH);
         tryOpenDirectory(directoryPath);
     }
     @Override
     public void openPicturesDirectory() {
-        String directoryPath = propertyLoaderService.getProperty("image.save.path");
+        String directoryPath = propertyLoaderService.getProperty(PropertyConstants.IMAGE_SAVE_PATH);
         tryOpenDirectory(directoryPath);
     }
 

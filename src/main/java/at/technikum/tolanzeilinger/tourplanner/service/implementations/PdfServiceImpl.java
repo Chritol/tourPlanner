@@ -1,7 +1,10 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.PropertyConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.FileNameGenerator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.FileType;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
@@ -52,7 +55,7 @@ public class PdfServiceImpl implements PdfService {
     }
 
     public void generatePDFWithImageAndData() {
-        String rootPath = propertyLoaderService.getProperty("pdf.save.path");
+        String rootPath = propertyLoaderService.getProperty(PropertyConstants.PDF_SAVE_PATH);
         folderOpenerService.createDirectoryIfNotExists(rootPath);
 
         if (tourService.getActiveTourIndex() < 0){
@@ -65,7 +68,11 @@ public class PdfServiceImpl implements PdfService {
 
         Tour tour = tourService.getActiveTour();
         List<TourLog> tourLogs = tourLogService.getAllTourLogsForActiveTour();
-        String imagePath = propertyLoaderService.getProperty("image.save.path") + "/" + tour.getId() + ".png";
+        String imagePath = FileNameGenerator.generateFileName(
+                propertyLoaderService.getProperty(PropertyConstants.IMAGE_SAVE_PATH),
+                String.valueOf(tour.getId()),
+                FileType.PNG,
+                false);
 
         createAndSavePdf(
                 imagePath,
@@ -91,7 +98,7 @@ public class PdfServiceImpl implements PdfService {
                 logger.warn("There are no logs or they are null to write to the pdf file");
             }
 
-            document.save(outputFilePath + "/" + tour.getId() + ".pdf");
+            document.save(FileNameGenerator.generateFileName(outputFilePath, String.valueOf(tour.getId()), FileType.PDF));
             document.close();
 
             logger.info("PDF generated successfully at: " + outputFilePath);

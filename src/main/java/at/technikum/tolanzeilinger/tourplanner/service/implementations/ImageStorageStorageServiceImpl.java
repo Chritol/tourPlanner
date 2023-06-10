@@ -1,13 +1,16 @@
 package at.technikum.tolanzeilinger.tourplanner.service.implementations;
 
+import at.technikum.tolanzeilinger.tourplanner.constants.PropertyConstants;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.event.Event;
+import at.technikum.tolanzeilinger.tourplanner.helpers.FileNameGenerator;
+import at.technikum.tolanzeilinger.tourplanner.helpers.FileType;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.service.interfaces.FolderOpenerService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
 import javafx.scene.image.Image;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,20 +21,21 @@ import java.nio.file.StandardCopyOption;
 public class ImageStorageStorageServiceImpl implements ImageStorageService {
     private final Logger logger;
     private final EventAggregator eventAggregator;
+    private final FolderOpenerService folderOpenerService;
+    private final PropertyLoaderService propertyLoaderService;
 
-    private final String rootPath;
-
-    public ImageStorageStorageServiceImpl(PropertyLoaderService propertyLoaderService, EventAggregator eventAggregator, Logger logger) {
+    public ImageStorageStorageServiceImpl(PropertyLoaderService propertyLoaderService, EventAggregator eventAggregator, Logger logger, FolderOpenerService folderOpenerService) {
         this.eventAggregator = eventAggregator;
         this.logger = logger;
-
-        rootPath = propertyLoaderService.getProperty("image.save.path");
-        createDirectoryIfNotExists(rootPath);
+        this.folderOpenerService = folderOpenerService;
+        this.propertyLoaderService = propertyLoaderService;
     }
 
 
     public boolean saveImage(InputStream imageInput, long tourId) {
-        String imagePath = rootPath + "/" + tourId + ".png";
+        String rootPath = propertyLoaderService.getProperty(PropertyConstants.IMAGE_SAVE_PATH);
+        folderOpenerService.createDirectoryIfNotExists(rootPath);
+        String imagePath = FileNameGenerator.generateFileName(rootPath, String.valueOf(tourId), FileType.PNG, false);
 
         try (imageInput) {
             Path outputFilePath = Path.of(imagePath);
@@ -49,7 +53,8 @@ public class ImageStorageStorageServiceImpl implements ImageStorageService {
     }
 
     public Image loadImage(long tourId) {
-        String imagePath = rootPath + "/" + tourId + ".png";
+        String rootPath = propertyLoaderService.getProperty(PropertyConstants.IMAGE_SAVE_PATH);
+        String imagePath = FileNameGenerator.generateFileName(rootPath, String.valueOf(tourId), FileType.PNG, false);
 
         try {
             try (InputStream inputStream = new FileInputStream(imagePath)) {
@@ -59,17 +64,6 @@ public class ImageStorageStorageServiceImpl implements ImageStorageService {
         } catch (IOException e) {
             logger.error(e.getMessage(),e);
             return null;
-        }
-    }
-
-    private void createDirectoryIfNotExists(String directoryPath) {
-        File directory = new File(directoryPath);
-        if (!directory.exists()) {
-            if (directory.mkdirs()) {
-                logger.info("Directory created: " + directory.getAbsolutePath());
-            } else {
-                logger.error("Failed to create directory: " + directory.getAbsolutePath());
-            }
         }
     }
 }
