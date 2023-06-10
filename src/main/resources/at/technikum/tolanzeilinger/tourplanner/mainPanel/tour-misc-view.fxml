@@ -7,11 +7,27 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.Insets?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView"
-            prefHeight="400.0" prefWidth="600.0">
-    <fx:include source="../miscElements/pdf-c-view.fxml"></fx:include>
-    <Text text="Special feature here"></Text>
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView">
+    
+    <VBox alignment="CENTER">
+        <Label fx:id="nameLabel" style="-fx-font-size: 20px;" alignment="CENTER" />
+    </VBox>
 
+    <VBox alignment="CENTER_LEFT">
+
+        <padding>
+            <Insets top="0" bottom="0" left="25" right="25"></Insets>
+        </padding>
+
+        <Label wrapText="true" text="This page allows you to perform the following actions: Create a PDF summary for the selected Tour, Create a PDF summary for all Tours, Export the Tour Summary as an Excel Report and Import an Excel Report." ></Label>
+
+        <Label wrapText="true" text="Simply click on the corresponding buttons to initiate the desired action."></Label>
+
+        <fx:include source="../miscElements/pdf-c-view.fxml"></fx:include>
+
+    </VBox>
 </VBox>
