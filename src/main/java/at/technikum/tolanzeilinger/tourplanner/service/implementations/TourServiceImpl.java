@@ -5,6 +5,8 @@ import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.helpers.TourLogConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.models.RoadStrategy;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.models.TripType;
 import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
@@ -109,7 +111,8 @@ public class TourServiceImpl implements TourService {
     private TourDtoModel fetchFromApi(Tour tour) {
         TourDtoModel routeFromUrl = null;
         try {
-            routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(tour.getFrom(), tour.getTo()));
+            routeFromUrl = mapquestService.fetchMapquestRoute(mapquestUrlBuilderService.buildDirectionsUrl(tour.getFrom(), tour.getTo(), TripType.valueOf(tour.getTransportation().name()), RoadStrategy.valueOf(tour.getHilliness().name())));
+            routeFromUrl.setTime(Math.round(routeFromUrl.getTime() / 60.0f));
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         } catch (URISyntaxException e) {
