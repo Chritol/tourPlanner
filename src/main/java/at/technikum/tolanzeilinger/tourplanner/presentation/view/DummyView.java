@@ -1,5 +1,6 @@
 package at.technikum.tolanzeilinger.tourplanner.presentation.view;
 
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.DummyViewModel;
 import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.ViewModel;
 import javafx.fxml.FXML;
 
