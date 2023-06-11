@@ -3,8 +3,8 @@ package at.technikum.tolanzeilinger.tourplanner.mapquest.implementations;
 import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
 import at.technikum.tolanzeilinger.tourplanner.constants.PropertyConstants;
 import at.technikum.tolanzeilinger.tourplanner.mapquest.interfaces.MapquestUrlBuilderService;
-import at.technikum.tolanzeilinger.tourplanner.mapquest.models.RoadStrategy;
-import at.technikum.tolanzeilinger.tourplanner.mapquest.models.TripType;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.models.enums.RoadStrategy;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.models.enums.TripType;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.PropertyLoaderService;
 
 public class MapquestUrlBuilderServiceImpl implements MapquestUrlBuilderService {

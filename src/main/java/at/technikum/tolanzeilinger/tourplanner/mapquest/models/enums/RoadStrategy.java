@@ -1,4 +1,4 @@
-package at.technikum.tolanzeilinger.tourplanner.mapquest.models;
+package at.technikum.tolanzeilinger.tourplanner.mapquest.models.enums;
 
 public enum RoadStrategy {
     DEFAULT_STRATEGY("DEFAULT_STRATEGY"),
