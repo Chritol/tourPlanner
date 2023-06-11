@@ -13,6 +13,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class LogLineChartViewModel implements ViewModel {
@@ -44,7 +45,14 @@ public class LogLineChartViewModel implements ViewModel {
             activeTourName.set(tourService.getActiveTour().getName());
             List<TourLog> currentLogs = tourLogService.getAllTourLogsForActiveTour();
 
-            ObservableList<Integer> totalTimeList = FXCollections.observableArrayList(currentLogs.stream().map(it -> it.getTotalTime()).toList());
+            ObservableList<Integer> totalTimeList
+                    = FXCollections
+                    .observableArrayList(
+                            currentLogs
+                                    .stream()
+                                    .sorted(Comparator.comparing(TourLog::getLogDateTime))
+                                    .map(it -> it.getTotalTime())
+                                    .toList());
             totalTime.set(totalTimeList);
         } else {
             totalTime.set(FXCollections.observableArrayList());
