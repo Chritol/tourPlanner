@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView"
+          fx:controller="at.technikum.tolanzeilinger.tourplanner.presentation.view.MiscComponents.PDFcView"
           vgap="10">
 
     <Label text="Create a PDF summary for the selected Tour:" GridPane.rowIndex="0" GridPane.columnIndex="0" />

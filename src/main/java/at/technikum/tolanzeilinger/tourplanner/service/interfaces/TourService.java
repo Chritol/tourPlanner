@@ -34,5 +34,4 @@ public interface TourService {
     Image getActiveTourImage();
 
     void setActiveTourImage(Image activeTourImage);
-
 }

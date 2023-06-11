@@ -1,6 +1,6 @@
 package helpers;
 
-import at.technikum.tolanzeilinger.tourplanner.util.StringUtilities;
+import at.technikum.tolanzeilinger.tourplanner.helpers.StringUtilities;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

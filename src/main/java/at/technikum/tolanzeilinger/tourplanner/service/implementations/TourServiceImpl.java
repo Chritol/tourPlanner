@@ -10,15 +10,15 @@ import at.technikum.tolanzeilinger.tourplanner.model.enums.ChildFriendliness;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.api.models.TourDtoModel;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.models.TourDtoModel;
 import at.technikum.tolanzeilinger.tourplanner.model.Tour;
 import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourDaoModel;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
-import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.ImageStorageService;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.TourService;
-import at.technikum.tolanzeilinger.tourplanner.util.StringUtilities;
+import at.technikum.tolanzeilinger.tourplanner.helpers.StringUtilities;
 import javafx.scene.image.Image;
 
 

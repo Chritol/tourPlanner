@@ -84,13 +84,12 @@ public class TourLog {
     }
 
     public String toSearchableString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(logDateTime.format(DateTimeFormatter.ISO_DATE_TIME)).append(" ");
-        sb.append(comment).append(" ");
-        sb.append(difficulty).append(" ");
-        sb.append(totalTime).append("minutes ");
-        sb.append(rating).append("/10 ");
+        String sb = logDateTime.format(DateTimeFormatter.ISO_DATE_TIME) + " " +
+                comment + " " +
+                difficulty + " " +
+                totalTime + "minutes " +
+                rating + "/10 ";
 
-        return sb.toString();
+        return sb;
     }
 }

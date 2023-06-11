@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView">
-
-
+           fx:controller="at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView">
     <VBox fx:id="create" visible="false" alignment="CENTER">
         <ScrollPane fitToWidth="true" fitToHeight="true" >
             <fx:include source="tour-data-create.fxml"></fx:include>
@@ -29,5 +23,4 @@
     </VBox>
 
     <Label fx:id="youBrokeIt" text="If you see this nothing works"></Label>
-
 </StackPane>

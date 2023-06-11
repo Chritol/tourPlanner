@@ -6,7 +6,6 @@ import at.technikum.tolanzeilinger.tourplanner.model.enums.Popularity;
 import at.technikum.tolanzeilinger.tourplanner.model.enums.Transportation;
 
 public class Tour {
-
     private Long id;
     private String name;
     private String description;
@@ -16,16 +15,14 @@ public class Tour {
     private HillType hilliness;
     private int distance;
     private int estimatedTime;
-
     private Popularity popularity;
-
     private ChildFriendliness childFriendliness;
 
     public Tour(String name, String description, String from, String to){
         this.name = name;
         this.description = description;
-        this.from = new String(from);
-        this.to = new String(to);
+        this.from = from;
+        this.to = to;
     }
 
     public Tour() {
@@ -120,18 +117,17 @@ public class Tour {
     }
 
     public String toSearchableString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" ");
-        sb.append(description).append(" ");
-        sb.append(from).append(" ");
-        sb.append(to).append(" ");
-        sb.append(transportation).append(" ");
-        sb.append(hilliness).append(" ");
-        sb.append(distance).append("km ");
-        sb.append(estimatedTime).append("minutes ");
-        sb.append(popularity).append(" ");
-        sb.append(childFriendliness).append(" ");
+        String sb = name + " " +
+                description + " " +
+                from + " " +
+                to + " " +
+                transportation + " " +
+                hilliness + " " +
+                distance + "km " +
+                estimatedTime + "minutes " +
+                popularity + " " +
+                childFriendliness + " ";
 
-        return sb.toString();
+        return sb;
     }
 }
