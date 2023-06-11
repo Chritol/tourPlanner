@@ -1,0 +1,48 @@
+@startuml
+
+package "factory" {
+  class ViewFactory {
+    +createView(viewType: String): View
+  }
+}
+
+package "view" {
+  interface View {
+    +initialize(): void
+  }
+
+  class DummyView {
+    -viewModel: DummyViewModel
+    +DummyView(viewModel: ViewModel)
+    +initialize(): void
+  }
+
+
+
+  View <|.. DummyView
+}
+
+package "viewModel" {
+  interface ViewModel {
+    +initializeView(): void
+    +initializeEventListeners(): void
+  }
+
+  class DummyViewModel {
+    -eventAggregator: EventAggregator
+    -logger: Logger
+    +DummyViewModel(eventAggregator: EventAggregator, logger: Logger)
+    +initializeView(): void
+    +initializeEventListeners(): void
+  }
+
+  ViewModel <|.. DummyViewModel
+}
+
+ViewFactory "1" -- "1" View
+ViewFactory ..> View
+
+View "1" -- "1" ViewModel
+DummyView "1" -- "1" DummyViewModel
+
+@enduml

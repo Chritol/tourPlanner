@@ -1,0 +1,17 @@
+@startuml
+actor User as U
+participant "User Interface" as UI
+participant Application as App
+participant Database as DB
+
+U -> UI: Select tour to modify
+UI -> App: Retrieve tour details
+App -> UI: Display tour details
+U -> UI: Modify tour attributes
+UI -> App: Submit modified data
+App -> App: Validate input
+App -> DB: Update tour information
+DB --> App: Confirmation
+App --> UI: Confirmation message
+
+@enduml

@@ -1,0 +1,164 @@
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+
+package service.interfaces {
+    interface TourService {
+        +addTour(tour: Tour): void
+        +setActiveTourIndex(index: long): void
+        +getActiveTourIndex(): long
+        +getActiveTour(): Tour
+        +getActiveImage(): Image
+        +setActiveTourImage(): void
+        +setActiveTour(): void
+        +deleteTourByIndex(id: long): void
+        +updateTourByIndex(id: long, tour: Tour): void
+        +getTours(): List<Tour>
+        +getFullTextSearchString(): String
+        +setFullTextSearchString(fullTextSearchString: String): void
+        +getActiveTourImage(): Image
+        +setActiveTourImage(activeTourImage: Image): void
+    }
+
+
+    interface MapquestService {
+        +getRoute(from: String, to: String): List<String>
+    }
+
+    interface MapquestUrlBuilderService {
+        +buildUrl(from: String, to: String): String
+    }
+
+    interface ImageStorageService {
+        +saveImage(image: Image): Long
+        +getImageById(id: Long): Image
+    }
+}
+
+package service.implementations {
+
+    class TourServiceImpl {
+        -logger: Logger
+        -eventAggregator: EventAggregator
+        -tourRepository: TourRepository
+        -tourLogRepository: TourLogRepository
+        -mapquestUrlBuilderService: MapquestUrlBuilderService
+        -mapquestService: MapquestService
+        -imageStorageService: ImageStorageService
+        -activeTourIndex: long
+        -activeTour: Tour
+        -activeTourImage: Image
+        -fullTextSearchString: String
+        +TourServiceImpl(...)
+        +addTour(tour: Tour): void
+        +setFullTextSearchString(fullTextSearchString: String): void
+        +setActiveTourIndex(index: long): void
+        +getActiveTourIndex(): long
+        +getActiveTour(): Tour
+        +getActiveImage(): Image
+        +setActiveTourImage(): void
+        +setActiveTour(): void
+        +deleteTourByIndex(id: long): void
+        +updateTourByIndex(id: long, newTour: Tour): void
+        +getTours(): List<Tour>
+        +getFullTextSearchString(): String
+        +getActiveTourImage(): Image
+        +setActiveTourImage(activeTourImage: Image): void
+    }
+}
+
+package model {
+
+    class Tour {
+        -id: Long
+        -name: String
+        -description: String
+        -from: String
+        -to: String
+        -transportation: Transportation
+        -hilliness: HillType
+        -distance: int
+        -estimatedTime: int
+        -popularity: Popularity
+        -childFriendliness: ChildFriendliness
+        +Tour(name: String, description: String, from: String, to: String)
+        +getName(): String
+        +setName(name: String): void
+        +getDescription(): String
+        +setDescription(description: String): void
+        +getFrom(): String
+        +setFrom(from: String): void
+        +getTo(): String
+        +setTo(to: String): void
+        +getTransportation(): Transportation
+        +setTransportation(transportation: Transportation): void
+        +getHilliness(): HillType
+        +setHilliness(hilliness: HillType): void
+        +getDistance(): int
+        +setDistance(distance: int): void
+        +getEstimatedTime(): int
+        +setEstimatedTime(estimatedTime: int): void
+        +getPopularity(): Popularity
+        +setPopularity(popularity: Popularity): void
+        +getChildFriendliness(): ChildFriendliness
+        +setChildFriendliness(childFriendliness: ChildFriendliness): void
+    }
+
+    enum Transportation {
+        CAR
+        BICYCLE
+        FOOT
+    }
+
+    enum HillType {
+        FLAT
+        HILLY
+        MOUNTAINOUS
+    }
+
+    enum Popularity {
+        LOW
+        MEDIUM
+        HIGH
+    }
+
+    enum ChildFriendliness {
+        LOW
+        MEDIUM
+        HIGH
+    }
+
+    class Image {
+        -id: Long
+        -tourId: Long
+        -name: String
+        -data: byte[]
+        +Image(name: String, data: byte[])
+        +getName(): String
+        +setName(name: String): void
+        +getData(): byte[]
+        +setData(data: byte[]): void
+    }
+}
+
+TourServiceImpl "1" -right- "*" Image : has
+
+Image .. ImageStorageService : creates
+
+TourServiceImpl -- ImageStorageService
+TourServiceImpl -- MapquestService
+TourServiceImpl -- MapquestUrlBuilderService
+
+Tour "1" --* "1" Transportation
+Tour "1" --* "1" HillType
+Tour "1" --* "1" Popularity
+Tour "1" --* "1" ChildFriendliness
+
+TourService <|-right- TourServiceImpl
+
+Tour "*" o-- "1" TourServiceImpl
+
+Tour --> MapquestService : uses
+Tour --> MapquestUrlBuilderService : uses
+@enduml
+

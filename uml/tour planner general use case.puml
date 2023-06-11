@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+
+actor User as U
+
+rectangle "Tour Planner Application" {
+  U -- (Create New Tour)
+  U -- (Modify a Tour)
+  U -- (Add a Log to a Completed Tour)
+  U -- (Perform Full-Text Search)
+
+}
+
+rectangle "Reports" {
+  U -- (Generate Summary Report)
+  U -- (Generate a Tour Report)
+  U -- (Import Tour Data)
+  U -- (Export Tour Data)
+
+}
+
+rectangle "Tour Management" {
+  (Manage Tours)
+  (Manage Tour Logs)
+}
+
+rectangle "Data Storage" {
+  (Tour Data)
+  (Tour Log Data)
+}
+
+(Create New Tour) -- (Manage Tours)
+(Modify a Tour) -- (Manage Tours)
+
+(Add a Log to a Completed Tour) -- (Manage Tour Logs)
+
+(Manage Tours) -- (Tour Data)
+(Manage Tour Logs) -- (Tour Log Data)
+
+@enduml

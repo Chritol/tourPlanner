@@ -1,0 +1,71 @@
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+
+package "BL Layer" {
+    class Tour {
+        -title: String
+        -description: String
+        ...
+        +Tour(title: String, description: String)
+        +getTitle(): String
+        +setTitle(title: String): void
+        +getDescription(): String
+        +setDescription(description: String): void
+        ...()
+    }
+
+    class PDFService {
+        +generatePDFReport(data: ReportData): void
+    }
+
+    class DialogService {
+        +showDialogWindow(message: String): void
+    }
+
+    class EventAggregator {
+        +subscribe(eventType: EventType, subscriber: Subscriber): void
+        +publishEvent(eventType: EventType, eventData: EventData): void
+    }
+
+    enum Event {
+        DIALOG_ACTION
+        GENERATE_PDF_ACTION
+        ...
+    }
+
+    interface Subscriber {
+        +handleEvent(eventData: EventData): void
+    }
+
+}
+
+package "UI Layer" {
+    class ViewModelA {
+        -eventAggregator: EventAggregator
+        +handleButtonClick(): void
+    }
+
+    class ViewModelB {
+        -eventAggregator: EventAggregator
+        +handleMenuItemClick(): void
+    }
+}
+
+PDFService ..> Tour : uses
+
+ViewModelA -- EventAggregator : uses
+ViewModelB -- EventAggregator : uses
+
+PDFService ..> EventAggregator : uses
+DialogService ..> EventAggregator : subscribes
+
+ViewModelA ..> Event : sends
+ViewModelB ..> Event : sends
+
+EventAggregator --> Event : publishes
+
+Subscriber <|.. ViewModelA : implements
+Subscriber <|.. ViewModelB : implements
+
+@enduml

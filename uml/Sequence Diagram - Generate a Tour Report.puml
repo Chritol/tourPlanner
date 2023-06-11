@@ -1,0 +1,16 @@
+@startuml
+actor User as U
+participant "User Interface" as UI
+participant Application as App
+participant Database as DB
+participant "Report Generator" as RG
+
+U -> UI: Select tour for report
+UI -> App: Retrieve tour details
+App -> DB: Retrieve tour logs
+DB --> App: Tour logs
+App -> RG: Generate tour report
+RG --> App: Report
+App --> U: Open report
+
+@enduml
