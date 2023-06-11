@@ -13,7 +13,6 @@
         <RowConstraints fillHeight="true" />
         <RowConstraints fillHeight="true" />
         <RowConstraints fillHeight="true" />
-        <RowConstraints fillHeight="true" />
     </rowConstraints>
 
     <fx:include source="miscElements/top-buttons.fxml" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"></fx:include>
@@ -55,6 +54,4 @@
             <fx:include source="logPanel/tour-logs-action-buttons.fxml" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1.0"></fx:include>
         </children>
     </AnchorPane>
-
-    <VBox GridPane.columnIndex="2" GridPane.rowIndex="3" />
 </GridPane>
