@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,7 +16,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLDependencyInjector.load("main-view.fxml", Locale.ENGLISH);
         Scene scene = new Scene(root, 1280, 720);
-        stage.setTitle("Hello!");
+        stage.getIcons().add(new Image("tourplanner_icon.png"));
+        stage.setTitle("Tourplanner");
         stage.setScene(scene);
         stage.show();
     }

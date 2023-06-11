@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.image.ImageView?>
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView">
+            fx:controller="at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourMapView">
     <VBox alignment="CENTER">
         <Label fx:id="nameLabel" style="-fx-font-size: 20px;" alignment="CENTER" />
     </VBox>
@@ -20,5 +16,4 @@
             <ImageView fx:id="mapImageView" preserveRatio="true"/>
         </VBox>
     </ScrollPane>
-
 </VBox>

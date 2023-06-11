@@ -1,69 +1,57 @@
 package at.technikum.tolanzeilinger.tourplanner.factory;
 
 import at.technikum.tolanzeilinger.tourplanner.constants.DefaultConstants;
-import at.technikum.tolanzeilinger.tourplanner.dialogs.DialogService;
+import at.technikum.tolanzeilinger.tourplanner.presentation.dialogs.DialogService;
 import at.technikum.tolanzeilinger.tourplanner.event.EventAggregator;
-import at.technikum.tolanzeilinger.tourplanner.helpers.TourConverter;
 import at.technikum.tolanzeilinger.tourplanner.log.Log4jLogger;
 import at.technikum.tolanzeilinger.tourplanner.log.Logger;
-import at.technikum.tolanzeilinger.tourplanner.model.Tour;
-import at.technikum.tolanzeilinger.tourplanner.model.TourLog;
 import at.technikum.tolanzeilinger.tourplanner.persistence.HibernateSessionFactory;
-import at.technikum.tolanzeilinger.tourplanner.persistence.dao.models.TourLogDaoModel;
-import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.WordRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourLogRepositoryImpl;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.implementation.TourRepositoryImpl;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourLogRepository;
 import at.technikum.tolanzeilinger.tourplanner.persistence.repositories.interfaces.TourRepository;
-import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.api.implementations.MapquestUrlBuilderServiceImpl;
-import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestService;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.implementations.MapquestServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.implementations.MapquestUrlBuilderServiceImpl;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.interfaces.MapquestService;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.*;
-import at.technikum.tolanzeilinger.tourplanner.service.api.interfaces.MapquestUrlBuilderService;
+import at.technikum.tolanzeilinger.tourplanner.mapquest.interfaces.MapquestUrlBuilderService;
 import at.technikum.tolanzeilinger.tourplanner.service.implementations.PropertyLoaderServiceImpl;
 import at.technikum.tolanzeilinger.tourplanner.service.interfaces.*;
-import at.technikum.tolanzeilinger.tourplanner.view.MainController;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.MainTabPaneSwitcherView;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataCreateView;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataDisplayView;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataEditView;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMapView;
-import at.technikum.tolanzeilinger.tourplanner.view.MainPanelComponents.TourMiscView;
-import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.LogLineChartView;
-import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.PDFcView;
-import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.SearchView;
-import at.technikum.tolanzeilinger.tourplanner.view.MiscComponents.TopButtonsView;
-import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListActionButtonsView;
-import at.technikum.tolanzeilinger.tourplanner.view.TourListComponents.TourListView;
-import at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogsActionButtonsView;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.MainTabPaneSwitcherViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataDisplayViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataEditViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMapViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainPanelComponents.TourMiscViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MainViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.LogLineChartViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.PDFcViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.SearchViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.MiscComponents.TopButtonsViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListActionButtonsViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourListViewModel;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.TourListComponents.TourLogsActionButtonsViewModel;
-import at.technikum.tolanzeilinger.tourplanner.view.TourLogComponents.TourLogListView;
-import at.technikum.tolanzeilinger.tourplanner.viewModel.TourLogComponents.TourLogListViewModel;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import javafx.scene.image.Image;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.MainTabPaneSwitcherView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourDataComponents.TourDataCreateView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourDataComponents.TourDataDisplayView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourDataComponents.TourDataEditView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourMapView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MainPanelComponents.TourMiscView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MiscComponents.LogLineChartView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MiscComponents.PDFcView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MiscComponents.SearchView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.MiscComponents.TopButtonsView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.TourListComponents.TourListActionButtonsView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.TourListComponents.TourListView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.TourLogComponents.TourLogsActionButtonsView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.MainTabPaneSwitcherViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.TourDataComponents.TourDataCreateViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.TourDataComponents.TourDataDisplayViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.TourDataComponents.TourDataEditViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.TourDataComponents.TourDataPaneSwitcherViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.TourMapViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MainPanelComponents.TourMiscViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MiscComponents.LogLineChartViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MiscComponents.PDFcViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MiscComponents.SearchViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.MiscComponents.TopButtonsViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.TourListComponents.TourListActionButtonsViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.TourListComponents.TourListViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.TourLogComponents.TourLogsActionButtonsViewModel;
+import at.technikum.tolanzeilinger.tourplanner.presentation.view.TourLogComponents.TourLogListView;
+import at.technikum.tolanzeilinger.tourplanner.presentation.viewModel.TourLogComponents.TourLogListViewModel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -74,7 +62,6 @@ public class ViewFactory {
     private final EventAggregator eventAggregator;
 
     // Repositories
-    private final WordRepository wordRepository;
     private final TourRepository tourRepository;
     private final TourLogRepository tourLogRepository;
 
@@ -93,11 +80,9 @@ public class ViewFactory {
     private final FilePickerService filePickerService;
 
     // View Models
-    private MainViewModel mainViewModel;
-    private PDFcViewModel pdFcViewModel;
-    private TopButtonsViewModel topButtonsViewModel;
-    private SearchViewModel searchViewModel;
-
+    private final PDFcViewModel pdFcViewModel;
+    private final TopButtonsViewModel topButtonsViewModel;
+    private final SearchViewModel searchViewModel;
 
     private final MainTabPaneSwitcherViewModel mainTabPaneSwitcherViewModel;
 
@@ -117,10 +102,26 @@ public class ViewFactory {
     private final TourLogListViewModel tourLogListViewModel;
 
     // Logger
-    private  Logger logger;
+    private final Logger logger;
+
+    public static ViewFactory getInstance() {
+        if(instance == null)
+            instance = new ViewFactory();
+        return instance;
+    }
+
+    public Object createView(Class<?> controllerClass) {
+        Supplier<Object> controllerSupplier = viewMap.get(controllerClass);
+        if (controllerSupplier != null) {
+            return controllerSupplier.get();
+        }
+
+        logger.fatal("No controller found for class: " + controllerClass.getName());
+
+        throw new NullPointerException();
+    }
 
     private ViewFactory() {
-
         this.logger = Log4jLogger.getInstance();
         this.eventAggregator = new EventAggregator();
         this.hibernateSessionFactory = new HibernateSessionFactory();
@@ -132,7 +133,6 @@ public class ViewFactory {
         initializeViewMap();
 
         // initialize Repositories
-        this.wordRepository = new WordRepository(eventAggregator);
         this.tourRepository = new TourRepositoryImpl(hibernateSessionFactory, eventAggregator, logger);
         this.tourLogRepository = new TourLogRepositoryImpl(hibernateSessionFactory, eventAggregator, logger);
 
@@ -155,8 +155,6 @@ public class ViewFactory {
         this.dialogService = new DialogService(logger, eventAggregator, tourService, tourLogService);
 
         // initialize ViewModels
-        this.mainViewModel = new MainViewModel(eventAggregator, wordRepository, logger, mapquestService, imageStorageService);
-
         this.pdFcViewModel = new PDFcViewModel(eventAggregator, logger, tourService, exportDataService, pdfService, importDataService, filePickerService);
         this.topButtonsViewModel = new TopButtonsViewModel(eventAggregator, logger);
         this.searchViewModel = new SearchViewModel(eventAggregator, logger, tourService);
@@ -177,25 +175,6 @@ public class ViewFactory {
         this.tourMapViewModel = new TourMapViewModel(eventAggregator, tourService, logger);
         this.tourMiscViewModel = new TourMiscViewModel(eventAggregator, tourService, logger);
         this.logLineChartViewModel = new LogLineChartViewModel(tourLogService, eventAggregator, tourService);
-
-        // checkDatabase(hibernateSessionFactory);
-    }
-
-    public static ViewFactory getInstance() {
-        if(instance == null)
-            instance = new ViewFactory();
-        return instance;
-    }
-
-    public Object createView(Class<?> controllerClass) {
-        Supplier<Object> controllerSupplier = viewMap.get(controllerClass);
-        if (controllerSupplier != null) {
-            return controllerSupplier.get();
-        }
-
-        logger.fatal("No controller found for class: " + controllerClass.getName());
-
-        throw new NullPointerException();
     }
 
     private void initializeViewMap() {
@@ -227,8 +206,6 @@ public class ViewFactory {
         viewMap.put(PDFcView.class, () -> new PDFcView(pdFcViewModel));
         viewMap.put(TopButtonsView.class, () -> new TopButtonsView(topButtonsViewModel));
         viewMap.put(SearchView.class, () -> new SearchView(searchViewModel));
-    
-        viewMap.put(MainController.class, () -> new MainController(mainViewModel));
     }
 
     private void clearDatabase(HibernateSessionFactory sessionFactory) {

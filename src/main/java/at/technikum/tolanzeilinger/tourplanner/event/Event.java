@@ -26,11 +26,9 @@ public enum Event {
     IMAGE_SAVED,
 
 
-
     // Bsp. Events
     CREATE_WORD,
     DELETE_WORD,
-
 
     NEW_TOUR_ACTION,
     REMOVE_TOUR_ACTION,
@@ -51,7 +49,5 @@ public enum Event {
     COULD_NOT_CREATE_PDF,
     PDF_CREATED,
     EXCEL_CREATED,
-    PDF_CREATE_ACTION, 
-    SEARCH_ACTION, 
-    TOUR_SEARCH_UPDATE,
+    SEARCH_ACTION,
 }
