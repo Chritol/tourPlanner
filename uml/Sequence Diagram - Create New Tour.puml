@@ -1,0 +1,14 @@
+@startuml
+actor User as U
+participant "User Interface" as UI
+participant Application as App
+participant Database as DB
+
+U -> UI: Fill in tour details
+UI -> App: Submit tour data
+App -> App: Validate input
+App -> DB: Save tour information
+DB --> App: Confirmation
+App --> UI: Confirmation message
+
+@enduml
