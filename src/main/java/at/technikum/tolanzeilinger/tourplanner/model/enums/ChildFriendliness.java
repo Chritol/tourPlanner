@@ -39,8 +39,8 @@ public enum ChildFriendliness {
 
             if(maxTime >= 0 && avgRating >= 0) {
                 if(avgRating <= NOT_FOR_CHILDREN.maxRating || maxTime >= NOT_FOR_CHILDREN.maxTime || maxDistance >= NOT_FOR_CHILDREN.maxDistance) return NOT_FOR_CHILDREN;
-                if(avgRating <= NOT_RECOMMENDED_FOR_CHILDREN.maxRating || maxTime >= NOT_RECOMMENDED_FOR_CHILDREN.maxTime || maxDistance >= NOT_RECOMMENDED_FOR_CHILDREN.maxDistance) return NOT_FOR_CHILDREN;
-                if(avgRating <= RECOMMENDED_FOR_CHILDREN.maxRating || maxTime >= RECOMMENDED_FOR_CHILDREN.maxTime || maxDistance >= RECOMMENDED_FOR_CHILDREN.maxDistance) return NOT_FOR_CHILDREN;
+                if(avgRating <= NOT_RECOMMENDED_FOR_CHILDREN.maxRating || maxTime >= NOT_RECOMMENDED_FOR_CHILDREN.maxTime || maxDistance >= NOT_RECOMMENDED_FOR_CHILDREN.maxDistance) return NOT_RECOMMENDED_FOR_CHILDREN;
+                if(avgRating <= RECOMMENDED_FOR_CHILDREN.maxRating || maxTime >= RECOMMENDED_FOR_CHILDREN.maxTime || maxDistance >= RECOMMENDED_FOR_CHILDREN.maxDistance) return RECOMMENDED_FOR_CHILDREN;
             }
         }
         return NOT_FOR_CHILDREN;

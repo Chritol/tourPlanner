@@ -50,4 +50,5 @@ module at.technikum.tolanzeilinger.tourplanner {
     opens at.technikum.tolanzeilinger.tourplanner.mapquest.implementations to com.fasterxml.jackson.databind, java.net.http;
     opens at.technikum.tolanzeilinger.tourplanner.mapquest.models to com.fasterxml.jackson.databind, java.net.http;
     opens at.technikum.tolanzeilinger.tourplanner.model.enums to com.fasterxml.jackson.databind;
+    opens at.technikum.tolanzeilinger.tourplanner.mapquest.models.enums to com.fasterxml.jackson.databind, java.net.http;
 }
